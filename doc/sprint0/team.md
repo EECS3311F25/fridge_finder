@@ -1,0 +1,15 @@
+# EECS 3311 - Software Design - Group Y
+## Team Information (Sprint 0)
+
+| Full Name          | Section | Student ID  | Email                    | Best Way to Contact | Discord Username |
+|--------------------|---------|-------------|--------------------------|---------------------|------------------|
+| Ignacio Doria Oberman| B      | 220385910  | idoriao@my.yorku.ca      | Discord             | doria7943        |
+|                    |         |             |                          |                     |                  |
+|                    |         |             |                          |                     |                  |
+|                    |         |             |                          |                     |                  |
+|                    |         |             |                          |                     |                  |
+
+**Discord Chat/Server Invite:** (https://discord.gg/jnyRWfD5QK) 
+
+---
+
