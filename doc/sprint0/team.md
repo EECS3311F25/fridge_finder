@@ -5,7 +5,7 @@
 |--------------------|---------|-------------|--------------------------|---------------------|------------------|
 | Ignacio Doria Oberman| B      | 220385910  | idoriao@my.yorku.ca      | Discord             | doria7943        |
 | Darren Drew        | B       | 220452298   | ddrew@my.yorku.ca        | Discord             | darrendoob       |
-|                    |         |             |                          |                     |                  |
+| Noah Skinner       |         | 220414561   | skinner4@my.yorku.ca     | Discord             | shamwoah         |
 |                    |         |             |                          |                     |                  |
 |                    |         |             |                          |                     |                  |
 
