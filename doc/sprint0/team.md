@@ -7,7 +7,6 @@
 | Darren Drew        | B       | 220452298   | ddrew@my.yorku.ca        | Discord             | darrendoob       |
 | Noah Skinner       | B       | 220414561   | skinner4@my.yorku.ca     | Discord             | shamwoah         |
 |                    |         |             |                          |                     |                  |
-|                    |         |             |                          |                     |                  |
 
 **Discord Chat/Server Invite:** (https://discord.gg/jnyRWfD5QK) 
 
