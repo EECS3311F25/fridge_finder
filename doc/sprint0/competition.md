@@ -1,0 +1,8 @@
+# EECS 3311 - Sprint 0  
+## Competition Analysis: Fridge Finder
+
+When we started planning Fridge Finder, we looked at a few apps that already try to solve similar problems. A couple of good examples are **Fridge AI** and **Plan to Eat**. Plan to Eat focuses on meal planning — it lets users store recipes, create shopping lists, and organize weekly meals. It’s great for people who love to plan ahead, but it doesn’t really focus on tracking what’s already in your fridge or reminding you when things are about to expire. Fridge AI, on the other hand, does a bit of tracking but feels more complex and geared toward people who enjoy managing data rather than those who just want something quick and simple.
+
+Our idea with Fridge Finder is to keep things lightweight and practical. You open the app, add what you have, and it quietly reminds you before things go bad. It also helps you come up with meals based on what’s already in your kitchen — not what you *plan* to buy later. We’re designing it for **students and busy people** who don’t have time for heavy apps or manual planning, but still want something genuinely useful.
+
+Most competitors aim at families or dedicated home cooks who enjoy the process of organizing meals in detail. That leaves out everyday users who just want to quickly check what’s in their fridge and avoid wasting food. For competitors like Plan to Eat to target that audience, they’d need to completely shift focus from planning ahead to managing what’s already bought — which would mean changing their core purpose. Fridge Finder keeps that everyday simplicity at its center — it’s small, fast, and made for real daily life.
