@@ -7,7 +7,7 @@ Project in progess
 
 Motivation
 ---------------
-As full time computer science studets who know thier priority is to study, sometimes keeping up with daily life and academic life is a little overwhealming. The fact that academic tasks take up so much space in our minds sometimes causes us to neglect our homes, which can lead to problems such as skipping meals and forgetting to eat a healthy diet. That's why Fridge Finder was created, as a way to stay focused on studying without completely neglecting something as basic as eating well. 
+As full-time computer science students who know their priority is to study, sometimes keeping up with daily life and academic work can be a little overwhelming. The fact that school tasks take up so much space in our minds often causes us to neglect our homes, which can lead to skipping meals and forgetting to eat a healthy diet. That’s why Fridge Finder was created — to help us stay focused on studying without completely neglecting something as basic as eating well.
 
 
 Visuals
@@ -54,6 +54,7 @@ Scope: generate a user-friendly app that serves as an full stack apk (Entire app
     ```bash
     git clone https://github.com/shamwoah/fridge-finder.git
     ```
+
 
 
 
