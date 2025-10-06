@@ -12,6 +12,7 @@ During this sprint, the only technical implementation conducted was the project 
 - Android SDK Command-line Tools (latest)
 - Andorid SDK PLatform-Tools (36.0.0)
 - Android Emulator (36.1.9)
+
 After the installation of the Android SDK, it was necessary to point Flutter to the location of the SDK. Then, an empty Flutter project was created.
 
 ## Team Strategy
