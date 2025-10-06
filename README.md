@@ -46,37 +46,37 @@ Contributing
 Open source for developing the app. 
 Scope: generate a user-friendly app that serves as an full stack apk (Entire app based on flutter).
 
-DEVELOPER INSTALLATION:
+### DEVELOPER INSTALLATION:
 
-    ### Step 1: Install Flutter SDK
+#### Step 1: Install Flutter SDK
 
-    Install Flutter 3.35.5 and unzip to a directory of your choice. Then, add the /bin/ folder to your PATH.
+Install Flutter 3.35.5 and unzip to a directory of your choice. Then, add the /bin/ folder to your PATH.
     
-    A guide can be found at the following URL: https://docs.flutter.dev/install/manual
+A guide can be found at the following URL: https://docs.flutter.dev/install/manual
 
-    ### Step 2: Install Android Studio and Android SDK
+#### Step 2: Install Android Studio and Android SDK
 
-    Download Android Studio from the following URL: https://developer.android.com/studio/install
+Download Android Studio from the following URL: https://developer.android.com/studio/install
 
-    Follow the instructions under the "IDE Guides" tab to install on your operating system. When prompted to choose a "recommended" versus a "manual" installation, choose manual. Ensure the Android Emulator is selected.
+Follow the instructions under the "IDE Guides" tab to install on your operating system. When prompted to choose a "recommended" versus a "manual" installation, choose manual. Ensure the Android Emulator is selected.
     
-    Once the installation has finished, Android Studio will open to the home page. Select "Customization", then scroll down to "all settings", and search for **sdk**. Ensure the following are installed:
-    - Android 16.0 (API level 36.0)
-    - Android SDK Build-Tools
-    - Android SDK Command-line Tools (latest)
-    - Andorid SDK PLatform-Tools (36.0.0)
-    - Android Emulator (36.1.9)
+Once the installation has finished, Android Studio will open to the home page. Select "Customization", then scroll down to "all settings", and search for **sdk**. Ensure the following are installed:
+- Android 16.0 (API level 36.0)
+- Android SDK Build-Tools
+- Android SDK Command-line Tools (latest)
+- Andorid SDK PLatform-Tools (36.0.0)
+- Android Emulator (36.1.9)
 
-    ### Step 3: Clone repository
+#### Step 3: Clone repository
 
-    open source repository on github
-    Create a work folder and clone repository
+open source repository on github
+Create a work folder and clone repository
 
-    ```bash
-    git clone https://github.com/shamwoah/fridge-finder.git
-    ```
+```bash
+git clone https://github.com/shamwoah/fridge-finder.git
+```
 
-    ### Step 4: Get to work!
+#### Step 4: Get to work!
 
 
 
