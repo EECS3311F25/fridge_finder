@@ -37,7 +37,7 @@ Contact on Discord developer server
 RoadMap
 ---------------
 
-Create a user interphase that conncets all parts of the app just using flutter. 
+Create a user interface that conncets all parts of the app just using flutter. 
 
 
 Contributing
@@ -54,6 +54,7 @@ Scope: generate a user-friendly app that serves as an full stack apk (Entire app
     ```bash
     git clone https://github.com/shamwoah/fridge-finder.git
     ```
+
 
 
 
