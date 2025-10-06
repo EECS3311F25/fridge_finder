@@ -2,7 +2,7 @@
 Fridge Finder
 ===============
 
-Project on progess
+Project in progess
 
 
 Motivation
@@ -54,6 +54,7 @@ Scope: generate a user-friendly app that serves as an full stack apk (Entire app
     ```bash
     git clone https://github.com/shamwoah/fridge-finder.git
     ```
+
 
 
 
