@@ -21,7 +21,7 @@ Installation
 
     USER INSTALLATION
 
-    Install fridge finder as a apk. 
+    Install fridge finder as an apk. 
 
 
    
@@ -54,5 +54,6 @@ Scope: generate a user-friendly app that serves as an full stack apk (Entire app
     ```bash
     git clone https://github.com/shamwoah/fridge-finder.git
     ```
+
 
 
