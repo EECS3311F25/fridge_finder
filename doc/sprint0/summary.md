@@ -8,7 +8,8 @@ Fridge Finder is a mobile app designed to help people stay on top of the food th
 **Cases →** Adding food with expiry dates, checking an updated inventory, receiving reminders before items expire, getting recipe suggestions based on what’s at home, and avoiding duplicate purchases at the store.  
 
 **Principles →**  
-Fridge Finder is built around three key principles: **simplicity**, **usefulness**, and **accessibility**.  
+Fridge Finder is built around three key principles: 
 - *Simplicity:* The app must be quick and intuitive to use — adding food should take only a few seconds.  
 - *Usefulness:* Every feature should provide clear value, helping users make better decisions about food and groceries.  
 - *Accessibility:* The design should work for all types of users, whether they’re students, busy parents, or professionals managing tight schedules.  
+
