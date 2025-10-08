@@ -3,7 +3,7 @@
 1. All *must* user stories are completed. Notably that:
     - There must be a main menu where you can view your inventory
     - You must be able to query your inventory
-    - You must be able to click on a food item in the main menu, leading you to its info page. Info page must feature:
+    - You must be able to click on a food item in the main menu, leading you to its **info** page. Info page must feature:
         - Name
         - Icon
         - Quantity
@@ -16,6 +16,7 @@
         - Icon
         - Expiry date
         - Quantity
+    - From the main menu, you must be able to navigate to a **recipes** page, wherein you can see suggested recipes based on the food that you have in your fridge
 2. App is usable and functional with limited bugs
 3. App passes all unit tests created by the team
 4. App is well-documented. Documentation must include:
