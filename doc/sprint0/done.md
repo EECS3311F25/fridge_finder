@@ -1,6 +1,6 @@
 # Criteria to be *done* the project
 
-1. All *must* user stories are completed. Notably that:
+1. All ***MUST***-labelled user stories are completed. Notably that:
     - There must be a main menu where you can view your inventory
     - You must be able to query your inventory
     - You must be able to click on a food item in the main menu, leading you to its **info** page. Info page must feature:
