@@ -11,12 +11,13 @@
         - Expiry date
         - Safe storage info
         - Ability to freeze item
+    - From an item's info page, you must be able to "freeze" an item, indicating that it has gone into you freezer, and pausing its expiry date until you "thaw" it
     - From the main menu, you must be able to add a new food item, where you can select its:
         - Name
         - Icon
         - Expiry date
         - Quantity
-    - From the main menu, you must be able to navigate to a **recipes** page, wherein you can see suggested recipes based on the food that you have in your fridge
+    - From the main menu, you must be able to navigate to a **recipes** page, wherein you can see suggested recipes based on the food that you have in your fridg
 2. App is usable and functional with limited bugs
 3. App passes all unit tests created by the team
 4. App is well-documented. Documentation must include:
