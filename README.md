@@ -73,10 +73,11 @@ open source repository on github
 Create a work folder and clone repository
 
 ```bash
-git clone https://github.com/shamwoah/fridge-finder.git
+git clone https://github.com/EECS3311F25/fridge_finder.git
 ```
 
 #### Step 4: Get to work!
+
 
 
 
