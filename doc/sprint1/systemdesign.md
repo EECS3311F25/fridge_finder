@@ -15,7 +15,7 @@
 
 ---
 
-## **1. CRC Cards**
+## **CRC Cards**
 
 | **Class Name:** |  |
 |------------------|--|
@@ -29,7 +29,7 @@
 
 ---
 
-## **2. Software Architecture Diagram**
+## **Software Architecture Diagram**
 
 
 **Diagram (Example):**
