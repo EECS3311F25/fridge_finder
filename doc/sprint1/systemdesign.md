@@ -21,10 +21,8 @@
 |------------------|--|
 | **Parent Class (if any):** | *List the parent class if applicable* |
 | **Subclasses (if any):** | *List all the subclasses separated by a comma* |
-
-| **Responsibilities:** | **Collaborators:** |
-|------------------------|--------------------|
-| • *List responsibilities* | • *List all your collaborators* |
+| **Responsibilities:** | *List responsibilities* |
+| **Collaborators:** | *List all your collaborators* |
 
 
 ---
