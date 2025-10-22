@@ -17,8 +17,6 @@
 
 ## **1. CRC Cards**
 
-### 🧩 **CRC Card **
-
 | **Class Name:** |  |
 |------------------|--|
 | **Parent Class (if any):** | *List the parent class if applicable* |
