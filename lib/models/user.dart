@@ -7,15 +7,16 @@ class User {
   final int? id;
   final String username;
   final String email;
+  final String password;
 
-  User({this.id, required this.username, required this.email});
+  User({this.id, required this.username, required this.email, required this.password,});
 
   Map<String, dynamic> toMap() {
-    return {'id': id, 'username': username, 'email': email};
+    return {'id': id, 'username': username, 'email': email 'password': password,};
   }
 
   factory User.fromMap(Map<String, dynamic> map) {
-    return User(id: map['id'], username: map['username'], email: map['email']);
+    return User(id: map['id'], username: map['username'], email: map['email'], password: map['password'],);
   }
 }
 
@@ -43,6 +44,7 @@ class UserDatabaseHelper {
         id INTEGER PRIMARY KEY,
         username TEXT,
         email TEXT
+        password TEXT
       )
     ''');
   }
