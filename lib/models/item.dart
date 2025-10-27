@@ -1,18 +1,21 @@
 import 'dart:async';
+import 'dart:ui';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'fridge.dart';
 
 class Item {
   final int? id;
-  final String name;
-  final int quantity;
+  final int? fdcId;
+  String name;
+  int quantity;
   final DateTime expiryDate;
-  final Fridge fridge; 
-  final Image imageIcon; 
+  final Fridge fridge;
+  final Image imageIcon;
 
   Item({
     this.id,
+    this.fdcId,
     required this.name,
     required this.quantity,
     required this.expiryDate,
@@ -25,8 +28,8 @@ class Item {
       'id': id,
       'name': name,
       'quantity': quantity,
-      'expiryDate': expiryDate.toIso8601String(),
-      'fridgeId': fridge.id, 
+      'expiryDate': expiryDate,
+      'fridgeId': fridge,
       'imageIcon': imageIcon,
     };
   }
@@ -36,17 +39,15 @@ class Item {
       id: map['id'],
       name: map['name'],
       quantity: map['quantity'],
-      expiryDate: DateTime.parse(map['expiryDate']),
-      fridge: Fridge(
-        id: map['fridgeId']
-      ),
+      expiryDate: map['expiryDate'],
+      fridge: map['fridge'],
       imageIcon: map['imageIcon'] ?? '',
     );
   }
 }
 
 class ItemDatabaseHelper {
-    /*
+  /*
   static final ItemDatabaseHelper instance = ItemDatabaseHelper._instance();
   static Database? _database;
 
