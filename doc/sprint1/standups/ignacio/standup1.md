@@ -1,9 +1,7 @@
-[October 27, 2025] - Sprint 1 Standup #1
-
-## Worked on: 
-Implemented item.dart (Item class) and fridge.dart (Fridge class) for the backend.
-## Next: 
-Continue developing the backend, refine CRC cards, and collaborate with the team on the software architecture diagram.
-## Blockers: 
-None currently — just ensuring backend and database schema alignment.
-
+🗓️ [October 27, 2025] – Sprint 1 Standup #1
+Worked on:
+Implemented item.dart and fridge.dart for the backend, establishing relationships between users, fridges, and items. Created classes Item and Fridge with said constructors. 
+Next -> 
+Refine backend logic and collaborate with the team on the architecture diagram to ensure smooth integration between models and the frontend. Start integrating functionalities from the front-end to the back-end.
+Blockers:
+None currently — just monitoring backend and database schema alignment.
