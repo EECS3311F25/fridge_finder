@@ -11,7 +11,7 @@ class Item {
   int quantity;
   final DateTime expiryDate;
   final Fridge fridge;
-  final Image imageIcon;
+  final Image? imageIcon;
 
   Item({
     this.id,
@@ -20,7 +20,7 @@ class Item {
     required this.quantity,
     required this.expiryDate,
     required this.fridge,
-    required this.imageIcon,
+    this.imageIcon,
   });
 
   Map<String, dynamic> toMap() {
