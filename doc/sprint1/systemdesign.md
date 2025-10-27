@@ -114,6 +114,20 @@
 | **Responsibilities:** | <ul><li>Widget build(BuildContext)</ul></li> |
 | **Collaborators:** | LoginView |
 
+| **class CreateFoodView** |  |
+|------------------|--|
+| **Parent Class:** | StatefulWidget |
+| **Subclasses:** | n/a |
+| **Responsibilities:** | <ul></li>State<CreateFoodView> createState()</li></ul> |
+| **Collaborators:** | none |
+
+| **class _CreateFoodViewState** |  |
+|------------------|--|
+| **Parent Class:** | State<CreateFoodView> |
+| **Subclasses:** | n/a |
+| **Responsibilities:** | <ul><li>Widget build(BuildContext)</ul></li> |
+| **Collaborators:** | CreateFoodView |
+
 
 ---
 
