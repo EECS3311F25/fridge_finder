@@ -58,7 +58,7 @@ class UserDatabaseHelper {
       CREATE TABLE user (
         id INTEGER PRIMARY KEY,
         username TEXT,
-        email TEXT
+        email TEXT,
         password TEXT
       )
     ''');
