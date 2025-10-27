@@ -98,7 +98,7 @@
 | **Parent Class:** | StatefulWidget |
 | **Subclasses:** | n/a |
 | **Responsibilities:** | <ul></li>State<HomeView> createState()</li></ul> |
-| **Collaborators:** | none |
+| **Collaborators:** | HomeController |
 
 | **class _HomeViewState** |  |
 |------------------|--|
@@ -112,7 +112,7 @@
 | **Parent Class:** | StatefulWidget |
 | **Subclasses:** | n/a |
 | **Responsibilities:** | <ul></li>State<LoginView> createState()</li></ul> |
-| **Collaborators:** | none |
+| **Collaborators:** | LoginController |
 
 | **class _LoginViewState** |  |
 |------------------|--|
@@ -126,7 +126,7 @@
 | **Parent Class:** | StatefulWidget |
 | **Subclasses:** | n/a |
 | **Responsibilities:** | <ul></li>State<CreateItemView> createState()</li></ul> |
-| **Collaborators:** | none |
+| **Collaborators:** | CreateItemController |
 
 | **class _CreateItemViewState** |  |
 |------------------|--|
