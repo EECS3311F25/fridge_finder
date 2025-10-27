@@ -9,28 +9,17 @@ class Fridge {
   final User user;
   final List<Item> items;
 
-  Fridge({
-    this.id,
-    required this.user,
-    required this.items,
-  });
+  Fridge({this.id, required this.user, required this.items});
 
   Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'userId': user.id,
-    };
+    return {'id': id, 'user': user, 'items': items};
   }
-    
+
   factory Fridge.fromMap(Map<String, dynamic> map) {
     return Fridge(
       id: map['id'],
-      user: User(
-        id: map['userId'],
-        username: map['username'] ?? 'Unknown',
-        email: map['email'] ?? 'Unknown',
-      ),
-      items: const [], //will be fetched later with fridge.id
+      user: map['user'],
+      items: map['items'], //will be fetched later with fridge.id
     );
   }
 }
