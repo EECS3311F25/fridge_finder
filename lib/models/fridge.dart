@@ -21,7 +21,7 @@ class Fridge {
       'userId': user.id,
     };
   }
-
+    
   factory Fridge.fromMap(Map<String, dynamic> map) {
     return Fridge(
       id: map['id'],
@@ -30,7 +30,7 @@ class Fridge {
         username: map['username'] ?? 'Unknown',
         email: map['email'] ?? 'Unknown',
       ),
-      items: const [], 
+      items: const [], //will be fetched later with fridge.id
     );
   }
 }
