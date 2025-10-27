@@ -84,6 +84,13 @@
 | **Responsibilities:** | <ul><li>User login(String, String)</li><li>void createUser(String, String)</li></ul> |
 | **Collaborators:** | User, Fridge, Item |
 
+| **class CreateItemController** |  |
+|------------------|--|
+| **Parent Class:** | n/a |
+| **Subclasses:** | n/a |
+| **Responsibilities:** | <ul><li>Item createItem(String, int, DateTime, Fridge)</li></ul> |
+| **Collaborators:** | User, Fridge, Item |
+
 ### View Classes:
 
 | **class HomeView** |  |
@@ -114,19 +121,19 @@
 | **Responsibilities:** | <ul><li>Widget build(BuildContext)</ul></li> |
 | **Collaborators:** | LoginView |
 
-| **class CreateFoodView** |  |
+| **class CreateItemView** |  |
 |------------------|--|
 | **Parent Class:** | StatefulWidget |
 | **Subclasses:** | n/a |
-| **Responsibilities:** | <ul></li>State<CreateFoodView> createState()</li></ul> |
+| **Responsibilities:** | <ul></li>State<CreateItemView> createState()</li></ul> |
 | **Collaborators:** | none |
 
-| **class _CreateFoodViewState** |  |
+| **class _CreateItemViewState** |  |
 |------------------|--|
-| **Parent Class:** | State<CreateFoodView> |
+| **Parent Class:** | State<CreateItemView> |
 | **Subclasses:** | n/a |
 | **Responsibilities:** | <ul><li>Widget build(BuildContext)</ul></li> |
-| **Collaborators:** | CreateFoodView |
+| **Collaborators:** | CreateItemView |
 
 
 ---
