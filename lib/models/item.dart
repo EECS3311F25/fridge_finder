@@ -58,13 +58,6 @@ class ItemDatabaseHelper {
     return _database!;
   }
 
-  Future<Database> initDb() async {
-    String databasesPath = await getDatabasesPath();
-    String path = join(databasesPath, 'item.db');
-
-    return await openDatabase(path, version: 1, onCreate: _onCreate);
-  }
-
   Future _onCreate(Database db, int version) async {
     await db.execute('''
       CREATE TABLE item (

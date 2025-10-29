@@ -1,8 +1,10 @@
 import 'dart:async';
-import 'package:path/path.dart';
+
 import 'package:sqflite/sqflite.dart';
+
 import 'user.dart';
 import 'item.dart';
+import 'databasehelper.dart';
 
 class Fridge {
   final int? id;
@@ -24,24 +26,19 @@ class Fridge {
   }
 }
 
-class FridgeDatabaseHelper {
-  /*static final FridgeDatabaseHelper instance = FridgeDatabaseHelper._instance();
+class FridgeDatabaseHelper extends DatabaseHelper<Fridge> {
+  static final FridgeDatabaseHelper instance = FridgeDatabaseHelper._instance();
   static Database? _database;
 
   FridgeDatabaseHelper._instance();
 
+  @override
   Future<Database> get db async {
     _database ??= await initDb();
     return _database!;
   }
 
-  Future<Database> initDb() async {
-    String databasesPath = await getDatabasesPath();
-    String path = join(databasesPath, 'fridge.db');
-
-    return await openDatabase(path, version: 1, onCreate: _onCreate);
-  }
-
+  @override
   Future _onCreate(Database db, int version) async {
     await db.execute('''
       CREATE TABLE fridge (
@@ -51,17 +48,20 @@ class FridgeDatabaseHelper {
     ''');
   }
 
-  Future<int> insertFridge(Fridge fridge) async {
+  @override
+  Future<int> insert(Fridge fridge) async {
     Database db = await instance.db;
     return await db.insert('fridge', fridge.toMap());
   }
 
-  Future<List<Map<String, dynamic>>> queryAllFridges() async {
+  @override
+  Future<List<Map<String, dynamic>>> queryAll() async {
     Database db = await instance.db;
     return await db.query('fridge');
   }
 
-  Future<int> updateFridge(Fridge fridge) async {
+  @override
+  Future<int> update(Fridge fridge) async {
     Database db = await instance.db;
     return await db.update(
       'fridge',
@@ -71,8 +71,9 @@ class FridgeDatabaseHelper {
     );
   }
 
-  Future<int> deleteFridge(int id) async {
+  @override
+  Future<int> delete(int id) async {
     Database db = await instance.db;
     return await db.delete('fridge', where: 'id = ?', whereArgs: [id]);
-  } */
+  }
 }

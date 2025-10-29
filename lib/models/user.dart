@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
+import 'databasehelper.dart';
+
 class User {
   final int? id;
   final String username;
@@ -35,22 +37,16 @@ class User {
   }
 }
 
-class UserDatabaseHelper {
+class UserDatabaseHelper extends DatabaseHelper<User> {
   static final UserDatabaseHelper instance = UserDatabaseHelper._instance();
   static Database? _database;
 
   UserDatabaseHelper._instance();
 
+  @override
   Future<Database> get db async {
     _database ??= await initDb();
     return _database!;
-  }
-
-  Future<Database> initDb() async {
-    String databasesPath = await getDatabasesPath();
-    String path = join(databasesPath, 'user.db');
-
-    return await openDatabase(path, version: 1, onCreate: _onCreate);
   }
 
   Future _onCreate(Database db, int version) async {
@@ -64,17 +60,20 @@ class UserDatabaseHelper {
     ''');
   }
 
-  Future<int> insertUser(User user) async {
+  @override
+  Future<int> insert(User user) async {
     Database db = await instance.db;
     return await db.insert('user', user.toMap());
   }
 
-  Future<List<Map<String, dynamic>>> queryAllUsers() async {
+  @override
+  Future<List<Map<String, dynamic>>> queryAll() async {
     Database db = await instance.db;
     return await db.query('user');
   }
 
-  Future<int> updateUser(User user) async {
+  @override
+  Future<int> update(User user) async {
     Database db = await instance.db;
     return await db.update(
       'user',
@@ -84,7 +83,8 @@ class UserDatabaseHelper {
     );
   }
 
-  Future<int> deleteUser(int id) async {
+  @override
+  Future<int> delete(int id) async {
     Database db = await instance.db;
     return await db.delete('user', where: 'id = ?', whereArgs: [id]);
   }
