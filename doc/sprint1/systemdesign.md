@@ -74,7 +74,7 @@
 |------------------|--|
 | **Parent Class:** | n/a |
 | **Subclasses:** | n/a |
-| **Responsibilities:** | <ul></li>void createItem()</li><li>void deleteItem(Item)</li><li>List\<Item> searchItems(String)</li></ul> |
+| **Responsibilities:** | <ul><li>void deleteItem(Item)</li><li>void loadItemsFromDb()</li><li>List\<Item> searchItems(String)</li></ul> |
 | **Collaborators:** | User, Fridge, Item |
 
 | **class LoginController** |  |
