@@ -39,7 +39,7 @@ class FridgeDatabaseHelper extends DatabaseHelper<Fridge> {
   }
 
   @override
-  Future _onCreate(Database db, int version) async {
+  Future onCreate(Database db, int version) async {
     await db.execute('''
       CREATE TABLE fridge (
         id INTEGER PRIMARY KEY,

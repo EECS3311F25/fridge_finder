@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'databasehelper.dart';
@@ -49,7 +48,8 @@ class UserDatabaseHelper extends DatabaseHelper<User> {
     return _database!;
   }
 
-  Future _onCreate(Database db, int version) async {
+  @override
+  Future onCreate(Database db, int version) async {
     await db.execute('''
       CREATE TABLE user (
         id INTEGER PRIMARY KEY,

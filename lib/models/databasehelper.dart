@@ -13,10 +13,10 @@ abstract class DatabaseHelper<T> {
     String databasesPath = await getDatabasesPath();
     String path = join(databasesPath, 'fridge_finder.db');
 
-    return await openDatabase(path, version: 1, onCreate: _onCreate);
+    return await openDatabase(path, version: 1, onCreate: onCreate);
   }
 
-  Future _onCreate(Database db, int version);
+  Future onCreate(Database db, int version);
 
   Future<int> insert(T t);
 

@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:ui';
-import 'package:path/path.dart';
+
 import 'package:sqflite/sqflite.dart';
+
+import 'databasehelper.dart';
 import 'fridge.dart';
 
 class Item {
@@ -46,19 +48,20 @@ class Item {
   }
 }
 
-class ItemDatabaseHelper {
-  /*
+class ItemDatabaseHelper extends DatabaseHelper<Item> {
   static final ItemDatabaseHelper instance = ItemDatabaseHelper._instance();
   static Database? _database;
 
   ItemDatabaseHelper._instance();
 
+  @override
   Future<Database> get db async {
     _database ??= await initDb();
     return _database!;
   }
 
-  Future _onCreate(Database db, int version) async {
+  @override
+  Future onCreate(Database db, int version) async {
     await db.execute('''
       CREATE TABLE item (
         id INTEGER PRIMARY KEY,
@@ -71,17 +74,20 @@ class ItemDatabaseHelper {
     ''');
   }
 
-  Future<int> insertItem(Item item) async {
+  @override
+  Future<int> insert(Item item) async {
     Database db = await instance.db;
     return await db.insert('item', item.toMap());
   }
 
-  Future<List<Map<String, dynamic>>> queryAllItems() async {
+  @override
+  Future<List<Map<String, dynamic>>> queryAll() async {
     Database db = await instance.db;
     return await db.query('item');
   }
 
-  Future<int> updateItem(Item item) async {
+  @override
+  Future<int> update(Item item) async {
     Database db = await instance.db;
     return await db.update(
       'item',
@@ -91,8 +97,9 @@ class ItemDatabaseHelper {
     );
   }
 
-  Future<int> deleteItem(int id) async {
+  @override
+  Future<int> delete(int id) async {
     Database db = await instance.db;
     return await db.delete('item', where: 'id = ?', whereArgs: [id]);
-  }*/
+  }
 }
