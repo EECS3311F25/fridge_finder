@@ -2,15 +2,26 @@ import '../models/item.dart';
 import '../models/fridge.dart';
 
 class CreateItemController {
-  /// Creates and returns a new [Item] associated with the given [Fridge].
-  Item createItem(
-    String name,
-    int quantity,
-    DateTime expiryDate,
-    Fridge fridge, {
+  // Hols a new [Item], and assosiates it with a given [Fridge] adding it to the database
+
+  Future<Item> createItem({ // use of Future since to insert an Item we need the response fromn the database and asyncronous functions
+    required String name,
+    required int quantity,
+
+    required DateTime expiryDate,
+    required Fridge fridge,
     int? fdcId,
-  }) {
+  }) async {
+    
+
+    if (fridge.id == null) {
+
+      throw Exception('Fridge must be saved before adding items.');
+    }
+
+
     final item = Item(
+      
       fdcId: fdcId,
       name: name,
       quantity: quantity,
@@ -18,11 +29,27 @@ class CreateItemController {
       fridge: fridge,
     );
 
-    fridge.items.add(item);
+    // database saver
+    final dbHelper = ItemDatabaseHelper.instance;
 
-    // Optionally save to database if ItemDatabaseHelper allows it
-    // await ItemDatabaseHelper.instance.insertItem(item);
+    
+    final itemId = await dbHelper.insert(item);
 
-    return item;
+    // creates copy of the item assosiated with the databse id
+    final savedItem = Item(
+      id: itemId,
+      fdcId: fdcId,
+      name: name,
+      quantity: quantity,
+      expiryDate: expiryDate,
+      fridge: fridge,
+    );
+
+    fridge.items.add(savedItem);
+
+    // update the fridge in the databse
+    await FridgeDatabaseHelper.instance.update(fridge);
+
+    return savedItem;
   }
 }

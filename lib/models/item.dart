@@ -31,8 +31,8 @@ class Item {
       'name': name,
       'quantity': quantity,
       'expiryDate': expiryDate,
-      'fridgeId': fridge,
-      'imageIcon': imageIcon,
+      'fridgeId': fridge.id,
+      'imageIcon': null, // database expects a path, placeholder
     };
   }
 
