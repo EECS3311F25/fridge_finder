@@ -1,4 +1,4 @@
-[27/10/2025] - Sprint #1 Standup #1
+[29/10/2025] - Sprint #1 Standup #1
 **1. What did you work on since the last standup?**
 I created the views folder for front end development. This is where screen is going to be located. I simplified main.dart to not have any front end implementation. Then I implemented the basics of home_view.dart, showing a header, search bar, and scrollable item grid. And I also created add_item.dart and food_item.dart
 
