@@ -25,7 +25,6 @@ class HomeController {
         .toList();
   }
 
-  /* Error because ItemDatabaseHelper is commented out
   Future<void> loadItemsFromDb(Fridge fridge) async {
   final db = await ItemDatabaseHelper.instance.db; 
 
@@ -43,5 +42,4 @@ class HomeController {
 
   }
 
-  */
 }
