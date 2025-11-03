@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import '../models/item.dart';
 import '../models/fridge.dart';
 
@@ -12,6 +14,7 @@ class CreateItemController {
     required DateTime expiryDate,
     required Fridge fridge,
     int? fdcId,
+    Image? imageIcon,
   }) async {
     if (fridge.id == null) {
       throw Exception('Fridge must be saved before adding items.');
@@ -23,6 +26,7 @@ class CreateItemController {
       quantity: quantity,
       dateAdded: dateAdded,
       expiryDate: expiryDate,
+      imageIcon: imageIcon,
       //fridge: fridge,
     );
 
@@ -39,6 +43,7 @@ class CreateItemController {
       quantity: quantity,
       dateAdded: dateAdded,
       expiryDate: expiryDate,
+      imageIcon: imageIcon,
       //fridge: fridge,
     );
 
