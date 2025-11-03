@@ -1,4 +1,4 @@
-### [October 27, 2025] – Sprint 1 Standup #1
+### [November 3, 2025] – Sprint 1 Standup #3
 
 **Worked on:**  
 I am working cooperatively with the people in charge of the View classes to make this project ready to debug, I finished all controller classes for sprint 1 given that I had to change some fields given requests from my partners that are making the View Classes. I also worked on the software architecture diagram because I had to see the final structure of the project. to finalize this part.
