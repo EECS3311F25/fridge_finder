@@ -156,20 +156,24 @@ class HomeView extends StatelessWidget {
       ),
 
       // Button (+)
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: CircleAvatar(
         backgroundColor: const Color.fromRGBO(34, 171, 82, 1),
-        shape: const CircleBorder(),
-        onPressed: () async {
-          final newItem = await Navigator.push<Item>(
-            context,
-            MaterialPageRoute(builder: (context) => const AddItemView()),
-          );
+        radius: 40,
+        child: IconButton(
+          onPressed: () async {
+            final newItem = await Navigator.push<Item>(
+              context,
+              MaterialPageRoute(builder: (context) => const AddItemView()),
+            );
 
-          if (newItem != null) {
-            onAddItem(newItem);
-          }
-        },
-        child: const Icon(Icons.add, size: 32, color: Colors.white),
+            if (newItem != null) {
+              onAddItem(newItem);
+            }
+          },
+          icon: const Icon(Icons.add, color: Colors.white, size: 40),
+          padding: EdgeInsets.zero,
+          enableFeedback: false, // Remove sound effect to match
+        ),
       ),
     );
   }
