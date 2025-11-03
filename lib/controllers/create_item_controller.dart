@@ -7,7 +7,7 @@ class CreateItemController {
   Future<Item> createItem({ // use of Future since to insert an Item we need the response fromn the database and asyncronous functions
     required String name,
     required int quantity,
-
+    required DateTime dateAdded,
     required DateTime expiryDate,
     required Fridge fridge,
     int? fdcId,
@@ -25,6 +25,7 @@ class CreateItemController {
       fdcId: fdcId,
       name: name,
       quantity: quantity,
+      dateAdded: dateAdded,
       expiryDate: expiryDate,
       fridge: fridge,
     );
@@ -41,6 +42,7 @@ class CreateItemController {
       fdcId: fdcId,
       name: name,
       quantity: quantity,
+      dateAdded: dateAdded,
       expiryDate: expiryDate,
       fridge: fridge,
     );
