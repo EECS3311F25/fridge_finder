@@ -17,12 +17,21 @@ Food Name -> Size 20, Black
 class HomeWrapper extends StatefulWidget {
   const HomeWrapper({super.key});
 
+
+
   @override
   State<HomeWrapper> createState() => _HomeWrapperState();
 }
 
 class _HomeWrapperState extends State<HomeWrapper> {
   final List<Item> _items = [];
+
+  void deleteItem(Item item) {
+    setState(() {
+      _items.remove(item);
+
+    });
+  }
 
   void _addNewItem(Item newItem) {
     setState(() {
@@ -32,15 +41,17 @@ class _HomeWrapperState extends State<HomeWrapper> {
 
   @override
   Widget build(BuildContext context) {
-    return HomeView(items: _items, onAddItem: _addNewItem);
+    return HomeView(items: _items, onAddItem: _addNewItem,   onDeleteItem: deleteItem);
   }
 }
 
 class HomeView extends StatelessWidget {
   final List<Item> items;
   final Function(Item) onAddItem;
+  final Function(Item) onDeleteItem;
 
-  const HomeView({super.key, required this.items, required this.onAddItem});
+
+  const HomeView({super.key, required this.items, required this.onAddItem,required this.onDeleteItem,});
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +120,14 @@ class HomeView extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => FoodItemView(item: item),
+                          builder: (context) => FoodItemView(
+                            item: item,
+                            onDelete: (itemToDelete) {
+                              onDeleteItem(itemToDelete);
+                              final homeWrapperState = context.findAncestorStateOfType<_HomeWrapperState>();
+                              homeWrapperState?.deleteItem(itemToDelete);
+                            },
+                          ),
                         ),
                       );
                     },
