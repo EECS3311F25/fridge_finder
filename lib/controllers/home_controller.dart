@@ -24,11 +24,7 @@ class HomeController {
   }
 
   Future<void> loadItemsFromDb(Fridge fridge) async {
-<<<<<<< HEAD
     final db = await ItemDatabaseHelper.instance.db; 
-=======
-    final db = await ItemDatabaseHelper.instance.db;
->>>>>>> 5ccc2ae542b79367554bd7be00cfcd0a4c8b12f1
 
     final itemMaps = await db.query(
       'item',
@@ -37,13 +33,6 @@ class HomeController {
     );
 
     final items = itemMaps.map((map) => Item.fromMap(map)).toList();
-<<<<<<< HEAD
-
-    fridge.items
-      ..clear()
-      ..addAll(items);
-=======
->>>>>>> 5ccc2ae542b79367554bd7be00cfcd0a4c8b12f1
 
     fridge.items
       ..clear()
