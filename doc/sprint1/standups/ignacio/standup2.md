@@ -1,4 +1,4 @@
-### [October 27, 2025] – Sprint 1 Standup #1
+### [October 27, 2025] – Sprint 1 Standup #2
 
 **Worked on:**  
 Implemented all the controller classes needed for Sprint 1 — `create_item_controller.dart`, `home_controller.dart`, and `login_controller.dart`.  

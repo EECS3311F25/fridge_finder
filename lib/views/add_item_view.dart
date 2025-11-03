@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../models/item.dart';
 
 class AddItemView extends StatefulWidget {
   const AddItemView({super.key});
@@ -14,13 +15,7 @@ class _AddItemViewState extends State<AddItemView> {
   DateTime? _expiryDate;
   int _addFoodQuantity = 1;
 
-  final List<String> _foodOptions = [
-    'Chicken',
-    'Bacon',
-    'Butter',
-    'Milk',
-    'Potato',
-  ];
+  final List<String> _foodOptions = ['Apple', 'Banana', 'Carrot'];
 
   final List<String> _imagePaths = [
     'assets/images/chicken.png',
@@ -122,12 +117,27 @@ class _AddItemViewState extends State<AddItemView> {
     });
   }
 
+  // Create Item object from form data
+  Item _createItem() {
+    return Item(
+      name: _selectedFood!,
+      quantity: _addFoodQuantity,
+      dateAdded: DateTime.now(),
+      expiryDate: _expiryDate ?? DateTime.now().add(const Duration(days: 7)),
+      imageIcon: null,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Item'),
+        title: const Text(
+          'Add Item',
+          style: TextStyle(color: Colors.white, fontSize: 24),
+        ),
         backgroundColor: const Color.fromRGBO(34, 171, 82, 1),
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
       backgroundColor: const Color.fromRGBO(248, 248, 248, 1),
       body: SingleChildScrollView(
@@ -138,7 +148,7 @@ class _AddItemViewState extends State<AddItemView> {
             // ====== FOOD NAME ======
             const Text(
               'Food Name',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
 
@@ -160,7 +170,7 @@ class _AddItemViewState extends State<AddItemView> {
             // ====== ICON SELECTOR ======
             const Text(
               'Icon',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
 
@@ -178,7 +188,7 @@ class _AddItemViewState extends State<AddItemView> {
                     ? const Center(
                         child: Text(
                           'Select an icon',
-                          style: TextStyle(color: Colors.black54, fontSize: 16),
+                          style: TextStyle(color: Colors.black54, fontSize: 24),
                         ),
                       )
                     : ClipRRect(
@@ -193,7 +203,7 @@ class _AddItemViewState extends State<AddItemView> {
             // ====== EXPIRY DATE ======
             const Text(
               'Expires',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
 
@@ -217,7 +227,7 @@ class _AddItemViewState extends State<AddItemView> {
                       _expiryDate == null
                           ? 'Select expiry date'
                           : '${_expiryDate!.day}/${_expiryDate!.month}/${_expiryDate!.year}',
-                      style: const TextStyle(fontSize: 16),
+                      style: const TextStyle(fontSize: 24),
                     ),
                     const Icon(
                       Icons.calendar_today,
@@ -231,47 +241,68 @@ class _AddItemViewState extends State<AddItemView> {
             const SizedBox(height: 30),
 
             // ====== QUANTITY ======
-            const Text(
-              'Quantity',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 10),
-
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              //mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                IconButton(
-                  icon: const Icon(Icons.remove_circle_outline),
-                  color: const Color.fromRGBO(34, 171, 82, 1),
-                  iconSize: 32,
-                  onPressed: _decrementQuantity,
-                ),
-                SizedBox(
-                  width: 70,
-                  child: TextField(
-                    textAlign: TextAlign.center,
-                    keyboardType: TextInputType.number,
-                    controller: TextEditingController(
-                      text: _addFoodQuantity.toString(),
-                    ),
-                    onChanged: (value) {
-                      final parsed = int.tryParse(value);
-                      if (parsed != null && parsed > 0) {
-                        setState(() {
-                          _addFoodQuantity = parsed;
-                        });
-                      }
-                    },
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                    ),
+                // Quantity Text
+                const Text(
+                  'Quantity',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
                   ),
                 ),
-                IconButton(
-                  icon: const Icon(Icons.add_circle_outline),
-                  color: const Color.fromRGBO(34, 171, 82, 1),
-                  iconSize: 32,
-                  onPressed: _incrementQuantity,
+
+                const SizedBox(width: 20),
+
+                // - X + Buttons ======================================
+                Row(
+                  children: [
+                    // - Button
+                    CircleAvatar(
+                      backgroundColor: const Color.fromRGBO(34, 171, 82, 1),
+                      radius: 20,
+                      child: IconButton(
+                        onPressed: _decrementQuantity,
+                        icon: const Icon(
+                          Icons.remove,
+                          color: Colors.white,
+                          size: 18,
+                        ),
+                        padding: EdgeInsets.zero,
+                        enableFeedback: false,
+                      ),
+                    ),
+                    const SizedBox(width: 20),
+
+                    // Quantity Value
+                    Text(
+                      _addFoodQuantity.toString(),
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    const SizedBox(width: 20),
+
+                    // + Button
+                    CircleAvatar(
+                      backgroundColor: const Color.fromRGBO(34, 171, 82, 1),
+                      radius: 20,
+                      child: IconButton(
+                        onPressed: _incrementQuantity,
+                        icon: const Icon(
+                          Icons.add,
+                          color: Colors.white,
+                          size: 18,
+                        ),
+                        padding: EdgeInsets.zero,
+                        enableFeedback: false,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -290,13 +321,16 @@ class _AddItemViewState extends State<AddItemView> {
                   ),
                 ),
                 onPressed: () {
-                  if (_selectedFood != null) {
-                    Navigator.pop(context, _selectedFood);
+                  if (_selectedFood != null && _expiryDate != null) {
+                    final newItem = _createItem();
+                    Navigator.pop(context, newItem);
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                        content: Text('Please select a food first'),
-                      ),                      
+                        content: Text(
+                          'Please select a food and expiry date first',
+                        ),
+                      ),
                     );
                   }
                 },
@@ -304,7 +338,7 @@ class _AddItemViewState extends State<AddItemView> {
                   'Add',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 20,
+                    fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
