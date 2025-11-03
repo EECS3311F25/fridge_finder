@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import '../models/item.dart';
+import '../views/home_view.dart';
 
 class FoodItemView extends StatefulWidget {
   final Item item;
+  final Function(Item) onDelete; // 🔹 nuevo parámetro
 
-  const FoodItemView({super.key, required this.item});
+  const FoodItemView({super.key, required this.item, required this.onDelete,});
 
   @override
   State<FoodItemView> createState() => _FoodItemViewState();
@@ -42,7 +44,7 @@ class _FoodItemViewState extends State<FoodItemView> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start, // Changed to start
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Food Title ==============================================
             Text(
@@ -157,13 +159,12 @@ class _FoodItemViewState extends State<FoodItemView> {
 
             // Added/Expires Container =================================
             Column(
-              crossAxisAlignment: CrossAxisAlignment.start, // Added this
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Added Container
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    // Added Text
                     const Text(
                       'Added',
                       style: TextStyle(
@@ -172,7 +173,6 @@ class _FoodItemViewState extends State<FoodItemView> {
                         color: Colors.black,
                       ),
                     ),
-                    // Date
                     Text(
                       '${widget.item.dateAdded.month}/${widget.item.dateAdded.day}/${widget.item.dateAdded.year}',
                       style: const TextStyle(
@@ -190,7 +190,6 @@ class _FoodItemViewState extends State<FoodItemView> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    // Expires Text
                     const Text(
                       'Expires',
                       style: TextStyle(
@@ -199,7 +198,6 @@ class _FoodItemViewState extends State<FoodItemView> {
                         color: Colors.black,
                       ),
                     ),
-                    // Date
                     Text(
                       '${widget.item.expiryDate.month}/${widget.item.expiryDate.day}/${widget.item.expiryDate.year}',
                       style: const TextStyle(
@@ -211,6 +209,36 @@ class _FoodItemViewState extends State<FoodItemView> {
                   ],
                 ),
               ],
+            ),
+
+            const SizedBox(height: 40),
+
+            // DELETE BUTTON ==========================================
+            Align(
+              alignment: Alignment.bottomLeft,
+              child: ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                  padding:
+                  const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                onPressed: () {
+                  widget.onDelete(widget.item);
+                  Navigator.pop(context); // Cierra la vista
+                },
+                icon: const Icon(Icons.delete, color: Colors.white),
+                label: const Text(
+                  'Delete',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
             ),
           ],
         ),
