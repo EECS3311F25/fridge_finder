@@ -106,7 +106,6 @@ class HomeView extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) => FoodItemView(
-                            foodName: foodNames[index],
                           ),
                         ),
                       );
