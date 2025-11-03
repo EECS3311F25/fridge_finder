@@ -13,7 +13,7 @@ class Item {
   int quantity;
   final DateTime dateAdded;
   final DateTime expiryDate;
-  final Fridge fridge;
+  //final Fridge fridge;
   final Image? imageIcon;
 
   Item({
@@ -23,7 +23,7 @@ class Item {
     required this.quantity,
     required this.dateAdded,
     required this.expiryDate,
-    required this.fridge,
+    //required this.fridge,
     this.imageIcon,
   });
 
@@ -34,7 +34,7 @@ class Item {
       'quantity': quantity,
       'dateAdded': dateAdded,
       'expiryDate': expiryDate,
-      'fridgeId': fridge.id,
+      //'fridgeId': fridge.id,
       'imageIcon': null, // database expects a path, placeholder
     };
   }
@@ -46,7 +46,7 @@ class Item {
       quantity: map['quantity'],
       dateAdded: map['dateAdded'],
       expiryDate: map['expiryDate'],
-      fridge: map['fridge'],
+      //fridge: map['fridge'],
       imageIcon: map['imageIcon'] ?? '',
     );
   }
@@ -73,7 +73,7 @@ class ItemDatabaseHelper extends DatabaseHelper<Item> {
         quantity INTEGER,
         dateAdded TEXT,
         expiryDate TEXT,
-        fridgeId INTEGER,
+        //fridgeId INTEGER,
         imageIcon TEXT
       )
     ''');

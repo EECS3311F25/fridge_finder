@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import '../models/item.dart';
+import '../models/fridge.dart';
+import '../models/user.dart';
 
 class AddItemView extends StatefulWidget {
   const AddItemView({super.key});
@@ -120,6 +123,17 @@ class _AddItemViewState extends State<AddItemView> {
     setState(() {
       if (_addFoodQuantity > 1) _addFoodQuantity--;
     });
+  }
+
+  // Create Item object from form data
+  Item _createItem() {
+    return Item(
+      name: _selectedFood!,
+      quantity: _addFoodQuantity,
+      dateAdded: DateTime.now(),
+      expiryDate: _expiryDate ?? DateTime.now().add(const Duration(days: 7)),
+      imageIcon: null,
+    );
   }
 
   @override
@@ -290,13 +304,16 @@ class _AddItemViewState extends State<AddItemView> {
                   ),
                 ),
                 onPressed: () {
-                  if (_selectedFood != null) {
-                    Navigator.pop(context, _selectedFood);
+                  if (_selectedFood != null && _expiryDate != null) {
+                    final newItem = _createItem();
+                    Navigator.pop(context, newItem);
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                        content: Text('Please select a food first'),
-                      ),                      
+                        content: Text(
+                          'Please select a food and expiry date first',
+                        ),
+                      ),
                     );
                   }
                 },

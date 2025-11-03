@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'food_item_view.dart';
 import 'add_item_view.dart';
+import '../models/item.dart';
+import '../models/fridge.dart';
+import '../models/user.dart';
+import '../controllers/home_controller.dart';
 
 /*
 Colour Palette:
@@ -21,52 +25,25 @@ class HomeWrapper extends StatefulWidget {
 }
 
 class _HomeWrapperState extends State<HomeWrapper> {
-  final List<String> _foodNames = [
-    'Chicken',
-    'Bacon',
-    'Potato',
-    'Molases',
-    'Butter',
-    'Butter Chicken',
-    'Onion',
-    'Potato',
-  ];
+  final List<Item> _items = [];
 
-  void _addNewItem(String newItem) {
+  void _addNewItem(Item newItem) {
     setState(() {
-      _foodNames.add(newItem);
+      _items.add(newItem);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return HomeView(
-      foodNames: _foodNames,
-      onAddItem: _addNewItem,
-    );
+    return HomeView(items: _items, onAddItem: _addNewItem);
   }
 }
 
 class HomeView extends StatelessWidget {
-  final List<String> foodNames;
-  final Function(String) onAddItem;
+  final List<Item> items;
+  final Function(Item) onAddItem;
 
-  const HomeView({
-    super.key,
-    required this.foodNames,
-    required this.onAddItem,
-  });
-
-  final List<String> imageTexts = const [
-    'IMG',
-    'IMG',
-    'IMG',
-    'IMG',
-    'IMG',
-    'IMG',
-    'IMG',
-    'IMG',
-  ];
+  const HomeView({super.key, required this.items, required this.onAddItem});
 
   @override
   Widget build(BuildContext context) {
@@ -122,19 +99,20 @@ class HomeView extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 25),
               child: GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, // 2 Columns
+                  crossAxisCount: 2, // 2 Columns of items
                   crossAxisSpacing: 20,
                   mainAxisSpacing: 20,
                   childAspectRatio: 0.9,
                 ),
-                itemCount: foodNames.length,
+                itemCount: items.length,
                 itemBuilder: (context, index) {
+                  final item = items[index];
                   return GestureDetector(
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const FoodItemView(),
+                          builder: (context) => FoodItemView(item: item),
                         ),
                       );
                     },
@@ -147,17 +125,11 @@ class HomeView extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: const Color.fromRGBO(240, 240, 240, 1),
                             borderRadius: BorderRadius.circular(12),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.05),
-                                blurRadius: 4,
-                                offset: const Offset(2, 2),
-                              ),
-                            ],
                           ),
+                          // Image Placeholder
                           child: Center(
                             child: Text(
-                              imageTexts[index % imageTexts.length],
+                              item.name,
                               style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 30,
@@ -166,9 +138,10 @@ class HomeView extends StatelessWidget {
                             ),
                           ),
                         ),
+                        // Item Name
                         const SizedBox(height: 8),
                         Text(
-                          foodNames[index],
+                          '${item.name} (${item.quantity})',
                           style: const TextStyle(
                             color: Colors.black,
                             fontSize: 20,
@@ -190,7 +163,7 @@ class HomeView extends StatelessWidget {
         backgroundColor: const Color.fromRGBO(34, 171, 82, 1),
         shape: const CircleBorder(),
         onPressed: () async {
-          final newItem = await Navigator.push<String>(
+          final newItem = await Navigator.push<Item>(
             context,
             MaterialPageRoute(builder: (context) => const AddItemView()),
           );

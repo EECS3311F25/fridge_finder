@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import '../models/item.dart';
 
 class FoodItemView extends StatefulWidget {
-  const FoodItemView({super.key});
+  final Item item; // Add item parameter
+
+  const FoodItemView({super.key, required this.item}); // Update constructor
 
   @override
   State<FoodItemView> createState() => _FoodItemViewState();
 }
 
 class _FoodItemViewState extends State<FoodItemView> {
-  String itemName = 'Apple';
   int quantity = 1;
 
   void increaseQuantity() {
@@ -58,7 +60,9 @@ class _FoodItemViewState extends State<FoodItemView> {
                 children: [
                   // Food Title ==============================================
                   Text(
-                    itemName,
+                    widget
+                        .item
+                        .name, // Use item.name instead of hardcoded value
                     style: TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
@@ -75,9 +79,11 @@ class _FoodItemViewState extends State<FoodItemView> {
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(color: Colors.grey.shade300, width: 1),
                     ),
-                    child: const Center(
+                    child: Center(
                       child: Text(
-                        'IMG',
+                        widget.item.name
+                            .substring(0, 3)
+                            .toUpperCase(), // Use item name
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 30,
@@ -179,7 +185,7 @@ class _FoodItemViewState extends State<FoodItemView> {
                             ),
                             // Date
                             Text(
-                              'MM/DD/YYYY',
+                              '${widget.item.dateAdded.month}/${widget.item.dateAdded.day}/${widget.item.dateAdded.year}', // Use actual date
                               style: TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold,
@@ -204,7 +210,7 @@ class _FoodItemViewState extends State<FoodItemView> {
                             ),
                             // Date
                             Text(
-                              'MM/DD/YYYY',
+                              '${widget.item.expiryDate.month}/${widget.item.expiryDate.day}/${widget.item.expiryDate.year}', // Use actual expiry date
                               style: TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold,
