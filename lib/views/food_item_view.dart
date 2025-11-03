@@ -4,7 +4,7 @@ import '../views/home_view.dart';
 
 class FoodItemView extends StatefulWidget {
   final Item item;
-  final Function(Item) onDelete; // 🔹 nuevo parámetro
+  final Function(Item) onDelete;
 
   const FoodItemView({super.key, required this.item, required this.onDelete,});
 

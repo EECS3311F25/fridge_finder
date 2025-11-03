@@ -54,30 +54,8 @@ class Item {
 
 class ItemDatabaseHelper extends DatabaseHelper<Item> {
   static final ItemDatabaseHelper instance = ItemDatabaseHelper._instance();
-  static Database? _database;
 
   ItemDatabaseHelper._instance();
-
-  @override
-  Future<Database> get db async {
-    _database ??= await initDb();
-    return _database!;
-  }
-
-  @override
-  Future onCreate(Database db, int version) async {
-    await db.execute('''
-      CREATE TABLE item (
-        id INTEGER PRIMARY KEY,
-        name TEXT,
-        quantity INTEGER,
-        dateAdded TEXT,
-        expiryDate TEXT,
-        //fridgeId INTEGER,
-        imageIcon TEXT
-      )
-    ''');
-  }
 
   @override
   Future<int> insert(Item item) async {

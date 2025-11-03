@@ -38,27 +38,8 @@ class User {
 
 class UserDatabaseHelper extends DatabaseHelper<User> {
   static final UserDatabaseHelper instance = UserDatabaseHelper._instance();
-  static Database? _database;
 
   UserDatabaseHelper._instance();
-
-  @override
-  Future<Database> get db async {
-    _database ??= await initDb();
-    return _database!;
-  }
-
-  @override
-  Future onCreate(Database db, int version) async {
-    await db.execute('''
-      CREATE TABLE user (
-        id INTEGER PRIMARY KEY,
-        username TEXT,
-        email TEXT,
-        password TEXT
-      )
-    ''');
-  }
 
   @override
   Future<int> insert(User user) async {

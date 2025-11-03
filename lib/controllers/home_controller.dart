@@ -24,7 +24,7 @@ class HomeController {
   }
 
   Future<void> loadItemsFromDb(Fridge fridge) async {
-    final db = await ItemDatabaseHelper.instance.db;
+    final db = await ItemDatabaseHelper.instance.db; 
 
     final itemMaps = await db.query(
       'item',
