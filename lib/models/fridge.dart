@@ -28,25 +28,8 @@ class Fridge {
 
 class FridgeDatabaseHelper extends DatabaseHelper<Fridge> {
   static final FridgeDatabaseHelper instance = FridgeDatabaseHelper._instance();
-  static Database? _database;
 
   FridgeDatabaseHelper._instance();
-
-  @override
-  Future<Database> get db async {
-    _database ??= await initDb();
-    return _database!;
-  }
-
-  @override
-  Future onCreate(Database db, int version) async {
-    await db.execute('''
-      CREATE TABLE fridge (
-        id INTEGER PRIMARY KEY,
-        userId INTEGER
-      )
-    ''');
-  }
 
   @override
   Future<int> insert(Fridge fridge) async {
