@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class FoodItemView extends StatelessWidget {
-  const FoodItemView({super.key});
+    final String foodName;
+
+  const FoodItemView({super.key, required this.foodName});
 
   @override
   Widget build(BuildContext context) {
