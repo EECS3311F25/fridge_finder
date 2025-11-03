@@ -14,7 +14,6 @@ class _AddItemViewState extends State<AddItemView> {
   DateTime? _expiryDate;
   int _addFoodQuantity = 1;
 
-
   final List<String> _foodOptions = [
     'Chicken',
     'Bacon',
@@ -70,10 +69,7 @@ class _AddItemViewState extends State<AddItemView> {
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12),
-                    child: Image.asset(
-                      path,
-                      fit: BoxFit.cover,
-                    ),
+                    child: Image.asset(path, fit: BoxFit.cover),
                   ),
                 ),
               );
@@ -142,10 +138,7 @@ class _AddItemViewState extends State<AddItemView> {
             // ====== FOOD NAME ======
             const Text(
               'Food Name',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
 
@@ -158,10 +151,7 @@ class _AddItemViewState extends State<AddItemView> {
                 });
               },
               items: _foodOptions.map((food) {
-                return DropdownMenuItem(
-                  value: food,
-                  child: Text(food),
-                );
+                return DropdownMenuItem(value: food, child: Text(food));
               }).toList(),
             ),
 
@@ -170,10 +160,7 @@ class _AddItemViewState extends State<AddItemView> {
             // ====== ICON SELECTOR ======
             const Text(
               'Icon',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
 
@@ -189,21 +176,15 @@ class _AddItemViewState extends State<AddItemView> {
                 ),
                 child: _selectedIcon == null
                     ? const Center(
-                  child: Text(
-                    'Select an icon',
-                    style: TextStyle(
-                      color: Colors.black54,
-                      fontSize: 16,
-                    ),
-                  ),
-                )
+                        child: Text(
+                          'Select an icon',
+                          style: TextStyle(color: Colors.black54, fontSize: 16),
+                        ),
+                      )
                     : ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: Image.asset(
-                    _selectedIcon!,
-                    fit: BoxFit.cover,
-                  ),
-                ),
+                        borderRadius: BorderRadius.circular(12),
+                        child: Image.asset(_selectedIcon!, fit: BoxFit.cover),
+                      ),
               ),
             ),
 
@@ -212,18 +193,17 @@ class _AddItemViewState extends State<AddItemView> {
             // ====== EXPIRY DATE ======
             const Text(
               'Expires',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
 
             GestureDetector(
               onTap: _pickExpiryDate,
               child: Container(
-                padding:
-                const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 20,
+                  horizontal: 16,
+                ),
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: const Color.fromRGBO(240, 240, 240, 1),
@@ -253,10 +233,7 @@ class _AddItemViewState extends State<AddItemView> {
             // ====== QUANTITY ======
             const Text(
               'Quantity',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
 
@@ -275,7 +252,8 @@ class _AddItemViewState extends State<AddItemView> {
                     textAlign: TextAlign.center,
                     keyboardType: TextInputType.number,
                     controller: TextEditingController(
-                        text: _addFoodQuantity.toString()),
+                      text: _addFoodQuantity.toString(),
+                    ),
                     onChanged: (value) {
                       final parsed = int.tryParse(value);
                       if (parsed != null && parsed > 0) {
@@ -312,7 +290,15 @@ class _AddItemViewState extends State<AddItemView> {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.pop(context);
+                  if (_selectedFood != null) {
+                    Navigator.pop(context, _selectedFood);
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Please select a food first'),
+                      ),                      
+                    );
+                  }
                 },
                 child: const Text(
                   'Add',

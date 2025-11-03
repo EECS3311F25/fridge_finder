@@ -10,6 +10,6 @@ class MainApp extends StatelessWidget {
   // home_view.dart is the main screen
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: HomeView());
+    return MaterialApp(home: HomeWrapper());
   }
 }

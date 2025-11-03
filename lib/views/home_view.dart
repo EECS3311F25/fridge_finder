@@ -12,11 +12,16 @@ Header -> Off White
 Food Name -> Size 20, Black
 */
 
-class HomeView extends StatelessWidget {
-  const HomeView({super.key});
+/// This small wrapper keeps HomeView stateless and also allows the creation of new items
+class HomeWrapper extends StatefulWidget {
+  const HomeWrapper({super.key});
 
-  // List of food names
-  final List<String> foodNames = const [
+  @override
+  State<HomeWrapper> createState() => _HomeWrapperState();
+}
+
+class _HomeWrapperState extends State<HomeWrapper> {
+  final List<String> _foodNames = [
     'Chicken',
     'Bacon',
     'Potato',
@@ -26,6 +31,31 @@ class HomeView extends StatelessWidget {
     'Onion',
     'Potato',
   ];
+
+  void _addNewItem(String newItem) {
+    setState(() {
+      _foodNames.add(newItem);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return HomeView(
+      foodNames: _foodNames,
+      onAddItem: _addNewItem,
+    );
+  }
+}
+
+class HomeView extends StatelessWidget {
+  final List<String> foodNames;
+  final Function(String) onAddItem;
+
+  const HomeView({
+    super.key,
+    required this.foodNames,
+    required this.onAddItem,
+  });
 
   final List<String> imageTexts = const [
     'IMG',
@@ -68,7 +98,6 @@ class HomeView extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(100),
               ),
-              // Inside the search bar
               child: const TextField(
                 decoration: InputDecoration(
                   hintText: 'What are you looking for?',
@@ -94,9 +123,9 @@ class HomeView extends StatelessWidget {
               child: GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2, // 2 Columns
-                  crossAxisSpacing: 20, // 20 between columns
-                  mainAxisSpacing: 20, // 20 between rows
-                  childAspectRatio: 0.9, // Vertical Space
+                  crossAxisSpacing: 20,
+                  mainAxisSpacing: 20,
+                  childAspectRatio: 0.9,
                 ),
                 itemCount: foodNames.length,
                 itemBuilder: (context, index) {
@@ -105,8 +134,7 @@ class HomeView extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => FoodItemView(
-                          ),
+                          builder: (context) => const FoodItemView(),
                         ),
                       );
                     },
@@ -127,10 +155,9 @@ class HomeView extends StatelessWidget {
                               ),
                             ],
                           ),
-                          // Food Icon =================================
                           child: Center(
                             child: Text(
-                              imageTexts[index],
+                              imageTexts[index % imageTexts.length],
                               style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 30,
@@ -139,7 +166,6 @@ class HomeView extends StatelessWidget {
                             ),
                           ),
                         ),
-                        // Food Name =====================================
                         const SizedBox(height: 8),
                         Text(
                           foodNames[index],
@@ -159,23 +185,21 @@ class HomeView extends StatelessWidget {
         ],
       ),
 
-      //  Button (+)
+      // Button (+)
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color.fromRGBO(34, 171, 82, 1),
         shape: const CircleBorder(),
-        onPressed: () {
-          Navigator.push(
+        onPressed: () async {
+          final newItem = await Navigator.push<String>(
             context,
-            MaterialPageRoute(
-              builder: (context) => const AddItemView(),
-            ),
+            MaterialPageRoute(builder: (context) => const AddItemView()),
           );
+
+          if (newItem != null) {
+            onAddItem(newItem);
+          }
         },
-        child: const Icon(
-          Icons.add,
-          size: 32,
-          color: Colors.white,
-        ),
+        child: const Icon(Icons.add, size: 32, color: Colors.white),
       ),
     );
   }
