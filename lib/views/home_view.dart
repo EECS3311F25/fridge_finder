@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'food_item_view.dart';
 import 'add_item_view.dart';
 import '../models/item.dart';
-import '../models/fridge.dart';
-import '../models/user.dart';
-import '../controllers/home_controller.dart';
 
 /*
 Colour Palette:

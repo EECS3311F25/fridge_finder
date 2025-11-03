@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import '../models/item.dart';
-import '../models/fridge.dart';
-import '../models/user.dart';
 
 class AddItemView extends StatefulWidget {
   const AddItemView({super.key});
@@ -17,13 +15,7 @@ class _AddItemViewState extends State<AddItemView> {
   DateTime? _expiryDate;
   int _addFoodQuantity = 1;
 
-  final List<String> _foodOptions = [
-    'Chicken',
-    'Bacon',
-    'Butter',
-    'Milk',
-    'Potato',
-  ];
+  final List<String> _foodOptions = ['Apple', 'Banana', 'Carrot'];
 
   final List<String> _imagePaths = [
     'assets/images/chicken.png',

@@ -81,9 +81,7 @@ class _FoodItemViewState extends State<FoodItemView> {
                     ),
                     child: Center(
                       child: Text(
-                        widget.item.name
-                            .substring(0, 3)
-                            .toUpperCase(), // Use item name
+                        widget.item.name,
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 30,
