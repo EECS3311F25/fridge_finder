@@ -1,4 +1,4 @@
-[02/11/2025] - Sprint #1 Standup #1
+[02/11/2025] - Sprint #1 Standup #3
 **1. What did you work on since the last standup?**
 I created food_item_view.dart and fully added all of its UI elements, such as food name, image placehoder, quantity, with increase/decrease function, and add/expires dates
 
