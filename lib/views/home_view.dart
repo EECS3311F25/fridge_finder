@@ -17,8 +17,6 @@ Food Name -> Size 20, Black
 class HomeWrapper extends StatefulWidget {
   const HomeWrapper({super.key});
 
-
-
   @override
   State<HomeWrapper> createState() => _HomeWrapperState();
 }
@@ -29,10 +27,10 @@ class _HomeWrapperState extends State<HomeWrapper> {
   List<Item> _filteredItems = [];
   String _searchQuery = '';
 
-   @override
+  @override
   void initState() {
     super.initState();
-    _filteredItems = _items; 
+    _filteredItems = _items;
     _searchController.addListener(_onSearchChanged);
   }
 
@@ -65,6 +63,7 @@ class _HomeWrapperState extends State<HomeWrapper> {
           .toList();
     });
   }
+
   @override
   void dispose() {
     _searchController.dispose();
@@ -88,7 +87,13 @@ class HomeView extends StatelessWidget {
   final Function(Item) onDeleteItem;
   final TextEditingController searchController;
 
-  const HomeView({super.key, required this.items, required this.onAddItem,required this.onDeleteItem, required this.searchController});
+  const HomeView({
+    super.key,
+    required this.items,
+    required this.onAddItem,
+    required this.onDeleteItem,
+    required this.searchController,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -162,7 +167,8 @@ class HomeView extends StatelessWidget {
                             item: item,
                             onDelete: (itemToDelete) {
                               onDeleteItem(itemToDelete);
-                              final homeWrapperState = context.findAncestorStateOfType<_HomeWrapperState>();
+                              final homeWrapperState = context
+                                  .findAncestorStateOfType<_HomeWrapperState>();
                               homeWrapperState?.deleteItem(itemToDelete);
                             },
                           ),
