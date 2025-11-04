@@ -28,11 +28,13 @@
 
 ### Best & Worst experiences in Sprint 1
 - Best: 
-    Ignacio:
-    Noah:
-    Matthew: My best practice in Sprint 1 was to understand the importance of the creation and follow of the CSC cards and the user experience docuemntation done in speint0. At the start sprint1, I wasint following the documentation, which made it really confusing on how it will be implementted with my classmates. It was like I was doing thr project by myslef, that, even though I was "making a lot of progress" it wasint useful since my classmates didnt know how to use what I coded. It wasint until I started following the architecure that I was actually making progress, the project took form in my head, and actually made it easier to implement the pages, especially the connection and the communication between them. 
+    Ignacio: Finally making the project fulfil the requirements, recording the video with my partners was really fun.  
+   
+    Noah: Getting to see it all come together is amazing. I loved recording the product demo.
 
-    Darren:
+    Matthew: My best practice in Sprint 1 was to understand the importance of the creation and follow of the CSC cards and the user experience docuemntation done in speint0. At the start sprint1, I wasint following the documentation, which made it really confusing on how it will be implementted with my classmates. It was like I was doing thr project by myslef, that, even though I was "making a lot of progress" it wasint useful since my classmates didnt know how to use what I coded. It wasint until I started following the architecure that I was actually making progress, the project took form in my head, and actually made it easier to implement the pages, especially the connection and the communication between them. 
+    
+    Darren: Learning how to use flutter for mobile development, and seeing the user interface come to life.
 
 - Worst:
     - Ignacio: Experienced for the first time having to work with a team in university which pretty new to me and having to depend on other partners to do work so you can do yours is very uncomfortable altough I got used to it. 
