@@ -1,5 +1,5 @@
-//import '../models/fridge.dart';
-//import '../models/item.dart';
+import '../models/fridge.dart';
+import '../models/item.dart';
 import '../models/user.dart';
 
 
@@ -44,16 +44,4 @@ class LoginController {
   /// Example utility to get all registered users.
   List<User> getAllUsers() => List.unmodifiable(_users);
   */
-  User login(String username, String password) {
-    if (username == 'debug_user' && password == 'password123') {
-      return User(
-        id: 0,
-        username: username,
-        email: 'debug_user@example.com',
-        password: password,
-      );
-    } else {
-      throw Exception('Invalid person credentials');
-    }
-  }
 }
