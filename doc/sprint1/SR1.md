@@ -31,9 +31,9 @@
     - Ignacio: Finally making the project fulfil the requirements, recording the video with my partners was really fun.  
     - Noah: Getting to see it all come together is amazing. I loved recording the product demo.
     - Nico:
-    - Darren:
+    - Darren: Learning how to use flutter for mobile development, and seeing the user interface come to life.
 - Worst:
     - Ignacio: Experienced for the first time having to work with a team in university which pretty new to me and having to depend on other partners to do work so you can do yours is very uncomfortable altough I got used to it. 
     - Noah: This is my first group project in my entire three years at university. The collaborative aspect is tough at times, but I'm glad I have a good team and we have a well-defined framework (agile) to guide us.
     - Nico:
-    - Darren:
+    - Darren: Since this is my first time working on a software design group project of this scale, aswell as using flutter for the first time, the learning curve has been difficult and challenging
