@@ -29,11 +29,11 @@
 ### Best & Worst experiences in Sprint 1
 - Best: 
     Ignacio: Finally making the project fulfil the requirements, recording the video with my partners was really fun.  
-    Noah:
+    Noah: Getting to see it all come together is amazing. I loved recording the product demo.
     Nico:
     Darren:
 - Worst:
     Ignacio: Experienced for the first time having to work with a team in university which pretty new to me and having to depend on other partners to do work so you can do yours is very uncomfortable altough I got used to it. 
-    Noah:
+    Noah: This is my first group project in my entire three years at university. The collaborative aspect is tough at times, but I'm glad I have a good team and we have a well-defined framework (agile) to guide us.
     Nico:
     Darren:
