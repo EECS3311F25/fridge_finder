@@ -22,20 +22,4 @@ class HomeController {
         .where((item) => item.name.toLowerCase().contains(lowerQuery))
         .toList();
   }
-
-  Future<void> loadItemsFromDb(Fridge fridge) async {
-    final db = await ItemDatabaseHelper.instance.db; 
-
-    final itemMaps = await db.query(
-      'item',
-      where: 'fridgeId = ?',
-      whereArgs: [fridge.id],
-    );
-
-    final items = itemMaps.map((map) => Item.fromMap(map)).toList();
-
-    fridge.items
-      ..clear()
-      ..addAll(items);
-  }
 }
