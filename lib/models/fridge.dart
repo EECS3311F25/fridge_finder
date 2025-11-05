@@ -9,9 +9,9 @@ import 'databasehelper.dart';
 class Fridge {
   final int? id;
   final User user;
-  final List<Item>? items;
+  List<Item>? items;
 
-  const Fridge._({this.id, required this.user, this.items});
+  Fridge._({this.id, required this.user, this.items});
 
   Fridge create({int? id, User? user, List<Item>? items}) {
     return Fridge._(
