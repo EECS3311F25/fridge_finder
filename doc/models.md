@@ -2,6 +2,7 @@
 
 ## Table of contents
 - `databasehelper.dart`
+    - Purpose
     - `abstract class DatabaseHelper<T>`
         - `initDb()`
         - `insert(T)`
@@ -9,6 +10,7 @@
         - `update(T)`
         - `delete(int)`
 - `user.dart`
+    - Purpose
     - `class User`
         - `toMap()`
         - `fromMap(Map<String, dynamic>)`
@@ -18,6 +20,7 @@
         - `update(User)`
         - `delete(int)`
 - `fridge.dart`
+    - Purpose
     - `class Fridge`
         - `toMap()`
         - `fromMap(Map<String, dynamic>)`
@@ -27,6 +30,7 @@
         - `update(Fridge)`
         - `delete(int)`
 - `item.dart`
+    - Purpose
     - `class Item`
         - `toMap()`
         - `fromMap(Map<String, dynamic>)`
