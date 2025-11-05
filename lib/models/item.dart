@@ -13,7 +13,7 @@ class Item {
   int quantity;
   final DateTime dateAdded;
   final DateTime expiryDate;
-  //final Fridge fridge;
+  final Fridge fridge;
   final Image? imageIcon;
 
   Item({
@@ -23,9 +23,55 @@ class Item {
     required this.quantity,
     required this.dateAdded,
     required this.expiryDate,
-    //required this.fridge,
+    required this.fridge,
     this.imageIcon,
   });
+
+  Item create({
+    int? id,
+    int? fdcId,
+    String? name,
+    int? quantity,
+    DateTime? dateAdded,
+    DateTime? expiryDate,
+    Fridge? fridge,
+    Image? imageIcon,
+  }) {
+    return Item(
+      id: id ?? this.id,
+      fdcId: fdcId ?? this.fdcId,
+      name: name ?? this.name,
+      quantity: quantity ?? this.quantity,
+      dateAdded: dateAdded ?? this.dateAdded,
+      expiryDate: expiryDate ?? this.expiryDate,
+      fridge: fridge ?? this.fridge,
+      imageIcon: imageIcon ?? this.imageIcon,
+    );
+  }
+
+  static Future<Item> createAndInsert(
+    int? fdcId,
+    String name,
+    int quantity,
+    DateTime dateAdded,
+    DateTime expiryDate,
+    Fridge fridge,
+    Image? imageIcon,
+  ) async {
+    final Item tempItem = Item(
+      fdcId: fdcId,
+      name: name,
+      quantity: quantity,
+      dateAdded: dateAdded,
+      expiryDate: expiryDate,
+      fridge: fridge,
+      imageIcon: imageIcon,
+    );
+
+    final int newId = await ItemDatabaseHelper.instance.insert(tempItem);
+
+    return tempItem.create(id: newId);
+  }
 
   Map<String, dynamic> toMap() {
     return {
@@ -34,19 +80,21 @@ class Item {
       'quantity': quantity,
       'dateAdded': dateAdded,
       'expiryDate': expiryDate,
-      //'fridgeId': fridge.id,
-      'imageIcon': imageIcon, // database expects a path, placeholder
+      'fridgeId': fridge.id,
+      'imageIcon': imageIcon.toString(), // database expects a path, placeholder
     };
   }
 
-  factory Item.fromMap(Map<String, dynamic> map) {
+  static Future<Item> fromMap(Map<String, dynamic> map) async {
+    final Fridge fridge = await Fridge.getFromDb(map['fridge']);
+
     return Item(
       id: map['id'],
       name: map['name'],
       quantity: map['quantity'],
       dateAdded: map['dateAdded'],
       expiryDate: map['expiryDate'],
-      //fridge: map['fridge'],
+      fridge: fridge,
       imageIcon: map['imageIcon'] ?? '',
     );
   }
@@ -61,6 +109,16 @@ class ItemDatabaseHelper extends DatabaseHelper<Item> {
   Future<int> insert(Item item) async {
     Database db = await instance.db;
     return await db.insert('item', item.toMap());
+  }
+
+  static Future<Map<String, dynamic>> query(int id) async {
+    List<Map<String, dynamic>> items = await instance.queryAll();
+    return items.firstWhere((map) => map['id'] == id);
+  }
+
+  static Future<List<Map<String, dynamic>>> queryByFridge(int fridgeId) async {
+    List<Map<String, dynamic>> items = await instance.queryAll();
+    return items.where((x) => x['fridgeId'] == fridgeId).toList();
   }
 
   @override
