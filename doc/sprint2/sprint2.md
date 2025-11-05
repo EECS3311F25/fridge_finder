@@ -37,6 +37,7 @@ At the moment we are an inexperienced team, and are unsure how many points we ca
 - Create recipe info page **(3pts)**: Darren
 - Create necessary controller methods for new PBs **(3pts)**: Ignacio
 - Rewriting PBs **(2pts)**: Darren
+- Improve add item view **(2pts)**: Darren
 
 Any point deficits will be made up for via troubleshooting.
 
