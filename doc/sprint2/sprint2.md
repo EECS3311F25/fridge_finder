@@ -43,7 +43,7 @@ Any point deficits will be made up for via troubleshooting.
 
 ## User Stories (for Sprint 2)
 
-- PB 2 - View inventory by product status
-- PB 5 - Label products as consumed or discarded
+- PB 2 - View Product Status
+- PB 5 - Change Quantity
 - PB 8 - Freeze
-- PB 9 - Duplicate detection on add
+- PB 9 - Duplicate Detection

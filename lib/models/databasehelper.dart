@@ -13,7 +13,12 @@ abstract class DatabaseHelper<T> {
     String databasesPath = await getDatabasesPath();
     String path = join(databasesPath, 'fridge_finder.db');
 
-    return await openDatabase(path, version: 1, onCreate: _onCreate, onConfigure: _onConfigure);
+    return await openDatabase(
+      path,
+      version: 1,
+      onCreate: _onCreate,
+      onConfigure: _onConfigure,
+    );
   }
 
   Future _onConfigure(Database db) async {
@@ -23,18 +28,18 @@ abstract class DatabaseHelper<T> {
   Future _onCreate(Database db, int version) async {
     await db.execute('''
       CREATE TABLE user (
-        id INTEGER PRIMARY KEY,
+        id INTEGER PRIMARY KEY NOT NULL,
         username TEXT,
         email TEXT,
         password TEXT
       ),
       CREATE TABLE fridge (
-        id INTEGER PRIMARY KEY,
+        id INTEGER PRIMARY KEY NOT NULL,
         userId INTEGER
         FOREIGN KEY userId REFERENCES user(id)
       ),
       CREATE TABLE item (
-        id INTEGER PRIMARY KEY,
+        id INTEGER PRIMARY KEY NOT NULL,
         name TEXT,
         quantity INTEGER,
         dateAdded TEXT,
