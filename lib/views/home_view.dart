@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'food_item_view.dart';
 import 'add_item_view.dart';
 import '../models/item.dart';
-
+import '../controllers/home_controller.dart';
 /*
 Colour Palette:
 Green -> (34, 171, 82, 1)
@@ -24,6 +24,7 @@ class HomeWrapper extends StatefulWidget {
 class _HomeWrapperState extends State<HomeWrapper> {
   final List<Item> _items = [];
   final TextEditingController _searchController = TextEditingController();
+  late final HomeController _homeController;
   List<Item> _filteredItems = [];
   String _searchQuery = '';
 
@@ -36,18 +37,11 @@ class _HomeWrapperState extends State<HomeWrapper> {
 
   void _onSearchChanged() {
     setState(() {
-      _searchQuery = _searchController.text.toLowerCase();
-
-      if (_searchQuery.isEmpty) {
-        _filteredItems = List.from(_items);
-      } else {
-        _filteredItems = _items
-            .where((item) => item.name.toLowerCase().contains(_searchQuery))
-            .toList();
-      }
+      _searchQuery = _searchController.text;
+      _filteredItems = _homeController.searchItems(_items, _searchQuery);
     });
   }
-
+  /*
   void deleteItem(Item item) {
     setState(() {
       _items.remove(item);
@@ -63,7 +57,8 @@ class _HomeWrapperState extends State<HomeWrapper> {
           .toList();
     });
   }
-
+  */
+  
   @override
   void dispose() {
     _searchController.dispose();

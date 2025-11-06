@@ -3,11 +3,10 @@ import 'dart:ui';
 import '../models/item.dart';
 import '../models/fridge.dart';
 
-class CreateItemController {
+class AddItemController {
   // Hols a new [Item], and assosiates it with a given [Fridge] adding it to the database
 
   Future<Item> createItem({
-    // use of Future since to insert an Item we need the response fromn the database and asyncronous functions
     int? fdcId,
     required String name,
     required int quantity,

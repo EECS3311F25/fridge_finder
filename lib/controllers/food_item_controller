@@ -1,0 +1,22 @@
+import '../models/item.dart';
+import '../models/item_database_helper.dart';
+
+class FoodItemController {
+  Future<void> increaseQuantity(Item item) async {
+    item.quantity++;
+    await ItemDatabaseHelper.instance.update(item);
+  }
+
+  Future<void> decreaseQuantity(Item item) async {
+    if (item.quantity > 0) {
+      item.quantity--;
+      await ItemDatabaseHelper.instance.update(item);
+    }
+  }
+
+  Future<void> deleteItem(Item item) async {
+    if (item.id != null) {
+      await ItemDatabaseHelper.instance.delete(item.id!);
+    }
+  }
+}
