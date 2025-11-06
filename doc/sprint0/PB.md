@@ -2,7 +2,7 @@
 
 ## Scope
 
-Mobile app made for and by students, as well as families and anyone who wants to save money and reduce food waste by managing household food supplies, recording products with expiration dates, viewing inventory in real time, receiving reminders before products expire, getting suggestions for basic recipes using what you have on hand, and receiving alerts to avoid duplicate purchases.
+For this project, we want to keep the scope reasonable. We are making an app called "Fridge Finder" where users can track their foods on a large scale, see when they expire, recieve reminders, and get recipes suggestions for foods they need to use up. This app is to be used by students, families and anyone who wants to save money and reduce food waste by managing household food supplies.
 
 ## Conventions
 
@@ -12,7 +12,8 @@ Priority: Must / Should / Could (ship MVP first).
 
 ## Personas
 
-Students and/or families with limited budget and small storage space aming to avoid duplicates/find simple recipes and avoid expiry dates.
+Students and/or families with limited budget and small storage space aming to avoid duplicates/find simple recipes and avoid expiry dates. 
+- 3 specific personas are listed in personas.pdf
 
 ## User Stories
 
