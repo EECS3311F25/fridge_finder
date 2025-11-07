@@ -1,9 +1,14 @@
 import 'dart:ui';
-
 import '../models/item.dart';
 import '../models/fridge.dart';
+import '../models/user.dart';
 
 class AddItemController {
+  final User user;
+  final Fridge fridge;
+
+  AddItemController({required this.user, required this.fridge});
+
   // Hols a new [Item], and assosiates it with a given [Fridge] adding it to the database
 
   Future<Item> createItem({
@@ -15,7 +20,7 @@ class AddItemController {
     required Fridge fridge,
     Image? imageIcon,
   }) async {
-    Item item = await Item.createAndInsert(
+    final item = await Item.createAndInsert(
       fdcId,
       name,
       quantity,
