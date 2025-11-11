@@ -28,7 +28,6 @@ class _AddItemViewState extends State<AddItemView> {
     'assets/images/potato.png',
   ];
 
-  // Abrir selector de ícono
   void _openIconSelector() {
     showModalBottomSheet(
       context: context,
