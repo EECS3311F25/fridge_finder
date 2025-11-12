@@ -9,14 +9,14 @@ class AddItemView extends StatefulWidget {
 }
 
 class _AddItemViewState extends State<AddItemView> {
-  // variables for the input
+  // ===== Form state =====
   String? _selectedFood;
   String? _selectedIcon;
   DateTime? _expiryDate;
   int _addFoodQuantity = 1;
 
+  // ===== Data sources =====
   final List<String> _foodOptions = ['Apple', 'Banana', 'Carrot'];
-
   final List<String> _imagePaths = [
     'assets/images/chicken.png',
     'assets/images/bacon.png',
@@ -25,7 +25,7 @@ class _AddItemViewState extends State<AddItemView> {
     'assets/images/potato.png',
   ];
 
-  // Abrir selector de ícono
+  // ===== Icon selector =====
   void _openIconSelector() {
     showModalBottomSheet(
       context: context,
@@ -47,9 +47,7 @@ class _AddItemViewState extends State<AddItemView> {
               final path = _imagePaths[index];
               return GestureDetector(
                 onTap: () {
-                  setState(() {
-                    _selectedIcon = path;
-                  });
+                  setState(() => _selectedIcon = path);
                   Navigator.pop(context);
                 },
                 child: Container(
@@ -75,7 +73,7 @@ class _AddItemViewState extends State<AddItemView> {
     );
   }
 
-  // date
+  // ===== Date picker =====
   Future<void> _pickExpiryDate() async {
     final DateTime now = DateTime.now();
     final DateTime? picked = await showDatePicker(
@@ -98,17 +96,13 @@ class _AddItemViewState extends State<AddItemView> {
     );
 
     if (picked != null) {
-      setState(() {
-        _expiryDate = picked;
-      });
+      setState(() => _expiryDate = picked);
     }
   }
 
-  // quantity functions
+  // ===== Quantity controls =====
   void _incrementQuantity() {
-    setState(() {
-      _addFoodQuantity++;
-    });
+    setState(() => _addFoodQuantity++);
   }
 
   void _decrementQuantity() {
@@ -117,7 +111,7 @@ class _AddItemViewState extends State<AddItemView> {
     });
   }
 
-  // Create Item object from form data
+  // ===== Create Item from form (uses your Item model) =====
   Item _createItem() {
     return Item(
       name: _selectedFood!,
@@ -125,6 +119,7 @@ class _AddItemViewState extends State<AddItemView> {
       dateAdded: DateTime.now(),
       expiryDate: _expiryDate ?? DateTime.now().add(const Duration(days: 7)),
       imageIcon: null,
+      fridge: /* your Fridge instance */,
     );
   }
 
@@ -145,35 +140,29 @@ class _AddItemViewState extends State<AddItemView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // ====== FOOD NAME ======
+            // ===== Food Name =====
             const Text(
               'Food Name',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
-
             DropdownButtonFormField<String>(
               value: _selectedFood,
               hint: const Text('Select a food'),
-              onChanged: (value) {
-                setState(() {
-                  _selectedFood = value;
-                });
-              },
-              items: _foodOptions.map((food) {
-                return DropdownMenuItem(value: food, child: Text(food));
-              }).toList(),
+              onChanged: (value) => setState(() => _selectedFood = value),
+              items: _foodOptions
+                  .map((food) => DropdownMenuItem(value: food, child: Text(food)))
+                  .toList(),
             ),
 
             const SizedBox(height: 30),
 
-            // ====== ICON SELECTOR ======
+            // ===== Icon Selector =====
             const Text(
               'Icon',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
-
             GestureDetector(
               onTap: _openIconSelector,
               child: Container(
@@ -200,20 +189,16 @@ class _AddItemViewState extends State<AddItemView> {
 
             const SizedBox(height: 30),
 
-            // ====== EXPIRY DATE ======
+            // ===== Expiry Date =====
             const Text(
               'Expires',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
-
             GestureDetector(
               onTap: _pickExpiryDate,
               child: Container(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 20,
-                  horizontal: 16,
-                ),
+                padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: const Color.fromRGBO(240, 240, 240, 1),
@@ -240,43 +225,29 @@ class _AddItemViewState extends State<AddItemView> {
 
             const SizedBox(height: 30),
 
-            // ====== QUANTITY ======
+            // ===== Quantity =====
             Row(
-              //mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Quantity Text
                 const Text(
                   'Quantity',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),
                 ),
-
                 const SizedBox(width: 20),
-
-                // - X + Buttons ======================================
                 Row(
                   children: [
-                    // - Button
+                    // -
                     CircleAvatar(
                       backgroundColor: const Color.fromRGBO(34, 171, 82, 1),
                       radius: 20,
                       child: IconButton(
                         onPressed: _decrementQuantity,
-                        icon: const Icon(
-                          Icons.remove,
-                          color: Colors.white,
-                          size: 18,
-                        ),
+                        icon: const Icon(Icons.remove, color: Colors.white, size: 18),
                         padding: EdgeInsets.zero,
                         enableFeedback: false,
                       ),
                     ),
                     const SizedBox(width: 20),
-
-                    // Quantity Value
+                    // value
                     Text(
                       _addFoodQuantity.toString(),
                       style: const TextStyle(
@@ -286,18 +257,13 @@ class _AddItemViewState extends State<AddItemView> {
                       ),
                     ),
                     const SizedBox(width: 20),
-
-                    // + Button
+                    // +
                     CircleAvatar(
                       backgroundColor: const Color.fromRGBO(34, 171, 82, 1),
                       radius: 20,
                       child: IconButton(
                         onPressed: _incrementQuantity,
-                        icon: const Icon(
-                          Icons.add,
-                          color: Colors.white,
-                          size: 18,
-                        ),
+                        icon: const Icon(Icons.add, color: Colors.white, size: 18),
                         padding: EdgeInsets.zero,
                         enableFeedback: false,
                       ),
@@ -309,7 +275,7 @@ class _AddItemViewState extends State<AddItemView> {
 
             const SizedBox(height: 40),
 
-            // ====== ADD BUTTON ======
+            // ===== Add Button =====
             SizedBox(
               width: double.infinity,
               height: 55,
@@ -327,9 +293,7 @@ class _AddItemViewState extends State<AddItemView> {
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                        content: Text(
-                          'Please select a food and expiry date first',
-                        ),
+                        content: Text('Please select a food and expiry date first'),
                       ),
                     );
                   }
