@@ -3,6 +3,8 @@ import 'food_item_view.dart';
 import 'add_item_view.dart';
 import '../models/item.dart';
 import '../controllers/home_controller.dart';
+import '../controllers/create_item_controller.dart';
+import '../controllers/food_item_controller.dart';
 /*
 Colour Palette:
 Green -> (34, 171, 82, 1)
