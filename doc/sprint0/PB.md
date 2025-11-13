@@ -2,7 +2,7 @@
 
 ## Scope
 
-Mobile app made for and by students, as well as families and anyone who wants to save money and reduce food waste by managing household food supplies, recording products with expiration dates, viewing inventory in real time, receiving reminders before products expire, getting suggestions for basic recipes using what you have on hand, and receiving alerts to avoid duplicate purchases.
+For this project, we want to keep the scope reasonable. We are making an app called "Fridge Finder" where users can track their foods on a large scale, see when they expire, recieve reminders, and get recipes suggestions for foods they need to use up. This app is to be used by students, families and anyone who wants to save money and reduce food waste by managing household food supplies.
 
 ## Conventions
 
@@ -12,38 +12,39 @@ Priority: Must / Should / Could (ship MVP first).
 
 ## Personas
 
-Students and/or families with limited budget and small storage space aming to avoid duplicates/find simple recipes and avoid expiry dates.
+Students and/or families with limited budget and small storage space aming to avoid duplicates/find simple recipes and avoid expiry dates. 
+- 3 specific personas are listed in personas.pdf
 
 ## User Stories
 
-### PB 1 - Create food item with expiry date (MUST)
+### PB 1 - Create Food Item (MUST)
 
 #### Story
 
-As a user, I want to add a food item with a name, quantity, and expiration date so that I can track what I have and when it goes bad.
+As a user, I want to add a food item with a name, quantity, and expiration date so that I can track what I have in my fridge
 
 #### Satisfaction Criteria
 
-- I can enter the name, quantity and expiration date
-- If any of these fields are missing, there is a clear massage that the item is not complete
-- After creating a new item, the item appears in the inventory with a initial status "Fresh"
+- I can create a food item with a name, quantity, and expiration date
+- I can view the item in the fridge
+- I can see the items attributes after creating it
 
 
-### PB 2 - View inventory by product status (MUST)
+### PB 2 - View Product Status (MUST)
 
 #### Story
 
-As a user, I want to see my inventory in different groups that give a brief description of the product status (Fresh/Expiring Soon/Expired) this way I can prioritize what products to use first
+As a user, I want to see my inventory in different groups that give a brief description of the product status fresh or expired this way I can prioritize what products to use first
 
 
 #### Satisfaction Criteria
 
-- Items grouped by expiration date 
-- Within each group, products are sorted by expiration date in which will expire first
-- Visual color indicators that tell the status of the products Fresh (Green), Expiring soon (Yellow), Expired (Red)
+- Items are categorized by status such as fresh or expired
+- I can filter items by when they expire
+- Expiration dates are shown on the home page and on the food item description
 
 
-### PB 3 - Delete items (MUST)
+### PB 3 - Delete Items (MUST)
 
 #### Story
 
@@ -51,33 +52,32 @@ As a user, I want to to delete products so that I can update and clean up my inv
 
 #### Satisfaction Criteria
 
-- Deleting asks a confirmation and removes it from the Inventory
+- The user can delete items from their fridge
 
-### PB 4 - Expiration Reminders (MUST)
-
-#### Story
-
-As a user, I wanto to receive a notification if a product is about to expire so that I dont forget to use it
-
-#### Satisfaction Criteria
-
-- There is a default schedule for when this notification is send (ie. 3 days before expiration)
-- The user can enable and disable notifications globally
-
-### PB 5 - Label products as consumed or discarded (MUST)
+### PB 4 - Expiration Reminders (SHOULD)
 
 #### Story
 
-As a user, I want to label products as either consumed or discarded so the inventory can accurately keep track not only of the undiscared food, but of the waste too
+As a user, I want to receive a notification if a product is about to expire so that I don't forget to use it
+
+#### Satisfaction Criteria
+
+- The user can receive notifications on product statuses such as expiring soon
+- The user can enable and disable notifications on the account page
+
+### PB 5 - Change Quantity (MUST)
+
+#### Story
+
+As a user, I want to be able to change the quantity of an item so that whenI buy more or use some, the app will track what I have
 
 
 #### Satisfaction Criteria
 
-- There is a button for each product to label it as "consumed" or "discarded"
+- The user can click a (-) or (+) button to change the quantity of an item
+- After a user changes the quantity of an item, this change will reflect across all relevant screens
 
-- If a item is labelled as either one of these descriptions, it is removed from the inventory
-
-### PB 6 - Search and filter (MUST)
+### PB 6 - Search Items (MUST)
 
 #### Story
 
@@ -85,161 +85,158 @@ As a user I want to search by name and filter by status so that it is easier to 
 
 #### Satisfaction Criteria
 
-- The search bar filters the products by name
-- Add filters (status, category)
-- Seach uses filter so products can be found easier
+- The search bar allows users to type an item name, and those items will appear below
 
-### PB 7 - Basic Recipe Suggestions (MUST)
+### PB 7 - Recipe Suggestions (SHOULD)
 
 #### Story
 
-As a user I want to see different simple recipe suggestions with items in my inventory so that I can use the soon-to-expire products before they go bad
+As a user I want to see different recipe suggestions with items in my inventory so that I can use the products I have for new recipes
 
 
 #### Satisfaction Criteria
-- View different (at least 1) recipe suggestions that include one "expiring soon" item
-- Each recipe shows required ingredients and "to-buy" items
+- The app will recommend recipes based on the items that are in my fridge
+- The recipes will detail what items to use, how much, and further cooking instructions
 
 ### PB 8 - Freeze (MUST)
 
 #### Story
 
-As a user I want suggestions on what items I can freeze so that they wont expire and I can reduce waste
+As a user I want to be able to mark items as frozen so they don’t expire and I can save them for later
 
 #### Satisfaction Criteria 
 
-- For any "freezable" item, there is a suggestion that is marked as "freeze suggestion"
-- If the item is freezed, then a new expiration date is set
+- There is a freeze button the user can click to freeze an item
+- The freeze button pauses the expiry date until the item is unfrozen
 
-### PB 9 - Duplicate detection on add (SHOULD)
-
-#### Story
-
-As a user, I want to be warned if I am adding a item that already exists so that I don't keep on adding repeated elements
-
-#### Satisfaction Criteria
-
-- While scanning the product, a warning will appear. Ie. "That item is already in your fridge, are you sure you want to re-add it?"
-- I can create a new record or add the existing quantity in the same product
-
-### PB 10 - Initital settings and "how to use" feature (SHOULD)
+### PB 9 - Duplicate Detection (MUST)
 
 #### Story
 
-As a new user, I want to see a quick guide on how the app words so that I can learn the basics of the app features
+As a user, I want to avoid adding duplicate items so that my fridge stays organized
 
 #### Satisfaction Criteria
 
-- 3-4 tutorial screens with a "skip" button
+- When the user adds a new item, if an item already exists with the same name, a pop up will appear informing the user, letting them either continue or cancel
+- If the user decides to add a duplicate item, the new item will be named with “Item Name (n)”, and n is the number of duplicates
 
-### PB 11 - Storage Location (SHOULD)
+### PB 10 - Storage Info (SHOULD)
 
 #### Story
 
-As a user, I want to record the storage location  of my items so that I can find them easier
+As a user, I want to learn how to store an item so that I know how to store it properly
 
 #### Satisfaction Criteria
 
-- A location field is offered with a custom value
-- Inventory can also be filtered by location
+- Each item will have storage info on their respective page
+- The storage info will be specialized per item, detailing where to store it and how long
 
-### PB 12 - Categories and preservation tips (SHOULD)
+### PB 11 - Track Added Dates (MUST)
 
 #### Story
 
-As a user, I want to assign categories and get recommendations on how to preserve my food so that it lasts as long as possible
+As a user, I want to know when I added an item so that I can know the last time I bought it
 
 #### Satisfaction Criteria
 
-- Suggested category list plus the ability to create new ones
-- Selecting a category shows a quick preservation tip
+- On the item page, I can see when the item was added
+- I can filter items on the home screen by how recently they were added
 
-### PB 13 - Quick Add (SHOULD)
+### PB 12 - Filter Items (MUST)
 
 #### Story
 
-As a user, I want to add items quickly using frequent items so that its easier to keep track of my items
+As a user, I want to filter items in my fridge so that I can find them easier
 
 #### Satisfaction Criteria
 
-- Implement a "recently added" list with the last 10 items added
-- I can duplicate a recent item and only change the quantity and date
+- The user can filter items by product status, and use the search bar in tandem
+- As the user changes filters, they update automatically on the home screen
+- The default filter is items that expire soon
 
-### PB 14 - Low-stock parameter (SHOULD)
+### PB 13 - Icons (MUST)
 
 #### Story
 
-As a user, I want to set a minimum quantity per item so that the app alerts me when to buy more
+As a user, I want to select an icon of the item in my fridge so that I can look through my fridge easier instead of reading a bunch of names
 
 #### Satisfaction Criteria
 
-- Add a "when-to-buy" feature on each item
-- When quantity drops below the "when-to-buy" feature, it is added to the shopping list
+- All items have an icon attribute
+- The user can select an icon when creating an item, and that Icon is then shown on the home page and food item page
 
-### PB 15 - Export Inventory (SHOULD)
+### PB 14 -  Bookmark Recipes (SHOULD)
 
 #### Story
 
-As a user, I want to export my inventory so that I can get a overall view of how I manage the food I buy
+As a user, I want to bookmark recipes so that I can save them for later
 
 #### Satisfaction Criteria
 
-- A button that exports the inventory and downloads a file with name, quantity, expiration and status
+- There is a bookmark tab on the recipes page
+- When the user clicks the bookmark on a recipe, the recipe is then saved in the bookmarked section
 
-### PB 16 - Shopping mode: alerts (COULD)
+### PB 15 - Account Creation (MUST)
 
 #### Story
 
-As a shopper, I want a "shopper mode" that lets me scan items and show if it already exists in my inventory so that duplicates are avoided
+As a user, I want to be able to create an account so that I can log into my account from any device
 
 #### Satisfaction Criteria
 
-- A search field in "shopping mode" that shows matches from my inventory
-- If products already exists, see its quantity and expiration date
-- If not, add it to my inventory
+- The user can create an account using an email, username, password
+- The user can sign in/out of the account
 
-### PB 17 - Dietary preferences for recipes (COULD)
+### PB 16 - Sort and Delete Recipes (SHOULD)
 
 #### Story
 
-As a user, I want to apply different dietary preferences so that recipe suggestions are fit for my own diet
+As a user, I want to delete recipes from my suggestions so that I can only keep the recipes that I like
 
 #### Satisfaction Criteria
 
-- Add dietary restrictions to user settings
-- Suggestions respect preferences or clearly indicate when options are insufficient
+- The user can re-order the recipes in the suggestions list
+- The user can delete recipes from the suggestions list
 
-### PB 18 - Household sharing (COULD)
+### PB 17 - Scan Items (COULD)
 
 #### Story
 
-As a roomate/household memeber, I can share my inventory with my family so that everyone sees the contents of our fridge
+As a user, I want to quickly scan items so that I don’t have to manually enter it’s information
 
 #### Satisfaction Criteria
 
-- I can invite others to see the same fridge
-- Changes from any member sync up on the same fridge
+- The user can scan barcodes with their camera to add new food items to their inventory
+- The information of the item is automatically filled out after scanning the item
 
-### PB 19 - Saving and waste metrics (COULD)
+### PB 18 - Share Recipes (COULD)
 
 #### Story
 
-As a user, I want a simple dashboard of consumed vs discarded food so that I understand how much money I am acctually saving
+As a user, I want to copy and paste recipes so that I can share them with my peers
 
 #### Satisfaction Criteria
 
-- Chart that compares the consumed vs the discared items over the past month
-- Card that shows a estimate on how much money has being saved
+- A copy button allows the user to copy and paste the suggested recipe in a shareable format
 
-### PB 20 - Integrated Shopping List (COULD)
+### PB 19 - Shopping List (COULD)
 
 #### Story
 
-As a user, I want to create a shopping list that can tell me the missing or low stock items so that its easier for me to remember and keep track of what I buy
+As a user, I want to create a shopping list so that I can keep track of what I need to purchase
 
 #### Satisfaction Criteria
 
-- Items are manually added or added from the low-stock alerts
-- In "shopping mode" I can mark what items are purchased and optionally add them to the inventory
+- There is a shopping list section, which allows the user to add and remove items from the list
+- The user can sort the shopping list
 
+### PB 20 - Minimum Quantity of Item (COULD)
 
+#### Story
+
+As a user, I want to set a minimum quantity of an item so that when the item runs low, I know when to buy more
+
+#### Satisfaction Criteria
+
+- For each item, the user can set a minimum quantity
+- When the item reaches the minimum quantity, a warning will appear to buy more

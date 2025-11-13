@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import '../models/item.dart';
+import '../controllers/add_item_controller.dart';
 
 class AddItemView extends StatefulWidget {
-  const AddItemView({super.key});
+  final AddItemController controller;
+
+  const AddItemView({super.key, required this.controller});
 
   @override
   State<AddItemView> createState() => _AddItemViewState();
 }
 
 class _AddItemViewState extends State<AddItemView> {
-  // variables for the input
   String? _selectedFood;
   String? _selectedIcon;
   DateTime? _expiryDate;
@@ -25,7 +27,6 @@ class _AddItemViewState extends State<AddItemView> {
     'assets/images/potato.png',
   ];
 
-  // icon selector
   void _openIconSelector() {
     showModalBottomSheet(
       context: context,
@@ -117,15 +118,38 @@ class _AddItemViewState extends State<AddItemView> {
     });
   }
 
-  // Create Item object from form data
-  Item _createItem() {
-    return Item(
-      name: _selectedFood!,
-      quantity: _addFoodQuantity,
-      dateAdded: DateTime.now(),
-      expiryDate: _expiryDate ?? DateTime.now().add(const Duration(days: 7)),
-      imageIcon: null,
-    );
+  Future<void> _onAddPressed() async {
+    if (_selectedFood == null || _expiryDate == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please select a food and expiry date first'),
+        ),
+      );
+      return;
+    }
+
+    try {
+
+      final Item newItem = await widget.controller.createItem(
+        fdcId: null,
+        name: _selectedFood!,
+        quantity: _addFoodQuantity,
+        dateAdded: DateTime.now(),
+        expiryDate: _expiryDate!,
+        fridge: widget.controller.fridge,
+        imageIcon: null,
+      );
+
+      if (!mounted) return;
+      Navigator.pop(context, newItem);
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error creating item: $e'),
+        ),
+      );
+    }
   }
 
   @override
@@ -186,15 +210,15 @@ class _AddItemViewState extends State<AddItemView> {
                 ),
                 child: _selectedIcon == null
                     ? const Center(
-                        child: Text(
-                          'Select an icon',
-                          style: TextStyle(color: Colors.black54, fontSize: 24),
-                        ),
-                      )
+                  child: Text(
+                    'Select an icon',
+                    style: TextStyle(color: Colors.black54, fontSize: 24),
+                  ),
+                )
                     : ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
-                        child: Image.asset(_selectedIcon!, fit: BoxFit.cover),
-                      ),
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.asset(_selectedIcon!, fit: BoxFit.cover),
+                ),
               ),
             ),
 
@@ -242,7 +266,6 @@ class _AddItemViewState extends State<AddItemView> {
 
             // ====== QUANTITY ======
             Row(
-              //mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 // Quantity Text
                 const Text(
@@ -320,20 +343,7 @@ class _AddItemViewState extends State<AddItemView> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                onPressed: () {
-                  if (_selectedFood != null && _expiryDate != null) {
-                    final newItem = _createItem();
-                    Navigator.pop(context, newItem);
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                          'Please select a food and expiry date first',
-                        ),
-                      ),
-                    );
-                  }
-                },
+                onPressed: _onAddPressed,
                 child: const Text(
                   'Add',
                   style: TextStyle(
