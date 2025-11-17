@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import '../models/item.dart';
+import '../views/home_view.dart';
 
 class FoodItemView extends StatefulWidget {
   final Item item;
+  final Function(Item) onDelete;
 
-  const FoodItemView({super.key, required this.item});
+  const FoodItemView({super.key, required this.item, required this.onDelete,});
 
   @override
   State<FoodItemView> createState() => _FoodItemViewState();
@@ -177,7 +179,6 @@ class _FoodItemViewState extends State<FoodItemView> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    // Added Text
                     const Text(
                       'Added',
                       style: TextStyle(
@@ -186,7 +187,6 @@ class _FoodItemViewState extends State<FoodItemView> {
                         color: Colors.black,
                       ),
                     ),
-                    // Date
                     Text(
                       '${widget.item.dateAdded.month}/${widget.item.dateAdded.day}/${widget.item.dateAdded.year}',
                       style: const TextStyle(
@@ -204,7 +204,6 @@ class _FoodItemViewState extends State<FoodItemView> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    // Expires Text
                     const Text(
                       'Expires',
                       style: TextStyle(
@@ -213,7 +212,6 @@ class _FoodItemViewState extends State<FoodItemView> {
                         color: Colors.black,
                       ),
                     ),
-                    // Date
                     Text(
                       '${widget.item.expiryDate.month}/${widget.item.expiryDate.day}/${widget.item.expiryDate.year}',
                       style: const TextStyle(

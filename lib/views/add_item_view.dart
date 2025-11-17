@@ -20,7 +20,7 @@ class _AddItemViewState extends State<AddItemView> {
   // Text editing controller for the food name
   final TextEditingController _foodNameController = TextEditingController();
 
-  // icon selector
+  // ===== Icon selector =====
   void _openIconSelector() {
     showModalBottomSheet(
       context: context,
@@ -42,9 +42,7 @@ class _AddItemViewState extends State<AddItemView> {
               final path = _imagePaths[index];
               return GestureDetector(
                 onTap: () {
-                  setState(() {
-                    _selectedIcon = path;
-                  });
+                  setState(() => _selectedIcon = path);
                   Navigator.pop(context);
                 },
                 child: Container(
@@ -70,7 +68,7 @@ class _AddItemViewState extends State<AddItemView> {
     );
   }
 
-  // date
+  // ===== Date picker =====
   Future<void> _pickExpiryDate() async {
     final DateTime now = DateTime.now();
     final DateTime? picked = await showDatePicker(
@@ -93,17 +91,13 @@ class _AddItemViewState extends State<AddItemView> {
     );
 
     if (picked != null) {
-      setState(() {
-        _expiryDate = picked;
-      });
+      setState(() => _expiryDate = picked);
     }
   }
 
-  // quantity functions
+  // ===== Quantity controls =====
   void _incrementQuantity() {
-    setState(() {
-      _addFoodQuantity++;
-    });
+    setState(() => _addFoodQuantity++);
   }
 
   void _decrementQuantity() {
@@ -112,7 +106,7 @@ class _AddItemViewState extends State<AddItemView> {
     });
   }
 
-  // Create Item object from form data
+  // ===== Create Item from form (uses your Item model) =====
   Item _createItem() {
     return Item(
       name: _foodName.trim(),
@@ -120,6 +114,7 @@ class _AddItemViewState extends State<AddItemView> {
       dateAdded: DateTime.now(),
       expiryDate: _expiryDate ?? DateTime.now().add(const Duration(days: 7)),
       imageIcon: null,
+      fridge: /* your Fridge instance */,
     );
   }
 
@@ -274,39 +269,26 @@ class _AddItemViewState extends State<AddItemView> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Quantity Text
                 const Text(
                   'Quantity',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),
                 ),
-
                 const SizedBox(width: 20),
-
-                // - X + Buttons ======================================
                 Row(
                   children: [
-                    // - Button
+                    // -
                     CircleAvatar(
                       backgroundColor: const Color.fromRGBO(34, 171, 82, 1),
                       radius: 20,
                       child: IconButton(
                         onPressed: _decrementQuantity,
-                        icon: const Icon(
-                          Icons.remove,
-                          color: Colors.white,
-                          size: 18,
-                        ),
+                        icon: const Icon(Icons.remove, color: Colors.white, size: 18),
                         padding: EdgeInsets.zero,
                         enableFeedback: false,
                       ),
                     ),
                     const SizedBox(width: 20),
-
-                    // Quantity Value
+                    // value
                     Text(
                       _addFoodQuantity.toString(),
                       style: const TextStyle(
@@ -316,18 +298,13 @@ class _AddItemViewState extends State<AddItemView> {
                       ),
                     ),
                     const SizedBox(width: 20),
-
-                    // + Button
+                    // +
                     CircleAvatar(
                       backgroundColor: const Color.fromRGBO(34, 171, 82, 1),
                       radius: 20,
                       child: IconButton(
                         onPressed: _incrementQuantity,
-                        icon: const Icon(
-                          Icons.add,
-                          color: Colors.white,
-                          size: 18,
-                        ),
+                        icon: const Icon(Icons.add, color: Colors.white, size: 18),
                         padding: EdgeInsets.zero,
                         enableFeedback: false,
                       ),
@@ -339,7 +316,7 @@ class _AddItemViewState extends State<AddItemView> {
 
             const SizedBox(height: 40),
 
-            // ====== ADD BUTTON ======
+            // ===== Add Button =====
             SizedBox(
               width: double.infinity,
               height: 55,

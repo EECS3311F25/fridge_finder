@@ -17,6 +17,31 @@ class User {
     required this.password,
   });
 
+  User create({int? id, String? username, String? email, String? password}) {
+    return User(
+      id: id ?? this.id,
+      username: username ?? this.username,
+      email: email ?? this.email,
+      password: password ?? this.password,
+    );
+  }
+
+  static Future<User> createAndInsert(
+    String username,
+    String email,
+    String password,
+  ) async {
+    final User tempUser = User(
+      username: username,
+      email: email,
+      password: password,
+    );
+
+    final int newId = await UserDatabaseHelper.instance.insert(tempUser);
+
+    return tempUser.create(id: newId);
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -38,32 +63,18 @@ class User {
 
 class UserDatabaseHelper extends DatabaseHelper<User> {
   static final UserDatabaseHelper instance = UserDatabaseHelper._instance();
-  static Database? _database;
 
   UserDatabaseHelper._instance();
-
-  @override
-  Future<Database> get db async {
-    _database ??= await initDb();
-    return _database!;
-  }
-
-  @override
-  Future onCreate(Database db, int version) async {
-    await db.execute('''
-      CREATE TABLE user (
-        id INTEGER PRIMARY KEY,
-        username TEXT,
-        email TEXT,
-        password TEXT
-      )
-    ''');
-  }
 
   @override
   Future<int> insert(User user) async {
     Database db = await instance.db;
     return await db.insert('user', user.toMap());
+  }
+
+  static Future<Map<String, dynamic>> query(int id) async {
+    List<Map<String, dynamic>> users = await instance.queryAll();
+    return users.firstWhere((map) => map['id'] == id);
   }
 
   @override

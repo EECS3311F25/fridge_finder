@@ -15,24 +15,77 @@ class HomeWrapper extends StatefulWidget {
 
 class _HomeWrapperState extends State<HomeWrapper> {
   final List<Item> _items = [];
+  final TextEditingController _searchController = TextEditingController();
+  List<Item> _filteredItems = [];
+  String _searchQuery = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _filteredItems = _items;
+    _searchController.addListener(_onSearchChanged);
+  }
+
+  void _onSearchChanged() {
+    setState(() {
+      _searchQuery = _searchController.text.toLowerCase();
+
+      if (_searchQuery.isEmpty) {
+        _filteredItems = List.from(_items);
+      } else {
+        _filteredItems = _items
+            .where((item) => item.name.toLowerCase().contains(_searchQuery))
+            .toList();
+      }
+    });
+  }
+
+  void deleteItem(Item item) {
+    setState(() {
+      _items.remove(item);
+      _filteredItems.remove(item);
+    });
+  }
 
   void _addNewItem(Item newItem) {
     setState(() {
       _items.add(newItem);
+      _filteredItems = _items
+          .where((item) => item.name.toLowerCase().contains(_searchQuery))
+          .toList();
     });
   }
 
   @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return HomeView(items: _items, onAddItem: _addNewItem);
+    return HomeView(
+      items: _filteredItems,
+      onAddItem: _addNewItem,
+      onDeleteItem: deleteItem,
+      searchController: _searchController,
+    );
   }
 }
 
 class HomeView extends StatelessWidget {
   final List<Item> items;
   final Function(Item) onAddItem;
+  final Function(Item) onDeleteItem;
+  final TextEditingController searchController;
 
-  const HomeView({super.key, required this.items, required this.onAddItem});
+  const HomeView({
+    super.key,
+    required this.items,
+    required this.onAddItem,
+    required this.onDeleteItem,
+    required this.searchController,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +146,8 @@ class HomeView extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(100),
               ),
-              child: const TextField(
+              child: TextField(
+                controller: searchController,
                 decoration: InputDecoration(
                   hintText: 'What are you looking for?',
                   hintStyle: TextStyle(
@@ -189,7 +243,15 @@ class HomeView extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => FoodItemView(item: item),
+                          builder: (context) => FoodItemView(
+                            item: item,
+                            onDelete: (itemToDelete) {
+                              onDeleteItem(itemToDelete);
+                              final homeWrapperState = context
+                                  .findAncestorStateOfType<_HomeWrapperState>();
+                              homeWrapperState?.deleteItem(itemToDelete);
+                            },
+                          ),
                         ),
                       );
                     },

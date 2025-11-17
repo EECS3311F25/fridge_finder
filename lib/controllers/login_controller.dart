@@ -1,18 +1,14 @@
-//import '../models/fridge.dart';
-//import '../models/item.dart';
+import '../models/fridge.dart';
+import '../models/item.dart';
 import '../models/user.dart';
 
 
 class LoginController {
-  
-  //final UserDatabaseHelper _dbHelper = UserDatabaseHelper.instance;
-    /*
-  /// Logs in a user by verifying username and password in the database.
-  /// Returns the [User] object if valid, otherwise throws an exception.
+  final UserDatabaseHelper _dbHelper = UserDatabaseHelper.instance;
+
   Future<User> login(String username, String password) async {
     final db = await _dbHelper.db;
 
-    // Query the database for a matching username & password
     final result = await db.query(
       'user',
       where: 'username = ? AND password = ?',
@@ -24,36 +20,23 @@ class LoginController {
       throw Exception('Invalid username or password');
     }
 
-    // Convert the map to a User object
     return User.fromMap(result.first);
   }
 
-   //Only uncomment if needed in future for registering or get list of users.
-  void createUser(String username, String password) {
+  Future<void> createUser(String username, String password) async {
     final user = User(
       username: username,
       email: '$username@example.com',
       password: password,
     );
 
-    _users.add(user);
-
-    // await UserDatabaseHelper.instance.insertUser(user);
+    await UserDatabaseHelper.instance.insert(user);
   }
-  
-  /// Example utility to get all registered users.
-  List<User> getAllUsers() => List.unmodifiable(_users);
-  */
-  User login(String username, String password) {
-    if (username == 'debug_user' && password == 'password123') {
-      return User(
-        id: 0,
-        username: username,
-        email: 'debug_user@example.com',
-        password: password,
-      );
-    } else {
-      throw Exception('Invalid person credentials');
-    }
+
+  Future<List<User>> getAllUsers() async {
+    final db = await _dbHelper.db;
+    final result = await db.query('user');
+    return result.map((map) => User.fromMap(map)).toList();
   }
 }
+
