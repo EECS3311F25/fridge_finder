@@ -15,6 +15,8 @@ class Item {
   final DateTime expiryDate;
   final Fridge fridge;
   final Image? imageIcon;
+  bool frozen;
+  int frozenDifferential;
 
   Item({
     this.id,
@@ -25,6 +27,8 @@ class Item {
     required this.expiryDate,
     required this.fridge,
     this.imageIcon,
+    this.frozen = false,
+    this.frozenDifferential = 0,
   });
 
   Item create({
@@ -82,6 +86,8 @@ class Item {
       'expiryDate': expiryDate,
       'fridgeId': fridge.id,
       'imageIcon': imageIcon.toString(), // database expects a path, placeholder
+      'frozen': frozen,
+      'frozenDifferential': frozenDifferential,
     };
   }
 
@@ -96,6 +102,8 @@ class Item {
       expiryDate: map['expiryDate'],
       fridge: fridge,
       imageIcon: map['imageIcon'] ?? '',
+      frozen: map['frozen'] ?? false,
+
     );
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'views/home_view.dart';
+import 'package:fridge_finder/views/login_view.dart';
 
 void main() {
   runApp(const MainApp());
@@ -10,6 +10,6 @@ class MainApp extends StatelessWidget {
   // home_view.dart is the main screen
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: HomeWrapper());
+    return MaterialApp(home: LoginView());
   }
 }

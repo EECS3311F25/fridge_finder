@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:fridge_finder/controllers/home_controller.dart';
 import 'food_item_view.dart';
 import 'add_item_view.dart';
 import 'login_view.dart';
 import 'recipe_page_view.dart';
 import '../models/item.dart';
+import '../models/fridge.dart';
 
 /// This small wrapper keeps HomeView stateless and also allows the creation of new items
 class HomeWrapper extends StatefulWidget {
-  const HomeWrapper({super.key});
+  final Fridge fridge;
+  late HomeController controller = HomeController(fridge: fridge);
+  
+  HomeWrapper({super.key, required this.fridge});
 
   @override
   State<HomeWrapper> createState() => _HomeWrapperState();
@@ -69,6 +74,7 @@ class _HomeWrapperState extends State<HomeWrapper> {
       onAddItem: _addNewItem,
       onDeleteItem: deleteItem,
       searchController: _searchController,
+      fridge: widget.fridge,
     );
   }
 }
@@ -78,13 +84,16 @@ class HomeView extends StatelessWidget {
   final Function(Item) onAddItem;
   final Function(Item) onDeleteItem;
   final TextEditingController searchController;
+  final Fridge fridge;
+  late HomeController controller = HomeController(fridge: fridge);
 
-  const HomeView({
+  HomeView({
     super.key,
     required this.items,
     required this.onAddItem,
     required this.onDeleteItem,
     required this.searchController,
+    required this.fridge,
   });
 
   @override
@@ -352,7 +361,7 @@ class HomeView extends StatelessWidget {
                   context,
                   PageRouteBuilder(
                     pageBuilder: (context, animation, secondaryAnimation) =>
-                        const AddItemView(),
+                        AddItemView(fridge: fridge),
                     transitionsBuilder:
                         (context, animation, secondaryAnimation, child) {
                           return SlideTransition(

@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:fridge_finder/controllers/create_item_controller.dart';
 import '../models/item.dart';
+import '../models/fridge.dart';
 
 class AddItemView extends StatefulWidget {
-  const AddItemView({super.key});
+  final Fridge fridge;
+  late CreateItemController controller = CreateItemController(fridge: fridge);
+  
+  AddItemView({super.key, required this.fridge});
 
   @override
   State<AddItemView> createState() => _AddItemViewState();
@@ -114,7 +119,7 @@ class _AddItemViewState extends State<AddItemView> {
       dateAdded: DateTime.now(),
       expiryDate: _expiryDate ?? DateTime.now().add(const Duration(days: 7)),
       imageIcon: null,
-      fridge: /* your Fridge instance */,
+      fridge: widget.fridge,
     );
   }
 
@@ -327,8 +332,14 @@ class _AddItemViewState extends State<AddItemView> {
                     borderRadius: BorderRadius.circular(100),
                   ),
                 ),
-                onPressed: () {
-                  final newItem = _createItem();
+                onPressed: () async {
+                  final newItem = await widget.controller.createItem(
+                    name: _foodName.trim(),
+                    quantity: _addFoodQuantity,
+                    dateAdded: DateTime.now(),
+                    expiryDate: _expiryDate ?? DateTime.now().add(const Duration(days: 7)),
+                    imageIcon: null,
+                  );
                   Navigator.pop(context, newItem);
                 },
                 child: const Text(

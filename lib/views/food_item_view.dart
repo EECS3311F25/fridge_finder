@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:fridge_finder/controllers/food_item_controller.dart';
 import '../models/item.dart';
 import '../views/home_view.dart';
 
 class FoodItemView extends StatefulWidget {
   final Item item;
   final Function(Item) onDelete;
+  late FoodItemController controller = FoodItemController(fridge: item.fridge, item: item);
 
-  const FoodItemView({super.key, required this.item, required this.onDelete,});
+  FoodItemView({super.key, required this.item, required this.onDelete});
 
   @override
   State<FoodItemView> createState() => _FoodItemViewState();
@@ -17,14 +19,14 @@ class _FoodItemViewState extends State<FoodItemView> {
 
   void increaseQuantity() {
     setState(() {
-      quantity++;
+      widget.item.quantity++;
     });
   }
 
   void decreaseQuantity() {
     setState(() {
-      if (quantity > 0) {
-        quantity--;
+      if (widget.item.quantity > 0) {
+        widget.item.quantity--;
       }
     });
   }
@@ -131,7 +133,7 @@ class _FoodItemViewState extends State<FoodItemView> {
 
                     // Quantity Value
                     Text(
-                      quantity.toString(),
+                      widget.item.quantity.toString(),
                       style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,

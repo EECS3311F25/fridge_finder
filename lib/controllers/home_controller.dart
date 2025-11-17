@@ -1,13 +1,11 @@
 import 'dart:async';
 import '../models/item.dart';
 import '../models/fridge.dart';
-import '../models/user.dart';
 
 class HomeController {
-  final User user;
   final Fridge fridge;
 
-  HomeController({required this.user, required this.fridge});
+  HomeController({required this.fridge});
 
   Future<void> deleteItem(Fridge fridge, Item item) async {
     fridge.items.remove(item);
