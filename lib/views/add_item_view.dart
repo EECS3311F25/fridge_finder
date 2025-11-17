@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import '../models/item.dart';
+import '../controllers/add_item_controller.dart';
 
 class AddItemView extends StatefulWidget {
-  const AddItemView({super.key});
+  final AddItemController controller;
+
+  const AddItemView({super.key, required this.controller});
 
   @override
   State<AddItemView> createState() => _AddItemViewState();
@@ -212,9 +215,9 @@ class _AddItemViewState extends State<AddItemView> {
                         ),
                       )
                     : ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
-                        child: Image.asset(_selectedIcon!, fit: BoxFit.cover),
-                      ),
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.asset(_selectedIcon!, fit: BoxFit.cover),
+                ),
               ),
             ),
 

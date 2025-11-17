@@ -1,10 +1,13 @@
-import '../models/fridge.dart';
-import '../models/item.dart';
 import '../models/user.dart';
-
 
 class LoginController {
   final UserDatabaseHelper _dbHelper = UserDatabaseHelper.instance;
+  
+  User? _currentUser;
+
+  User? get currentUser => _currentUser;
+
+  bool get isLoggedIn => _currentUser != null;
 
   Future<User> login(String username, String password) async {
     final db = await _dbHelper.db;
@@ -20,23 +23,19 @@ class LoginController {
       throw Exception('Invalid username or password');
     }
 
-    return User.fromMap(result.first);
+    final user = User.fromMap(result.first);
+    _currentUser = user;
+    return user;
   }
 
-  Future<void> createUser(String username, String password) async {
-    final user = User(
-      username: username,
-      email: '$username@example.com',
-      password: password,
-    );
-
-    await UserDatabaseHelper.instance.insert(user);
+  void logout() {
+    _currentUser = null;
   }
 
-  Future<List<User>> getAllUsers() async {
-    final db = await _dbHelper.db;
-    final result = await db.query('user');
-    return result.map((map) => User.fromMap(map)).toList();
+  Future<User> createUser(String username, String password) async {
+    final email = username;
+    final newUser = await User.createAndInsert(username, email, password);
+    return newUser;
   }
+
 }
-
