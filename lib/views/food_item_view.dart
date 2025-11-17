@@ -45,25 +45,40 @@ class _FoodItemViewState extends State<FoodItemView> {
     final item = widget.item;
 
     return Scaffold(
+      // Header ====================================================
       appBar: AppBar(
-        title: const Text(
-          'Food Item',
-          style: TextStyle(color: Colors.white, fontSize: 24),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.of(context).pop(),
+          padding: EdgeInsets.zero,
+          iconSize: 30,
+        ),
+        title: const Padding(
+          padding: EdgeInsets.zero,
+          child: Text(
+            'Food Item',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
         backgroundColor: const Color.fromRGBO(34, 171, 82, 1),
         iconTheme: const IconThemeData(color: Colors.white),
+        toolbarHeight: 60,
       ),
       backgroundColor: const Color.fromRGBO(248, 248, 248, 1),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // Food Title ==============================================
             Text(
               item.name,
               style: const TextStyle(
-                fontSize: 40,
+                fontSize: 30,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
               ),
@@ -72,12 +87,11 @@ class _FoodItemViewState extends State<FoodItemView> {
 
             // Box Container ===========================================
             Container(
-              width: double.infinity,
-              height: 200,
+              width: 150,
+              height: 150,
               decoration: BoxDecoration(
                 color: const Color.fromRGBO(240, 240, 240, 1),
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.grey.shade300, width: 1),
               ),
               child: Center(
                 child: Text(
@@ -95,6 +109,7 @@ class _FoodItemViewState extends State<FoodItemView> {
 
             // Quantity Row ============================================
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
                   'Quantity',
@@ -221,29 +236,73 @@ class _FoodItemViewState extends State<FoodItemView> {
               ],
             ),
 
-            const SizedBox(height: 40),
+            const SizedBox(height: 20),
 
-            // DELETE BUTTON ==========================================
-            Align(
-              alignment: Alignment.bottomLeft,
-              child: ElevatedButton.icon(
+            // Second Divider Line =====================================
+            Container(
+              width: double.infinity,
+              height: 1,
+              color: const Color.fromARGB(255, 186, 186, 186),
+            ),
+
+            const SizedBox(height: 20),
+
+            // Storage Info Text =======================================
+            const Text(
+              'Storage Info',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
+
+            const SizedBox(height: 10),
+
+            // Storage Info Description ================================
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Text(
+                'Keep in orginal packaging',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey.shade700,
+                  height: 1.4,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+
+            const SizedBox(height: 20),
+
+            // Third Divider Line ======================================
+            Container(
+              width: double.infinity,
+              height: 1,
+              color: const Color.fromARGB(255, 186, 186, 186),
+            ),
+
+            const SizedBox(height: 20),
+
+            // Freeze Button ===========================================
+            SizedBox(
+              width: double.infinity,
+              height: 55,
+              child: ElevatedButton(
+                onPressed: () {
+                  // onPressed for the freeze button
+                },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 24,
-                    vertical: 14,
-                  ),
+                  backgroundColor: const Color.fromRGBO(66, 133, 244, 1),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(100),
                   ),
                 ),
-                onPressed: _handleDelete,
-                icon: const Icon(Icons.delete, color: Colors.white),
-                label: const Text(
-                  'Delete',
+                child: const Text(
+                  'Freeze',
                   style: TextStyle(
-                    fontSize: 18,
                     color: Colors.white,
+                    fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

@@ -10,7 +10,6 @@ class AddItemController {
   AddItemController({required this.user, required this.fridge});
 
   // Hols a new [Item], and assosiates it with a given [Fridge] adding it to the database
-
   Future<Item> createItem({
     int? fdcId,
     required String name,
