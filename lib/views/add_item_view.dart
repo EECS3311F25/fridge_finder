@@ -9,21 +9,16 @@ class AddItemView extends StatefulWidget {
 }
 
 class _AddItemViewState extends State<AddItemView> {
-  // ===== Form state =====
-  String? _selectedFood;
+  // variables for the input
+  String _foodName = '';
   String? _selectedIcon;
   DateTime? _expiryDate;
   int _addFoodQuantity = 1;
 
-  // ===== Data sources =====
-  final List<String> _foodOptions = ['Apple', 'Banana', 'Carrot'];
-  final List<String> _imagePaths = [
-    'assets/images/chicken.png',
-    'assets/images/bacon.png',
-    'assets/images/butter.png',
-    'assets/images/milk.png',
-    'assets/images/potato.png',
-  ];
+  final List<String> _imagePaths = ['assets/images/appleIcon.png'];
+
+  // Text editing controller for the food name
+  final TextEditingController _foodNameController = TextEditingController();
 
   // ===== Icon selector =====
   void _openIconSelector() {
@@ -114,7 +109,7 @@ class _AddItemViewState extends State<AddItemView> {
   // ===== Create Item from form (uses your Item model) =====
   Item _createItem() {
     return Item(
-      name: _selectedFood!,
+      name: _foodName.trim(),
       quantity: _addFoodQuantity,
       dateAdded: DateTime.now(),
       expiryDate: _expiryDate ?? DateTime.now().add(const Duration(days: 7)),
@@ -126,58 +121,94 @@ class _AddItemViewState extends State<AddItemView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // Header ====================================================
       appBar: AppBar(
-        title: const Text(
-          'Add Item',
-          style: TextStyle(color: Colors.white, fontSize: 24),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.of(context).pop(),
+          padding: EdgeInsets.zero,
+          iconSize: 30,
+        ),
+        title: const Padding(
+          padding: EdgeInsets.zero,
+          child: Text(
+            'Add Item',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
         backgroundColor: const Color.fromRGBO(34, 171, 82, 1),
         iconTheme: const IconThemeData(color: Colors.white),
+        toolbarHeight: 60,
       ),
       backgroundColor: const Color.fromRGBO(248, 248, 248, 1),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // ===== Food Name =====
-            const Text(
-              'Food Name',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 10),
-            DropdownButtonFormField<String>(
-              value: _selectedFood,
-              hint: const Text('Select a food'),
-              onChanged: (value) => setState(() => _selectedFood = value),
-              items: _foodOptions
-                  .map((food) => DropdownMenuItem(value: food, child: Text(food)))
-                  .toList(),
+            // ====== FOOD NAME ======
+            Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(100),
+              ),
+              child: TextField(
+                controller: _foodNameController,
+                onChanged: (value) {
+                  setState(() {
+                    _foodName = value;
+                  });
+                },
+                textAlign: TextAlign.center,
+                decoration: InputDecoration(
+                  hintText: _foodName.isEmpty ? 'Enter item name' : _foodName,
+                  border: InputBorder.none,
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 20,
+                  ),
+                  hintStyle: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromRGBO(158, 158, 158, 1),
+                  ),
+                  counterText: "",
+                ),
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+                maxLength: 16,
+              ),
             ),
 
             const SizedBox(height: 30),
 
-            // ===== Icon Selector =====
-            const Text(
-              'Icon',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 10),
+            // ====== ICON SELECTOR ======
             GestureDetector(
               onTap: _openIconSelector,
               child: Container(
-                height: 120,
-                width: double.infinity,
+                width: 150,
+                height: 150,
                 decoration: BoxDecoration(
                   color: const Color.fromRGBO(240, 240, 240, 1),
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.grey.shade300),
                 ),
                 child: _selectedIcon == null
                     ? const Center(
                         child: Text(
-                          'Select an icon',
-                          style: TextStyle(color: Colors.black54, fontSize: 24),
+                          'Select icon',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromRGBO(158, 158, 158, 1),
+                          ),
                         ),
                       )
                     : ClipRRect(
@@ -189,34 +220,34 @@ class _AddItemViewState extends State<AddItemView> {
 
             const SizedBox(height: 30),
 
-            // ===== Expiry Date =====
-            const Text(
-              'Expires',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 10),
+            // ====== EXPIRY DATE ======
             GestureDetector(
               onTap: _pickExpiryDate,
               child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 20,
+                  horizontal: 20,
+                ),
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: const Color.fromRGBO(240, 240, 240, 1),
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.grey.shade300),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(100),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      _expiryDate == null
-                          ? 'Select expiry date'
-                          : '${_expiryDate!.day}/${_expiryDate!.month}/${_expiryDate!.year}',
-                      style: const TextStyle(fontSize: 24),
-                    ),
-                    const Icon(
-                      Icons.calendar_today,
-                      color: Color.fromRGBO(34, 171, 82, 1),
+                    Expanded(
+                      child: Text(
+                        _expiryDate == null
+                            ? 'Select expiry date'
+                            : '${_expiryDate!.month}/${_expiryDate!.day}/${_expiryDate!.year}',
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromARGB(255, 122, 122, 122),
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                   ],
                 ),
@@ -225,8 +256,18 @@ class _AddItemViewState extends State<AddItemView> {
 
             const SizedBox(height: 30),
 
-            // ===== Quantity =====
+            // ====== DIVIDER ======
+            Container(
+              width: double.infinity,
+              height: 1,
+              color: const Color.fromARGB(255, 186, 186, 186),
+            ),
+
+            const SizedBox(height: 30),
+
+            // ====== QUANTITY ======
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
                   'Quantity',
@@ -283,20 +324,12 @@ class _AddItemViewState extends State<AddItemView> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromRGBO(34, 171, 82, 1),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(100),
                   ),
                 ),
                 onPressed: () {
-                  if (_selectedFood != null && _expiryDate != null) {
-                    final newItem = _createItem();
-                    Navigator.pop(context, newItem);
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Please select a food and expiry date first'),
-                      ),
-                    );
-                  }
+                  final newItem = _createItem();
+                  Navigator.pop(context, newItem);
                 },
                 child: const Text(
                   'Add',
