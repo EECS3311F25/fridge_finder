@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:fridge_finder/controllers/create_item_controller.dart';
 import '../models/item.dart';
-import '../models/fridge.dart';
+import '../controllers/add_item_controller.dart';
 
 class AddItemView extends StatefulWidget {
-  final Fridge fridge;
-  late CreateItemController controller = CreateItemController(fridge: fridge);
-  
-  AddItemView({super.key, required this.fridge});
+  final AddItemController controller;
+
+  const AddItemView({super.key, required this.controller});
 
   @override
   State<AddItemView> createState() => _AddItemViewState();
@@ -111,18 +109,6 @@ class _AddItemViewState extends State<AddItemView> {
     });
   }
 
-  // ===== Create Item from form (uses your Item model) =====
-  Item _createItem() {
-    return Item(
-      name: _foodName.trim(),
-      quantity: _addFoodQuantity,
-      dateAdded: DateTime.now(),
-      expiryDate: _expiryDate ?? DateTime.now().add(const Duration(days: 7)),
-      imageIcon: null,
-      fridge: widget.fridge,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -217,9 +203,9 @@ class _AddItemViewState extends State<AddItemView> {
                         ),
                       )
                     : ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
-                        child: Image.asset(_selectedIcon!, fit: BoxFit.cover),
-                      ),
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.asset(_selectedIcon!, fit: BoxFit.cover),
+                ),
               ),
             ),
 

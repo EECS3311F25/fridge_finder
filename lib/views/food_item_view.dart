@@ -1,29 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:fridge_finder/controllers/food_item_controller.dart';
 import '../models/item.dart';
-import '../views/home_view.dart';
+import '../controllers/food_item_controller.dart';
 
 class FoodItemView extends StatefulWidget {
   final Item item;
   final Function(Item) onDelete;
-  late FoodItemController controller = FoodItemController(fridge: item.fridge, item: item);
-
-  FoodItemView({super.key, required this.item, required this.onDelete});
+  final FoodItemController controller;
+  const FoodItemView({
+    super.key,
+    required this.item,
+    required this.onDelete,
+    required this.controller,
+  });
 
   @override
   State<FoodItemView> createState() => _FoodItemViewState();
 }
 
 class _FoodItemViewState extends State<FoodItemView> {
-  int quantity = 1;
 
-  void increaseQuantity() {
+  Future<void> _handleIncrease() async {
+    await widget.controller.increaseQuantity(widget.item);
     setState(() {
       widget.item.quantity++;
     });
   }
 
-  void decreaseQuantity() {
+  Future<void> _handleDecrease() async {
+    await widget.controller.decreaseQuantity(widget.item);
     setState(() {
       if (widget.item.quantity > 0) {
         widget.item.quantity--;
@@ -31,8 +36,17 @@ class _FoodItemViewState extends State<FoodItemView> {
     });
   }
 
+  Future<void> _handleDelete() async {
+    await widget.controller.deleteItem(widget.item);
+    widget.onDelete(widget.item);
+    if (!mounted) return;
+    Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final item = widget.item;
+
     return Scaffold(
       // Header ====================================================
       appBar: AppBar(
@@ -65,7 +79,7 @@ class _FoodItemViewState extends State<FoodItemView> {
           children: [
             // Food Title ==============================================
             Text(
-              widget.item.name,
+              item.name,
               style: const TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
@@ -84,7 +98,7 @@ class _FoodItemViewState extends State<FoodItemView> {
               ),
               child: Center(
                 child: Text(
-                  widget.item.name,
+                  item.name,
                   style: const TextStyle(
                     color: Colors.black,
                     fontSize: 24,
@@ -108,10 +122,8 @@ class _FoodItemViewState extends State<FoodItemView> {
                     color: Colors.black,
                   ),
                 ),
-
                 const SizedBox(width: 20),
 
-                // - X + Buttons ======================================
                 Row(
                   children: [
                     // - Button
@@ -119,7 +131,7 @@ class _FoodItemViewState extends State<FoodItemView> {
                       backgroundColor: const Color.fromRGBO(34, 171, 82, 1),
                       radius: 20,
                       child: IconButton(
-                        onPressed: decreaseQuantity,
+                        onPressed: _handleDecrease,
                         icon: const Icon(
                           Icons.remove,
                           color: Colors.white,
@@ -131,7 +143,7 @@ class _FoodItemViewState extends State<FoodItemView> {
                     ),
                     const SizedBox(width: 20),
 
-                    // Quantity Value
+                    // Quantity Value (siempre el del modelo)
                     Text(
                       widget.item.quantity.toString(),
                       style: const TextStyle(
@@ -147,7 +159,7 @@ class _FoodItemViewState extends State<FoodItemView> {
                       backgroundColor: const Color.fromRGBO(34, 171, 82, 1),
                       radius: 20,
                       child: IconButton(
-                        onPressed: increaseQuantity,
+                        onPressed: _handleIncrease,
                         icon: const Icon(
                           Icons.add,
                           color: Colors.white,
@@ -173,11 +185,11 @@ class _FoodItemViewState extends State<FoodItemView> {
 
             const SizedBox(height: 20),
 
-            // Added/Expires Container =================================
+            // Added / Expires =========================================
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Added Container
+                // Added Row
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -190,7 +202,7 @@ class _FoodItemViewState extends State<FoodItemView> {
                       ),
                     ),
                     Text(
-                      '${widget.item.dateAdded.month}/${widget.item.dateAdded.day}/${widget.item.dateAdded.year}',
+                      '${item.dateAdded.month}/${item.dateAdded.day}/${item.dateAdded.year}',
                       style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -202,7 +214,7 @@ class _FoodItemViewState extends State<FoodItemView> {
 
                 const SizedBox(height: 10),
 
-                // Expires Container
+                // Expires Row
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -215,7 +227,7 @@ class _FoodItemViewState extends State<FoodItemView> {
                       ),
                     ),
                     Text(
-                      '${widget.item.expiryDate.month}/${widget.item.expiryDate.day}/${widget.item.expiryDate.year}',
+                      '${item.expiryDate.month}/${item.expiryDate.day}/${item.expiryDate.year}',
                       style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,

@@ -5,59 +5,64 @@ import 'add_item_view.dart';
 import 'login_view.dart';
 import 'recipe_page_view.dart';
 import '../models/item.dart';
-import '../models/fridge.dart';
+import '../controllers/home_controller.dart';
+import '../controllers/add_item_controller.dart';
+import '../controllers/food_item_controller.dart';
 
 /// This small wrapper keeps HomeView stateless and also allows the creation of new items
 class HomeWrapper extends StatefulWidget {
-  final Fridge fridge;
-  late HomeController controller = HomeController(fridge: fridge);
-  
-  HomeWrapper({super.key, required this.fridge});
+  final HomeController homeController;
+  const HomeWrapper({super.key, required this.homeController});
 
   @override
   State<HomeWrapper> createState() => _HomeWrapperState();
 }
 
 class _HomeWrapperState extends State<HomeWrapper> {
-  final List<Item> _items = [];
   final TextEditingController _searchController = TextEditingController();
+  late final HomeController _homeController;
+
   List<Item> _filteredItems = [];
   String _searchQuery = '';
 
   @override
   void initState() {
     super.initState();
-    _filteredItems = _items;
+    _homeController = widget.homeController;
+
+    // Al inicio, mostramos todos los items del fridge del controller
+    _filteredItems = _homeController.fridge.items;
+
     _searchController.addListener(_onSearchChanged);
   }
 
   void _onSearchChanged() {
     setState(() {
-      _searchQuery = _searchController.text.toLowerCase();
-
-      if (_searchQuery.isEmpty) {
-        _filteredItems = List.from(_items);
-      } else {
-        _filteredItems = _items
-            .where((item) => item.name.toLowerCase().contains(_searchQuery))
-            .toList();
-      }
+      _searchQuery = _searchController.text;
+      _filteredItems = _homeController.searchItems(
+        _homeController.fridge.items,
+        _searchQuery,
+      );
     });
   }
 
-  void deleteItem(Item item) {
+  void _onDeleteItem(Item item) {
+    //  (real logic in controller) in here im assuming that the controller already deleted the item, and the view its just updated
     setState(() {
-      _items.remove(item);
-      _filteredItems.remove(item);
+      _filteredItems = _homeController.searchItems(
+        _homeController.fridge.items,
+        _searchQuery,
+      );
     });
   }
 
-  void _addNewItem(Item newItem) {
+  void _onAddItem(Item newItem) {
+   //same thing that with DeleteItem
     setState(() {
-      _items.add(newItem);
-      _filteredItems = _items
-          .where((item) => item.name.toLowerCase().contains(_searchQuery))
-          .toList();
+      _filteredItems = _homeController.searchItems(
+        _homeController.fridge.items,
+        _searchQuery,
+      );
     });
   }
 
@@ -71,10 +76,10 @@ class _HomeWrapperState extends State<HomeWrapper> {
   Widget build(BuildContext context) {
     return HomeView(
       items: _filteredItems,
-      onAddItem: _addNewItem,
-      onDeleteItem: deleteItem,
+      onAddItem: _onAddItem,
+      onDeleteItem: _onDeleteItem,
       searchController: _searchController,
-      fridge: widget.fridge,
+      homeController: _homeController,
     );
   }
 }
@@ -84,8 +89,7 @@ class HomeView extends StatelessWidget {
   final Function(Item) onAddItem;
   final Function(Item) onDeleteItem;
   final TextEditingController searchController;
-  final Fridge fridge;
-  late HomeController controller = HomeController(fridge: fridge);
+  final HomeController homeController;
 
   HomeView({
     super.key,
@@ -93,7 +97,7 @@ class HomeView extends StatelessWidget {
     required this.onAddItem,
     required this.onDeleteItem,
     required this.searchController,
-    required this.fridge,
+    required this.homeController,
   });
 
   @override
@@ -157,7 +161,7 @@ class HomeView extends StatelessWidget {
               ),
               child: TextField(
                 controller: searchController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'What are you looking for?',
                   hintStyle: TextStyle(
                     color: Color.fromRGBO(158, 158, 158, 1),
@@ -247,6 +251,7 @@ class HomeView extends StatelessWidget {
                 itemCount: items.length,
                 itemBuilder: (context, index) {
                   final item = items[index];
+
                   return GestureDetector(
                     onTap: () {
                       Navigator.push(
@@ -255,14 +260,17 @@ class HomeView extends StatelessWidget {
                           builder: (context) => FoodItemView(
                             item: item,
                             onDelete: (itemToDelete) {
-                              onDeleteItem(itemToDelete);
-                              final homeWrapperState = context
-                                  .findAncestorStateOfType<_HomeWrapperState>();
-                              homeWrapperState?.deleteItem(itemToDelete);
+                              onDeleteItem(itemToDelete); //refreshes home
                             },
+                            controller: FoodItemController(
+                              user: homeController.user,
+                              fridge: homeController.fridge,
+                              item: item,
+                            ),
                           ),
                         ),
                       );
+
                     },
                     child: Column(
                       children: [
@@ -361,7 +369,9 @@ class HomeView extends StatelessWidget {
                   context,
                   PageRouteBuilder(
                     pageBuilder: (context, animation, secondaryAnimation) =>
-                        AddItemView(fridge: fridge),
+                        AddItemView(
+                          controller: AddItemController(user: homeController.user, fridge: homeController.fridge),
+                        ),
                     transitionsBuilder:
                         (context, animation, secondaryAnimation, child) {
                           return SlideTransition(
