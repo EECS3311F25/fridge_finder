@@ -14,7 +14,7 @@ class Item {
   final DateTime dateAdded;
   final DateTime expiryDate;
   final Fridge fridge;
-  final Image? imageIcon;
+  final String imagePath;
   bool frozen;
   int frozenDifferential;
 
@@ -26,7 +26,7 @@ class Item {
     required this.dateAdded,
     required this.expiryDate,
     required this.fridge,
-    this.imageIcon,
+    required this.imagePath,
     this.frozen = false,
     this.frozenDifferential = 0,
   });
@@ -49,7 +49,7 @@ class Item {
       dateAdded: dateAdded ?? this.dateAdded,
       expiryDate: expiryDate ?? this.expiryDate,
       fridge: fridge ?? this.fridge,
-      imageIcon: imageIcon ?? this.imageIcon,
+      imagePath: imagePath,
     );
   }
 
@@ -60,7 +60,7 @@ class Item {
     DateTime dateAdded,
     DateTime expiryDate,
     Fridge fridge,
-    Image? imageIcon,
+    String imagePath,
   ) async {
     final Item tempItem = Item(
       fdcId: fdcId,
@@ -69,7 +69,7 @@ class Item {
       dateAdded: dateAdded,
       expiryDate: expiryDate,
       fridge: fridge,
-      imageIcon: imageIcon,
+      imagePath: imagePath,
     );
 
     final int newId = await ItemDatabaseHelper.instance.insert(tempItem);
@@ -85,14 +85,14 @@ class Item {
       'dateAdded': dateAdded.toIso8601String(),
       'expiryDate': expiryDate.toIso8601String(),
       'fridgeId': fridge.id,
-      'imageIcon': imageIcon.toString(), // database expects a path, placeholder
+      'imageIcon': imagePath, // database expects a path, placeholder
       'frozen': frozen,
       'frozenDifferential': frozenDifferential,
     };
   }
 
   static Future<Item> fromMap(Map<String, dynamic> map) async {
-    final Fridge fridge = await Fridge.getFromDb(map['fridge']);
+    final Fridge fridge = await Fridge.getFromDb(map['fridgeId']);
 
     return Item(
       id: map['id'],
@@ -101,7 +101,7 @@ class Item {
       dateAdded: DateTime.parse(map['dateAdded']),
       expiryDate: DateTime.parse(map['expiryDate']),
       fridge: fridge,
-      imageIcon: map['imageIcon'] ?? '',
+      imagePath: map['imagePath'] ?? '',
       frozen: map['frozen'] ?? false,
     );
   }

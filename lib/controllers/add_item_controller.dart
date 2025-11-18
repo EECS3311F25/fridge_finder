@@ -16,7 +16,7 @@ class AddItemController {
     required int quantity,
     required DateTime dateAdded,
     required DateTime expiryDate,
-    Image? imageIcon,
+    required String imagePath,
   }) async {
     final item = await Item.createAndInsert(
       fdcId,
@@ -25,7 +25,7 @@ class AddItemController {
       dateAdded,
       expiryDate,
       fridge,
-      imageIcon,
+      imagePath,
     );
 
     fridge.items.add(item);

@@ -324,7 +324,7 @@ class _AddItemViewState extends State<AddItemView> {
                     quantity: _addFoodQuantity,
                     dateAdded: DateTime.now(),
                     expiryDate: _expiryDate ?? DateTime.now().add(const Duration(days: 7)),
-                    imageIcon: null,
+                    imagePath: "",
                   );
                   Navigator.pop(context, newItem);
                 },
