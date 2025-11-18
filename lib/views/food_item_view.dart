@@ -313,10 +313,7 @@ class _FoodItemViewState extends State<FoodItemView> {
               height: 55,
               child: ElevatedButton(
                 onPressed: () async {
-                  await widget.controller.deleteItem(item);
-                  if (context.mounted) {
-                    Navigator.pop(context);
-                  }
+                  _handleDelete();
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromARGB(255, 244, 66, 66),
