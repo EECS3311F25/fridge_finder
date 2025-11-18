@@ -19,20 +19,15 @@ class FoodItemView extends StatefulWidget {
 }
 
 class _FoodItemViewState extends State<FoodItemView> {
-
   Future<void> _handleIncrease() async {
-    await widget.controller.increaseQuantity(widget.item);
     setState(() {
-      widget.item.quantity++;
+      widget.controller.increaseQuantity(widget.item);
     });
   }
 
   Future<void> _handleDecrease() async {
-    await widget.controller.decreaseQuantity(widget.item);
     setState(() {
-      if (widget.item.quantity > 0) {
-        widget.item.quantity--;
-      }
+      widget.controller.decreaseQuantity(widget.item);
     });
   }
 
