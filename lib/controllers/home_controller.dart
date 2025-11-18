@@ -6,7 +6,7 @@ class HomeController {
   final User user;
   final Fridge fridge;
   HomeController({required this.user, required this.fridge});
-  
+
   List<Item> searchItems(List<Item> items, String query) {
     final lowerQuery = query.toLowerCase().trim();
     if (lowerQuery.isEmpty) return List.from(items);
@@ -14,5 +14,15 @@ class HomeController {
     return items
         .where((item) => item.name.toLowerCase().contains(lowerQuery))
         .toList();
+  }
+
+  List<Item> sortItemsByDateAdded(List<Item> items) {
+    items.sort((a, b) => a.dateAdded.compareTo(b.dateAdded));
+    return items;
+  }
+
+  List<Item> sortItemsByExpiryDate(List<Item> items) {
+    items.sort((a, b) => a.expiryDate.compareTo(b.expiryDate));
+    return items;
   }
 }

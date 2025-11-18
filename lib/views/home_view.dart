@@ -5,7 +5,6 @@ import 'add_item_view.dart';
 import 'login_view.dart';
 import 'recipe_page_view.dart';
 import '../models/item.dart';
-import '../controllers/home_controller.dart';
 import '../controllers/add_item_controller.dart';
 import '../controllers/food_item_controller.dart';
 
@@ -57,7 +56,7 @@ class _HomeWrapperState extends State<HomeWrapper> {
   }
 
   void _onAddItem(Item newItem) {
-   //same thing that with DeleteItem
+    //same thing that with DeleteItem
     setState(() {
       _filteredItems = _homeController.searchItems(
         _homeController.fridge.items,
@@ -91,7 +90,7 @@ class HomeView extends StatelessWidget {
   final TextEditingController searchController;
   final HomeController homeController;
 
-  HomeView({
+  const HomeView({
     super.key,
     required this.items,
     required this.onAddItem,
@@ -270,7 +269,6 @@ class HomeView extends StatelessWidget {
                           ),
                         ),
                       );
-
                     },
                     child: Column(
                       children: [
@@ -370,7 +368,10 @@ class HomeView extends StatelessWidget {
                   PageRouteBuilder(
                     pageBuilder: (context, animation, secondaryAnimation) =>
                         AddItemView(
-                          controller: AddItemController(user: homeController.user, fridge: homeController.fridge),
+                          controller: AddItemController(
+                            user: homeController.user,
+                            fridge: homeController.fridge,
+                          ),
                         ),
                     transitionsBuilder:
                         (context, animation, secondaryAnimation, child) {
