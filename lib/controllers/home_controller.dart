@@ -7,6 +7,13 @@ class HomeController {
   final Fridge fridge;
   HomeController({required this.user, required this.fridge});
 
+  /*
+  Future<void> refreshFridgeItems() async {
+  fridge.items = await ItemDatabaseHelper.queryByFridge(fridge.id!)
+      .then((list) => Future.wait(list.map((map) => Item.fromMap(map))));
+  }
+*/
+
   List<Item> searchItems(List<Item> items, String query) {
     final lowerQuery = query.toLowerCase().trim();
     if (lowerQuery.isEmpty) return List.from(items);
