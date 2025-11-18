@@ -6,11 +6,14 @@ import '../controllers/food_item_controller.dart';
 class FoodItemView extends StatefulWidget {
   final Item item;
   final Function(Item) onDelete;
+  final Function() onReturn;
   final FoodItemController controller;
+
   const FoodItemView({
     super.key,
     required this.item,
     required this.onDelete,
+    required this.onReturn,
     required this.controller,
   });
 
@@ -47,7 +50,10 @@ class _FoodItemViewState extends State<FoodItemView> {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () {
+            widget.onReturn();
+            Navigator.of(context).pop();
+          },
           padding: EdgeInsets.zero,
           iconSize: 30,
         ),

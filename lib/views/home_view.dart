@@ -64,6 +64,15 @@ class _HomeWrapperState extends State<HomeWrapper> {
     });
   }
 
+  void _onBackToHomeView() {
+    setState(() {
+      _filteredItems = _homeController.searchItems(
+        _homeController.fridge.items,
+        _searchQuery,
+      );
+    });
+  }
+
   @override
   void dispose() {
     _searchController.dispose();
@@ -76,6 +85,7 @@ class _HomeWrapperState extends State<HomeWrapper> {
       items: _filteredItems,
       onAddItem: _onAddItem,
       onDeleteItem: _onDeleteItem,
+      onBackToHomeView: _onBackToHomeView,
       searchController: _searchController,
       homeController: _homeController,
     );
@@ -86,6 +96,7 @@ class HomeView extends StatelessWidget {
   final List<Item> items;
   final Function(Item) onAddItem;
   final Function(Item) onDeleteItem;
+  final Function() onBackToHomeView;
   final TextEditingController searchController;
   final HomeController homeController;
 
@@ -94,6 +105,7 @@ class HomeView extends StatelessWidget {
     required this.items,
     required this.onAddItem,
     required this.onDeleteItem,
+    required this.onBackToHomeView,
     required this.searchController,
     required this.homeController,
   });
@@ -259,6 +271,9 @@ class HomeView extends StatelessWidget {
                             item: item,
                             onDelete: (itemToDelete) {
                               onDeleteItem(itemToDelete); //refreshes home
+                            },
+                            onReturn: () {
+                              onBackToHomeView();
                             },
                             controller: FoodItemController(
                               user: homeController.user,
