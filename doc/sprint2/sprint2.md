@@ -21,7 +21,7 @@
 At the moment we are an inexperienced team, and are unsure how many points we can handle, nor what point value each task should hold. For now, we will delegate our capacity as follows:
 
 - Noah: 12 points
-- Darren: 12 points
+- Darren: 10 points
 - Ignacio: 8 points
 - Matthew: 11 points
 
@@ -34,10 +34,9 @@ At the moment we are an inexperienced team, and are unsure how many points we ca
 - Integrate login page with controllers **(2pts)**: Matthew
 - Reallocate methods to correct layer **(4pts)**: Ignacio
 - Create recipes page **(3pts)**: Darren
-- Create recipe info page **(3pts)**: Darren
 - Create necessary controller methods for new PBs **(3pts)**: Ignacio
 - Rewriting PBs **(2pts)**: Darren
-- Improve add item view **(2pts)**: Darren
+- Improve existing views **(3pts)**: Darren
 
 Any point deficits will be made up for via troubleshooting.
 
