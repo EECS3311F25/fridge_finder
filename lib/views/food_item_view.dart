@@ -90,6 +90,9 @@ class _FoodItemViewState extends State<FoodItemView> {
               decoration: BoxDecoration(
                 color: const Color.fromRGBO(240, 240, 240, 1),
                 borderRadius: BorderRadius.circular(12),
+                border: item.frozen
+                    ? Border.all(color: Colors.blue, width: 4)
+                    : null,
               ),
               child: Center(
                 child: Text(
