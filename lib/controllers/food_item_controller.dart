@@ -29,9 +29,10 @@ class FoodItemController {
     if (item.id != null) {
       await ItemDatabaseHelper.instance.delete(item.id!);
     }
+    fridge.items.remove(item);
   }
 
-  Future freezeItem() async {
+  Future<void> freezeItem() async {
     item.frozen = true;
     item.frozenDifferential = item.expiryDate.difference(item.dateAdded).inDays;
     await ItemDatabaseHelper.instance.update(item);
