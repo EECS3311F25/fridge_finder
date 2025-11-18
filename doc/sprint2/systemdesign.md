@@ -146,11 +146,3 @@
 
 
 ---
-
-## **Software Architecture Diagram**
-**Diagram:**
-![Fridge Finder MVC Architecture](./mvc.png)
-
-**Reference Link** : https://developer.mozilla.org/en-US/docs/Glossary/MVC
-
-
