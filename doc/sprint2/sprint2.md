@@ -21,7 +21,7 @@
 At the moment we are an inexperienced team, and are unsure how many points we can handle, nor what point value each task should hold. For now, we will delegate our capacity as follows:
 
 - Noah: 12 points
-- Darren: 10 points
+- Darren: 12 points
 - Ignacio: 8 points
 - Matthew: 11 points
 
