@@ -287,8 +287,8 @@ class _FoodItemViewState extends State<FoodItemView> {
               width: double.infinity,
               height: 55,
               child: ElevatedButton(
-                onPressed: () {
-                  // onPressed for the freeze button
+                onPressed: () async {
+                  await widget.controller.freezeItem();
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromRGBO(66, 133, 244, 1),
