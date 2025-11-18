@@ -56,15 +56,13 @@ class _HomeWrapperState extends State<HomeWrapper> {
   }
 
   void _onAddItem(Item newItem) {
-  setState(() {
-    _filteredItems = _homeController.searchItems(
-      _homeController.fridge.items,
-      _searchQuery,
-    );
-  });
-}
-
-
+    setState(() {
+      _filteredItems = _homeController.searchItems(
+        _homeController.fridge.items,
+        _searchQuery,
+      );
+    });
+  }
 
   @override
   void dispose() {
@@ -280,7 +278,11 @@ class HomeView extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: const Color.fromRGBO(240, 240, 240, 1),
                             borderRadius: BorderRadius.circular(12),
+                            border: item.frozen
+                                ? Border.all(color: Colors.blue, width: 4)
+                                : null,
                           ),
+
                           // Image Placeholder
                           child: Center(
                             child: SizedBox(
