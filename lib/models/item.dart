@@ -82,8 +82,8 @@ class Item {
       'id': id,
       'name': name,
       'quantity': quantity,
-      'dateAdded': dateAdded,
-      'expiryDate': expiryDate,
+      'dateAdded': dateAdded.toIso8601String(),
+      'expiryDate': expiryDate.toIso8601String(),
       'fridgeId': fridge.id,
       'imageIcon': imageIcon.toString(), // database expects a path, placeholder
       'frozen': frozen,
@@ -98,12 +98,11 @@ class Item {
       id: map['id'],
       name: map['name'],
       quantity: map['quantity'],
-      dateAdded: map['dateAdded'],
-      expiryDate: map['expiryDate'],
+      dateAdded: DateTime.parse(map['dateAdded']),
+      expiryDate: DateTime.parse(map['expiryDate']),
       fridge: fridge,
       imageIcon: map['imageIcon'] ?? '',
       frozen: map['frozen'] ?? false,
-
     );
   }
 }
