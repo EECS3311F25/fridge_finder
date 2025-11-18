@@ -312,8 +312,8 @@ class _FoodItemViewState extends State<FoodItemView> {
               width: double.infinity,
               height: 55,
               child: ElevatedButton(
-                onPressed: () {
-                  // onPressed for the delete button
+                onPressed: () async {
+                  await widget.controller.deleteItem(item);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromARGB(255, 244, 66, 66),
