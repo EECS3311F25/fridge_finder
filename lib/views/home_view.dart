@@ -56,7 +56,6 @@ class _HomeWrapperState extends State<HomeWrapper> {
   }
 
   void _onAddItem(Item newItem) {
-  _homeController.fridge.items.add(newItem); 
   setState(() {
     _filteredItems = _homeController.searchItems(
       _homeController.fridge.items,
