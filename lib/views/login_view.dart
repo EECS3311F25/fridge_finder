@@ -160,7 +160,7 @@ class LoginView extends StatelessWidget {
                   final username = 'HealthyEater3000';
                   final password = 'Apple123';
                   loginController
-                      .createUser(username, password)
+                      .login(username, password)
                       // Create newUser given a username and password
                       .then((newUser) async {
                         // Create a fridge for the new user
