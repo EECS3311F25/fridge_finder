@@ -26,9 +26,7 @@ class FoodItemController {
   }
 
   Future<void> deleteItem(Item item) async {
-    if (item.id != null) {
-      await ItemDatabaseHelper.instance.delete(item.id!);
-    }
+    await ItemDatabaseHelper.instance.delete(item.id!);
     fridge.items.remove(item);
   }
 
