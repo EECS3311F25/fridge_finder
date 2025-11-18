@@ -19,20 +19,15 @@ class FoodItemView extends StatefulWidget {
 }
 
 class _FoodItemViewState extends State<FoodItemView> {
-
   Future<void> _handleIncrease() async {
-    await widget.controller.increaseQuantity(widget.item);
     setState(() {
-      widget.item.quantity++;
+      widget.controller.increaseQuantity(widget.item);
     });
   }
 
   Future<void> _handleDecrease() async {
-    await widget.controller.decreaseQuantity(widget.item);
     setState(() {
-      if (widget.item.quantity > 0) {
-        widget.item.quantity--;
-      }
+      widget.controller.decreaseQuantity(widget.item);
     });
   }
 
@@ -292,8 +287,8 @@ class _FoodItemViewState extends State<FoodItemView> {
               width: double.infinity,
               height: 55,
               child: ElevatedButton(
-                onPressed: () {
-                  // onPressed for the freeze button
+                onPressed: () async {
+                  await widget.controller.freezeItem();
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromRGBO(66, 133, 244, 1),
@@ -303,6 +298,31 @@ class _FoodItemViewState extends State<FoodItemView> {
                 ),
                 child: const Text(
                   'Freeze',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+
+            // Delete Button ===========================================
+            SizedBox(
+              width: double.infinity,
+              height: 55,
+              child: ElevatedButton(
+                onPressed: () async {
+                  await widget.controller.deleteItem(item);
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 244, 66, 66),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                ),
+                child: const Text(
+                  'Delete',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 24,
