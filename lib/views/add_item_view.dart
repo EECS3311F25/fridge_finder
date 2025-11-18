@@ -203,9 +203,9 @@ class _AddItemViewState extends State<AddItemView> {
                         ),
                       )
                     : ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: Image.asset(_selectedIcon!, fit: BoxFit.cover),
-                ),
+                        borderRadius: BorderRadius.circular(12),
+                        child: Image.asset(_selectedIcon!, fit: BoxFit.cover),
+                      ),
               ),
             ),
 
@@ -262,7 +262,11 @@ class _AddItemViewState extends State<AddItemView> {
               children: [
                 const Text(
                   'Quantity',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
                 ),
                 const SizedBox(width: 20),
                 Row(
@@ -273,7 +277,11 @@ class _AddItemViewState extends State<AddItemView> {
                       radius: 20,
                       child: IconButton(
                         onPressed: _decrementQuantity,
-                        icon: const Icon(Icons.remove, color: Colors.white, size: 18),
+                        icon: const Icon(
+                          Icons.remove,
+                          color: Colors.white,
+                          size: 18,
+                        ),
                         padding: EdgeInsets.zero,
                         enableFeedback: false,
                       ),
@@ -295,7 +303,11 @@ class _AddItemViewState extends State<AddItemView> {
                       radius: 20,
                       child: IconButton(
                         onPressed: _incrementQuantity,
-                        icon: const Icon(Icons.add, color: Colors.white, size: 18),
+                        icon: const Icon(
+                          Icons.add,
+                          color: Colors.white,
+                          size: 18,
+                        ),
                         padding: EdgeInsets.zero,
                         enableFeedback: false,
                       ),
@@ -323,10 +335,14 @@ class _AddItemViewState extends State<AddItemView> {
                     name: _foodName.trim(),
                     quantity: _addFoodQuantity,
                     dateAdded: DateTime.now(),
-                    expiryDate: _expiryDate ?? DateTime.now().add(const Duration(days: 7)),
+                    expiryDate:
+                        _expiryDate ??
+                        DateTime.now().add(const Duration(days: 7)),
                     imagePath: "",
                   );
-                  Navigator.pop(context, newItem);
+                  if (context.mounted) {
+                    Navigator.pop(context, newItem);
+                  }
                 },
                 child: const Text(
                   'Add',
