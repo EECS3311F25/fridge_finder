@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'home_view.dart';
+import '../controllers/home_controller.dart';
+import '../controllers/login_controller.dart';
+import '../models/fridge.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
@@ -151,7 +155,43 @@ class LoginView extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  // onPressed for sign in button
+                  // Log In Functionality (Temporary Create User)
+                  final loginController = LoginController();
+                  final username = 'HealthyEater3000';
+                  final password = 'Apple123';
+                  loginController
+                      .createUser(username, password)
+                      // Create newUser given a username and password
+                      .then((newUser) async {
+                        // Create a fridge for the new user
+                        final fridge = await Fridge.createAndInsert(newUser);
+                        // Navigate to home view
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => HomeWrapper(
+                              homeController: HomeController(
+                                user: newUser,
+                                fridge: fridge,
+                              ),
+                            ),
+                          ),
+                        );
+                      })
+                      .catchError((error) {
+                        // Show error message if user creation fails
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Failed to create account: $error'),
+                            backgroundColor: const Color.fromARGB(
+                              255,
+                              255,
+                              17,
+                              0,
+                            ),
+                          ),
+                        );
+                      });
                 },
                 child: const Text(
                   'Sign in',
