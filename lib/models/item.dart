@@ -85,7 +85,7 @@ class Item {
       'dateAdded': dateAdded.toIso8601String(),
       'expiryDate': expiryDate.toIso8601String(),
       'fridgeId': fridge.id,
-      'imageIcon': imagePath, // database expects a path, placeholder
+      'imagePath': imagePath, // database expects a path, placeholder
       'frozen': frozen,
       'frozenDifferential': frozenDifferential,
     };
