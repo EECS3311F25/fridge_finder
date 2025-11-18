@@ -49,7 +49,7 @@ class Fridge {
   }
 
   Map<String, dynamic> toMap() {
-    return {'id': id, 'user': user.id};
+    return {'id': id, 'userId': user.id};
   }
 
   static Future<Fridge> fromMap(Map<String, dynamic> map) async {
