@@ -40,13 +40,16 @@ abstract class DatabaseHelper<T> {
       ),
       CREATE TABLE item (
         id INTEGER PRIMARY KEY NOT NULL,
-        name TEXT,
-        quantity INTEGER,
-        dateAdded TEXT,
-        expiryDate TEXT,
-        fridgeId INTEGER,
-        imageIcon TEXT,
-        FOREIGN KEY fridgeId REFERENCES fridge(id)
+        fdcId INTEGER,
+        name TEXT NOT NULL,
+        quantity INTEGER NOT NULL,
+        dateAdded TEXT NOT NULL,
+        expiryDate TEXT NOT NULL,
+        fridgeId INTEGER NOT NULL,
+        imagePath TEXT,
+        FOREIGN KEY fridgeId REFERENCES fridge(id),
+        frozen INTEGER NOT NULL,
+        frozenDifferential INTEGER NOT NULL
       )
     ''');
   }
