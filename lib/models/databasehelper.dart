@@ -15,7 +15,7 @@ abstract class DatabaseHelper<T> {
 
     return await openDatabase(
       path,
-      version: 3,
+      version: 4,
       onCreate: _onCreate,
       onConfigure: _onConfigure,
       onUpgrade: _onUpgrade,
@@ -23,11 +23,11 @@ abstract class DatabaseHelper<T> {
   }
 
   Future _onUpgrade(Database db, int oldVersion, int newVersion) async {
-    await db.execute('''
-      ALTER TABLE item RENAME COLUMN imageIcon TO imagePath;
-      ALTER TABLE item ADD COLUMN frozen INTEGER NOT NULL;
-      ALTER TABLE item ADD COLUMN frozenDifferential INTEGER NOT NULL;
-    ''');
+    await db.execute('ALTER TABLE item RENAME COLUMN imageIcon TO imagePath');
+    await db.execute('ALTER TABLE item ADD COLUMN frozen INTEGER NOT NULL');
+    await db.execute(
+      'ALTER TABLE item ADD COLUMN frozenDifferential INTEGER NOT NULL',
+    );
   }
 
   Future _onConfigure(Database db) async {
