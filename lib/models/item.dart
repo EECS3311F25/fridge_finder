@@ -39,7 +39,7 @@ class Item {
     DateTime? dateAdded,
     DateTime? expiryDate,
     Fridge? fridge,
-    Image? imageIcon,
+    String? imagePath,
   }) {
     return Item(
       id: id ?? this.id,
@@ -49,7 +49,7 @@ class Item {
       dateAdded: dateAdded ?? this.dateAdded,
       expiryDate: expiryDate ?? this.expiryDate,
       fridge: fridge ?? this.fridge,
-      imagePath: imagePath,
+      imagePath: imagePath ?? this.imagePath,
     );
   }
 
