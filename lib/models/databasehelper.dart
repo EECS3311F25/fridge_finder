@@ -41,12 +41,18 @@ abstract class DatabaseHelper<T> {
         username TEXT,
         email TEXT,
         password TEXT
-      ),
+      )
+    ''');
+
+    await db.execute('''
       CREATE TABLE fridge (
         id INTEGER PRIMARY KEY NOT NULL,
         userId INTEGER
         FOREIGN KEY userId REFERENCES user(id)
-      ),
+      )
+    ''');
+
+    await db.execute('''
       CREATE TABLE item (
         id INTEGER PRIMARY KEY NOT NULL,
         fdcId INTEGER,
