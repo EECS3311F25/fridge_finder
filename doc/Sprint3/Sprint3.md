@@ -31,7 +31,7 @@ At the moment we are an inexperienced team, and are unsure how many points we ca
 - Recipe_view **(3pts)**: Matthew
 - recipe_page_view **(3pts)**: Matthew
 - connect recipe pages with contollers **(3pts)**: Matthew
-- polish connection with view and controllers **(3pts)**: Matthew
+- Keep up Trello Board **(3pts)**: Matthew
 - Create filter for home Screen **(3pts)**: Darren
 - Complete the model documentation/system design **(4pts)**: Noah
 - Recepie controller **(3pts)**: Ignacio
