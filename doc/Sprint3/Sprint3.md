@@ -33,10 +33,11 @@ At the moment we are an inexperienced team, and are unsure how many points we ca
 - connect recipe pages with contollers **(3pts)**: Matthew
 - polish connection with view and controllers **(3pts)**: Matthew
 - Create filter for home Screen **(3pts)**: Darren
-- Complete the model documentation/system design **(4pts)**: Noah
+- Complete the model documentation/system design **(6pts)**: Noah
 - Recepie controller **(3pts)**: Ignacio
 - filter item controller **(4pts)**: Ignacio, Noah
 - Polish controllers **(3pts)**: Ignacio
+- CRC cards **(2pts)**: Noah
 
 
 Any point deficits will be made up for via troubleshooting.
