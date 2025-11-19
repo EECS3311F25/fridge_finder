@@ -44,7 +44,7 @@ Any point deficits will be made up for via troubleshooting.
 
 ## User Stories (for Sprint 2)
 
-- PB2: view product status
-- PB12: filter Items
-- PB15: account creation
-- PB11: track added dates
+- PB 2: view product status
+- PB 12: filter Items
+- PB 15: account creation
+- PB 11: track added dates
