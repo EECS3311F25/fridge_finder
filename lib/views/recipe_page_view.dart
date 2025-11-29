@@ -1,8 +1,24 @@
 import 'package:flutter/material.dart';
 import 'recipe_view.dart';
+import '../controllers/recipe_controller.dart';
+import '../models/recipe.dart';
 
-class RecipePageView extends StatelessWidget {
+class RecipePageView extends StatefulWidget {
   const RecipePageView({super.key});
+
+  @override
+  State<RecipePageView> createState() => _RecipePageViewState();
+}
+
+class _RecipePageViewState extends State<RecipePageView> {
+  final RecipeController _controller = RecipeController();
+  List<Recipe> _recipes = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _recipes = _controller.getAllRecipes();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,39 +50,27 @@ class RecipePageView extends StatelessWidget {
       // Recipes List
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              _buildRecipeContainer(
-                context,
-                'Apple Pie',
-                'Really cool Apple Pie, it tastes very delicious yum yum',
-              ),
-              const SizedBox(height: 20),
-              _buildRecipeContainer(
-                context,
-                'Banana Bread',
-                'Really cool Banana Bread, it tastes very delicious yum yum',
-              ),
-              // New recipes here
-            ],
-          ),
+        child: ListView.separated(
+          itemCount: _recipes.length,
+          separatorBuilder: (context, index) => const SizedBox(height: 20),
+          itemBuilder: (context, index) {
+            final recipe = _recipes[index];
+            return _buildRecipeContainer(context, recipe);
+          },
         ),
       ),
     );
   }
 
   // Recipe containers
-  Widget _buildRecipeContainer(
-    BuildContext context,
-    String title,
-    String description,
-  ) {
+  Widget _buildRecipeContainer(BuildContext context, Recipe recipe) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const RecipeView()),
+          MaterialPageRoute(
+            builder: (context) => RecipeView(recipe: recipe),
+          ),
         );
       },
       child: Container(
@@ -104,7 +108,7 @@ class RecipePageView extends StatelessWidget {
                 children: [
                   // Recipe Title
                   Text(
-                    title,
+                    recipe.name,
                     style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -115,7 +119,7 @@ class RecipePageView extends StatelessWidget {
 
                   // Recipe Description
                   Text(
-                    description,
+                    recipe.description,
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.grey.shade700,

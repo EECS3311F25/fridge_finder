@@ -48,6 +48,24 @@ class Fridge {
     return Fridge._(id: fridgeMap['id'], user: user, items: items);
   }
 
+  static Future<Fridge?> getFridgeByUser(User user) async {
+    try {
+      final Map<String, dynamic> fridgeMap = await FridgeDatabaseHelper.queryByUserId(
+        user.id!,
+      );
+
+      final List<Map<String, dynamic>> itemMaps =
+          await ItemDatabaseHelper.queryByFridge(fridgeMap['id']);
+      final List<Item> items = await Future.wait(
+        itemMaps.map((map) async => await Item.fromMap(map)),
+      );
+
+      return Fridge._(id: fridgeMap['id'], user: user, items: items);
+    } catch (e) {
+      return null;
+    }
+  }
+
   Map<String, dynamic> toMap() {
     return {'id': id, 'userId': user.id};
   }
@@ -88,6 +106,20 @@ class FridgeDatabaseHelper extends DatabaseHelper<Fridge> {
       return maps.first;
     }
     throw Exception('Fridge with ID $id not found');
+  }
+
+  static Future<Map<String, dynamic>> queryByUserId(int userId) async {
+    Database db = await instance.db;
+    List<Map<String, dynamic>> maps = await db.query(
+      'fridge',
+      where: 'userId = ?',
+      whereArgs: [userId],
+      limit: 1,
+    );
+    if (maps.isNotEmpty) {
+      return maps.first;
+    }
+    throw Exception('Fridge for user ID $userId not found');
   }
 
   @override

@@ -7,6 +7,7 @@ import 'recipe_page_view.dart';
 import '../models/item.dart';
 import '../controllers/add_item_controller.dart';
 import '../controllers/food_item_controller.dart';
+import '../controllers/filter_item_controller.dart';
 
 /// This small wrapper keeps HomeView stateless and also allows the creation of new items
 class HomeWrapper extends StatefulWidget {
@@ -20,9 +21,11 @@ class HomeWrapper extends StatefulWidget {
 class _HomeWrapperState extends State<HomeWrapper> {
   final TextEditingController _searchController = TextEditingController();
   late final HomeController _homeController;
+  final FilterItemController _filterController = FilterItemController();
 
   List<Item> _filteredItems = [];
   String _searchQuery = '';
+  String _currentFilter = 'Expiring soon';
 
   @override
   void initState() {
@@ -38,38 +41,64 @@ class _HomeWrapperState extends State<HomeWrapper> {
   void _onSearchChanged() {
     setState(() {
       _searchQuery = _searchController.text;
-      _filteredItems = _homeController.searchItems(
-        _homeController.fridge.items,
-        _searchQuery,
-      );
+      _applyFilters();
     });
+  }
+
+  void _onFilterChanged(String? newValue) {
+    if (newValue != null) {
+      setState(() {
+        _currentFilter = newValue;
+        _applyFilters();
+      });
+    }
+  }
+
+  void _applyFilters() {
+    // First search
+    var items = _homeController.searchItems(
+      _homeController.fridge.items,
+      _searchQuery,
+    );
+
+    // Then filter/sort
+    if (_currentFilter == 'Expiring soon') {
+      items = _filterController.sortByExpiryDate(items, ascending: true);
+    } else if (_currentFilter == 'Recently added') {
+      items = _filterController.sortByDateAdded(items, ascending: false);
+    } else if (_currentFilter == 'Fresh') {
+      items = _filterController.filterByStatus(items, ItemStatus.fresh);
+    } else if (_currentFilter == 'Expiring Soon') {
+      items = _filterController.filterByStatus(items, ItemStatus.expiringSoon);
+    } else if (_currentFilter == 'Expired') {
+      items = _filterController.filterByStatus(items, ItemStatus.expired);
+    }
+
+    _filteredItems = items;
   }
 
   void _onDeleteItem(Item item) {
     //  (real logic in controller) in here im assuming that the controller already deleted the item, and the view its just updated
     setState(() {
-      _filteredItems = _homeController.searchItems(
-        _homeController.fridge.items,
-        _searchQuery,
-      );
+    setState(() {
+      _applyFilters();
+    });
     });
   }
 
   void _onAddItem(Item newItem) {
     setState(() {
-      _filteredItems = _homeController.searchItems(
-        _homeController.fridge.items,
-        _searchQuery,
-      );
+    setState(() {
+      _applyFilters();
+    });
     });
   }
 
   void _onBackToHomeView() {
     setState(() {
-      _filteredItems = _homeController.searchItems(
-        _homeController.fridge.items,
-        _searchQuery,
-      );
+    setState(() {
+      _applyFilters();
+    });
     });
   }
 
@@ -88,6 +117,8 @@ class _HomeWrapperState extends State<HomeWrapper> {
       onBackToHomeView: _onBackToHomeView,
       searchController: _searchController,
       homeController: _homeController,
+      onFilterChanged: _onFilterChanged,
+      currentFilter: _currentFilter,
     );
   }
 }
@@ -99,6 +130,8 @@ class HomeView extends StatelessWidget {
   final Function() onBackToHomeView;
   final TextEditingController searchController;
   final HomeController homeController;
+  final Function(String?) onFilterChanged;
+  final String currentFilter;
 
   const HomeView({
     super.key,
@@ -108,6 +141,8 @@ class HomeView extends StatelessWidget {
     required this.onBackToHomeView,
     required this.searchController,
     required this.homeController,
+    required this.onFilterChanged,
+    required this.currentFilter,
   });
 
   @override
@@ -211,7 +246,7 @@ class HomeView extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: DropdownButton<String>(
-                        value: 'Expiring soon',
+                        value: currentFilter,
                         items: const [
                           DropdownMenuItem(
                             value: 'Recently added',
@@ -221,10 +256,20 @@ class HomeView extends StatelessWidget {
                             value: 'Expiring soon',
                             child: Text('Expiring soon'),
                           ),
+                          DropdownMenuItem(
+                            value: 'Fresh',
+                            child: Text('Fresh'),
+                          ),
+                          DropdownMenuItem(
+                            value: 'Expiring Soon',
+                            child: Text('Expiring Soon'),
+                          ),
+                          DropdownMenuItem(
+                            value: 'Expired',
+                            child: Text('Expired'),
+                          ),
                         ],
-                        onChanged: (String? newValue) {
-                          // This is where the functionality of each value will go
-                        },
+                        onChanged: onFilterChanged,
                         underline: const SizedBox(),
                         icon: const Icon(
                           Icons.arrow_drop_down,

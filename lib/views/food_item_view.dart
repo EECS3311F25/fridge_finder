@@ -87,6 +87,24 @@ class _FoodItemViewState extends State<FoodItemView> {
                 color: Colors.black,
               ),
             ),
+            const SizedBox(height: 10),
+
+            // Status Badge ============================================
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              decoration: BoxDecoration(
+                color: _getStatusColor(item.status),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Text(
+                _getStatusText(item.status),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
             const SizedBox(height: 20),
 
             // Box Container ===========================================
@@ -291,23 +309,30 @@ class _FoodItemViewState extends State<FoodItemView> {
 
             const SizedBox(height: 20),
 
-            // Freeze Button ===========================================
+            // Freeze/Unfreeze Button ===========================================
             SizedBox(
               width: double.infinity,
               height: 55,
               child: ElevatedButton(
                 onPressed: () async {
-                  await widget.controller.freezeItem();
+                  if (widget.item.frozen) {
+                    await widget.controller.unfreezeItem();
+                  } else {
+                    await widget.controller.freezeItem();
+                  }
+                  setState(() {}); // Refresh UI to show new state
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromRGBO(66, 133, 244, 1),
+                  backgroundColor: widget.item.frozen
+                      ? Colors.lightBlueAccent // Different color for Unfreeze
+                      : const Color.fromRGBO(66, 133, 244, 1),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(100),
                   ),
                 ),
-                child: const Text(
-                  'Freeze',
-                  style: TextStyle(
+                child: Text(
+                  widget.item.frozen ? 'Unfreeze' : 'Freeze',
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -344,5 +369,27 @@ class _FoodItemViewState extends State<FoodItemView> {
         ),
       ),
     );
+  }
+
+  Color _getStatusColor(ItemStatus status) {
+    switch (status) {
+      case ItemStatus.fresh:
+        return Colors.green;
+      case ItemStatus.expiringSoon:
+        return Colors.orange;
+      case ItemStatus.expired:
+        return Colors.red;
+    }
+  }
+
+  String _getStatusText(ItemStatus status) {
+    switch (status) {
+      case ItemStatus.fresh:
+        return 'Fresh';
+      case ItemStatus.expiringSoon:
+        return 'Expiring Soon';
+      case ItemStatus.expired:
+        return 'Expired';
+    }
   }
 }

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import '../models/recipe.dart';
 
 class RecipeView extends StatelessWidget {
-  const RecipeView({super.key});
+  final Recipe recipe;
+
+  const RecipeView({super.key, required this.recipe});
 
   @override
   Widget build(BuildContext context) {
@@ -14,11 +17,11 @@ class RecipeView extends StatelessWidget {
           padding: EdgeInsets.zero,
           iconSize: 30,
         ),
-        title: const Padding(
+        title: Padding(
           padding: EdgeInsets.zero,
           child: Text(
-            'Recipe Name',
-            style: TextStyle(
+            recipe.name,
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 30,
               fontWeight: FontWeight.bold,
@@ -30,14 +33,29 @@ class RecipeView extends StatelessWidget {
         toolbarHeight: 60,
       ),
       backgroundColor: const Color.fromRGBO(248, 248, 248, 1),
-      body: const Center(
-        child: Text(
-          'Recipe Info',
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-          ),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              recipe.name,
+              style: const TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              recipe.description,
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.grey.shade800,
+                height: 1.5,
+              ),
+            ),
+          ],
         ),
       ),
     );
