@@ -17,8 +17,13 @@ class FilterItemController {
     return items.where((item) => item.frozen == frozen).toList();
   }
 
+  /// Filters the list of items by their status.
+  List<Item> filterByStatus(List<Item> items, ItemStatus status) {
+    return items.where((item) => item.status == status).toList();
+  }
+
   /// Sorts items by the closest expiry date.
-  List<Item> sortByExpiryDate(List<Item> items) {
+  List<Item> filterByExpiryStatus(List<Item> items) {
     items.sort((a, b) => a.expiryDate.compareTo(b.expiryDate));
     return items;
   }

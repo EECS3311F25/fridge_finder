@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'home_view.dart';
-import 'register_view.dart';
+import 'login_view.dart';
 import '../controllers/home_controller.dart';
-import '../controllers/login_controller.dart';
+import '../controllers/register_controller.dart';
 import '../models/fridge.dart';
 
-class LoginView extends StatelessWidget {
-  const LoginView({super.key});
+class RegisterView extends StatelessWidget {
+  const RegisterView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +43,9 @@ class LoginView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Sign in
+            // Create Account Title
             const Text(
-              'Log in',
+              'Create Account',
               style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
@@ -54,29 +54,29 @@ class LoginView extends StatelessWidget {
             ),
             const SizedBox(height: 20),
 
-            // Create an account link
+            // Already have an account link
             GestureDetector(
               onTap: () {
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => const RegisterView()),
+                  MaterialPageRoute(builder: (context) => const LoginView()),
                 );
               },
               child: RichText(
                 text: const TextSpan(
                   children: [
                     TextSpan(
-                      text: 'Or ',
+                      text: 'Already have an account? ',
                       style: TextStyle(
-                        fontSize: 24,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
                       ),
                     ),
                     TextSpan(
-                      text: 'create an account',
+                      text: 'Log in',
                       style: TextStyle(
-                        fontSize: 24,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Colors.grey,
                         decoration: TextDecoration.underline,
@@ -157,7 +157,7 @@ class LoginView extends StatelessWidget {
             ),
             const SizedBox(height: 30),
 
-            // Sign in button
+            // Sign up button
             SizedBox(
               width: double.infinity,
               height: 55,
@@ -168,71 +168,44 @@ class LoginView extends StatelessWidget {
                     borderRadius: BorderRadius.circular(100),
                   ),
                 ),
-                onPressed: () async {
-                  final loginController = LoginController();
+                onPressed: () {
+                  final registerController = RegisterController();
                   final username = usernameController.text;
                   final password = passwordController.text;
 
-                  // Show loading indicator
-                  showDialog(
-                    context: context,
-                    barrierDismissible: false,
-                    builder: (BuildContext context) {
-                      return const Center(
-                        child: CircularProgressIndicator(
-                          color: Color.fromRGBO(34, 171, 82, 1),
-                        ),
-                      );
-                    },
-                  );
-
-                  try {
-                    // Attempt login
-                    final user = await loginController.login(username, password);
-                    
-                    // Get or create fridge for the user
-                    Fridge? fridge = await Fridge.getFridgeByUser(user);
-                    
-                    // If no fridge exists, create one
-                    if (fridge == null) {
-                      fridge = await Fridge.createAndInsert(user);
-                    }
-                    
-                    // Close loading dialog
-                    if (context.mounted) {
-                      Navigator.of(context).pop();
-                      
-                      // Navigate to home view
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => HomeWrapper(
-                            homeController: HomeController(
-                              user: user,
-                              fridge: fridge!,
+                  registerController
+                      .createUser(username, password)
+                      .then((newUser) async {
+                        // Create a fridge for the new user
+                        final fridge = await Fridge.createAndInsert(newUser);
+                        // Navigate to home view
+                        if (context.mounted) {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => HomeWrapper(
+                                homeController: HomeController(
+                                  user: newUser,
+                                  fridge: fridge,
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
-                      );
-                    }
-                  } catch (error) {
-                    // Close loading dialog
-                    if (context.mounted) {
-                      Navigator.of(context).pop();
-                      
-                      // Show error message
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Login failed: $error'),
-                          backgroundColor: Colors.red,
-                          duration: const Duration(seconds: 3),
-                        ),
-                      );
-                    }
-                  }
+                          );
+                        }
+                      })
+                      .catchError((error) {
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Failed to create account: $error'),
+                              backgroundColor: Colors.red,
+                            ),
+                          );
+                        }
+                      });
                 },
                 child: const Text(
-                  'Sign in',
+                  'Sign up',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 24,
