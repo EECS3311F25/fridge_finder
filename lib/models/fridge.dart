@@ -22,20 +22,12 @@ class Fridge {
   }
 
   static Future<Fridge> createAndInsert(User user) async {
-  final tempFridge = Fridge._(
-    user: user,
-    items: [],
-  );
+    final tempFridge = Fridge._(user: user, items: []);
 
-  final newId = await FridgeDatabaseHelper.instance.insert(tempFridge);
+    final newId = await FridgeDatabaseHelper.instance.insert(tempFridge);
 
-  return Fridge._(
-    id: newId,
-    user: user,
-    items: [],
-  );
-}
-
+    return Fridge._(id: newId, user: user, items: []);
+  }
 
   static Future<Fridge> getFromDb(int fridgeId) async {
     final Map<String, dynamic> fridgeMap = await FridgeDatabaseHelper.query(
@@ -65,12 +57,7 @@ class Fridge {
       final itemMaps = await ItemDatabaseHelper.queryByFridge(fridgeMap['id']);
       final items = await Future.wait(itemMaps.map((m) => Item.fromMap(m)));
 
-      return Fridge._(
-        id: fridgeMap['id'],
-        user: user,
-        items: items,
-      );
-
+      return Fridge._(id: fridgeMap['id'], user: user, items: items);
     } catch (e) {
       return null;
     }
@@ -81,7 +68,9 @@ class Fridge {
   }
 
   static Future<Fridge> fromMap(Map<String, dynamic> map) async {
-    final User user = User.fromMap(await UserDatabaseHelper.query(map['userId']));
+    final User user = User.fromMap(
+      await UserDatabaseHelper.query(map['userId']),
+    );
 
     final List<Map<String, dynamic>> itemMaps =
         await ItemDatabaseHelper.queryByFridge(map['id']);
