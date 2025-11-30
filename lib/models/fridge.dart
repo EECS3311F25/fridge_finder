@@ -22,12 +22,20 @@ class Fridge {
   }
 
   static Future<Fridge> createAndInsert(User user) async {
-    final tempFridge = Fridge._(user: user, items: []);
+  final tempFridge = Fridge._(
+    user: user,
+    items: [],
+  );
 
-    final int newId = await FridgeDatabaseHelper.instance.insert(tempFridge);
+  final newId = await FridgeDatabaseHelper.instance.insert(tempFridge);
 
-    return tempFridge.create(id: newId);
-  }
+  return Fridge._(
+    id: newId,
+    user: user,
+    items: [],
+  );
+}
+
 
   static Future<Fridge> getFromDb(int fridgeId) async {
     final Map<String, dynamic> fridgeMap = await FridgeDatabaseHelper.query(
@@ -50,17 +58,19 @@ class Fridge {
 
   static Future<Fridge?> getFridgeByUser(User user) async {
     try {
-      final Map<String, dynamic> fridgeMap = await FridgeDatabaseHelper.queryByUserId(
-        user.id!,
+      final fridgeMap = await FridgeDatabaseHelper.queryByUserId(user.id!);
+
+      if (fridgeMap.isEmpty) return null;
+
+      final itemMaps = await ItemDatabaseHelper.queryByFridge(fridgeMap['id']);
+      final items = await Future.wait(itemMaps.map((m) => Item.fromMap(m)));
+
+      return Fridge._(
+        id: fridgeMap['id'],
+        user: user,
+        items: items,
       );
 
-      final List<Map<String, dynamic>> itemMaps =
-          await ItemDatabaseHelper.queryByFridge(fridgeMap['id']);
-      final List<Item> items = await Future.wait(
-        itemMaps.map((map) async => await Item.fromMap(map)),
-      );
-
-      return Fridge._(id: fridgeMap['id'], user: user, items: items);
     } catch (e) {
       return null;
     }
@@ -71,7 +81,7 @@ class Fridge {
   }
 
   static Future<Fridge> fromMap(Map<String, dynamic> map) async {
-    final User user = User.fromMap(await UserDatabaseHelper.query(map['user']));
+    final User user = User.fromMap(await UserDatabaseHelper.query(map['userId']));
 
     final List<Map<String, dynamic>> itemMaps =
         await ItemDatabaseHelper.queryByFridge(map['id']);

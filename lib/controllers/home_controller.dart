@@ -32,4 +32,9 @@ class HomeController {
     items.sort((a, b) => a.expiryDate.compareTo(b.expiryDate));
     return items;
   }
+
+  void logout() {
+    // Clear any session data if needed
+    // For now, just a placeholder as navigation is handled in the view
+  }
 }

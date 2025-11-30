@@ -40,181 +40,203 @@ class RegisterView extends StatelessWidget {
       backgroundColor: const Color.fromRGBO(248, 248, 248, 1),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Create Account Title
-            const Text(
-              'Create Account',
-              style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Create Account Title
+              const Text(
+                'Create Account',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
               ),
-            ),
-            const SizedBox(height: 20),
+              const SizedBox(height: 20),
 
-            // Already have an account link
-            GestureDetector(
-              onTap: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoginView()),
-                );
-              },
-              child: RichText(
-                text: const TextSpan(
-                  children: [
-                    TextSpan(
-                      text: 'Already have an account? ',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
+              // Already have an account link
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => const LoginView()),
+                  );
+                },
+                child: RichText(
+                  text: const TextSpan(
+                    children: [
+                      TextSpan(
+                        text: 'Already have an account? ',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
                       ),
-                    ),
-                    TextSpan(
-                      text: 'Log in',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey,
-                        decoration: TextDecoration.underline,
+                      TextSpan(
+                        text: 'Log in',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey,
+                          decoration: TextDecoration.underline,
+                        ),
                       ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 30),
+
+              // Username label
+              const Text(
+                'Username:',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+              const SizedBox(height: 10),
+
+              // Username input box
+              Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(100),
+                ),
+                child: TextField(
+                  controller: usernameController,
+                  decoration: const InputDecoration(
+                    hintText: 'ex. HealthyEater3000',
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 20,
                     ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 30),
-
-            // Username label
-            const Text(
-              'Username:',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
-            const SizedBox(height: 10),
-
-            // Username input box
-            Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(100),
-              ),
-              child: TextField(
-                controller: usernameController,
-                decoration: const InputDecoration(
-                  hintText: 'ex. HealthyEater3000',
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 20,
+                    hintStyle: TextStyle(fontSize: 24, color: Colors.black54),
                   ),
-                  hintStyle: TextStyle(fontSize: 24, color: Colors.black54),
+                  style: const TextStyle(fontSize: 24, color: Colors.black),
                 ),
-                style: const TextStyle(fontSize: 24, color: Colors.black),
               ),
-            ),
-            const SizedBox(height: 20),
+              const SizedBox(height: 20),
 
-            // Password label
-            const Text(
-              'Password:',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
+              // Password label
+              const Text(
+                'Password:',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
               ),
-            ),
-            const SizedBox(height: 10),
+              const SizedBox(height: 10),
 
-            // Password input box
-            Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(100),
-              ),
-              child: TextField(
-                controller: passwordController,
-                obscureText: true,
-                decoration: const InputDecoration(
-                  hintText: 'ex. Apple123',
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 20,
+              // Password input box
+              Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(100),
+                ),
+                child: TextField(
+                  controller: passwordController,
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    hintText: 'ex. Apple123',
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 20,
+                    ),
+                    hintStyle: TextStyle(fontSize: 24, color: Colors.black54),
                   ),
-                  hintStyle: TextStyle(fontSize: 24, color: Colors.black54),
+                  style: const TextStyle(fontSize: 24, color: Colors.black),
                 ),
-                style: const TextStyle(fontSize: 24, color: Colors.black),
               ),
-            ),
-            const SizedBox(height: 30),
+              const SizedBox(height: 30),
 
-            // Sign up button
-            SizedBox(
-              width: double.infinity,
-              height: 55,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromRGBO(34, 171, 82, 1),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(100),
+              // Sign up button
+              SizedBox(
+                width: double.infinity,
+                height: 55,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromRGBO(34, 171, 82, 1),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(100),
+                    ),
                   ),
-                ),
-                onPressed: () {
-                  final registerController = RegisterController();
-                  final username = usernameController.text;
-                  final password = passwordController.text;
+                  onPressed: () async {
+                    final registerController = RegisterController();
+                    final username = usernameController.text;
+                    final password = passwordController.text;
 
-                  registerController
-                      .createUser(username, password)
-                      .then((newUser) async {
-                        // Create a fridge for the new user
-                        final fridge = await Fridge.createAndInsert(newUser);
+                    // Show loading indicator
+                    showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) {
+                        return const Center(
+                          child: CircularProgressIndicator(
+                            color: Color.fromRGBO(34, 171, 82, 1),
+                          ),
+                        );
+                      },
+                    );
+
+                    try {
+                      final newUser = await registerController.createUser(username, password);
+                      
+                      // Create a fridge for the new user
+                      final fridge = await Fridge.createAndInsert(newUser);
+                      
+                      // Close loading dialog
+                      if (context.mounted) {
+                        Navigator.of(context).pop();
+                        
                         // Navigate to home view
-                        if (context.mounted) {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => HomeWrapper(
-                                homeController: HomeController(
-                                  user: newUser,
-                                  fridge: fridge,
-                                ),
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => HomeWrapper(
+                              homeController: HomeController(
+                                user: newUser,
+                                fridge: fridge,
                               ),
                             ),
-                          );
-                        }
-                      })
-                      .catchError((error) {
-                        if (context.mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('Failed to create account: $error'),
-                              backgroundColor: Colors.red,
-                            ),
-                          );
-                        }
-                      });
-                },
-                child: const Text(
-                  'Sign up',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
+                          ),
+                        );
+                      }
+                    } catch (error) {
+                      // Close loading dialog
+                      if (context.mounted) {
+                        Navigator.of(context).pop();
+                        
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Failed to create account: $error'),
+                            backgroundColor: Colors.red,
+                            duration: const Duration(seconds: 3),
+                          ),
+                        );
+                      }
+                    }
+                  },
+                  child: const Text(
+                    'Sign up',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
