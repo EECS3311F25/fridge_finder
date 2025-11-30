@@ -6,6 +6,12 @@ import 'package:sqflite/sqflite.dart';
 import 'databasehelper.dart';
 import 'fridge.dart';
 
+enum ItemStatus {
+  fresh,
+  expiringSoon,
+  expired,
+}
+
 class Item {
   final int? id;
   final int? fdcId;
@@ -30,6 +36,20 @@ class Item {
     this.frozen = false,
     this.frozenDifferential = 0,
   });
+
+  /// Auto-calculated status based on expiry date
+  ItemStatus get status {
+    final now = DateTime.now();
+    final daysUntilExpiry = expiryDate.difference(now).inDays;
+
+    if (daysUntilExpiry < 0) {
+      return ItemStatus.expired;
+    } else if (daysUntilExpiry <= 3) {
+      return ItemStatus.expiringSoon;
+    } else {
+      return ItemStatus.fresh;
+    }
+  }
 
   Item create({
     int? id,

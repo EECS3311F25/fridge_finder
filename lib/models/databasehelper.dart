@@ -15,7 +15,7 @@ abstract class DatabaseHelper<T> {
 
     return await openDatabase(
       path,
-      version: 5,
+      version: 6,
       onCreate: _onCreate,
       onConfigure: _onConfigure,
       onUpgrade: _onUpgrade,
@@ -23,13 +23,32 @@ abstract class DatabaseHelper<T> {
   }
 
   Future _onUpgrade(Database db, int oldVersion, int newVersion) async {
+    // Handle version 3: rename column
     if (oldVersion < 3) {
-      await db.execute('ALTER TABLE item RENAME COLUMN imageIcon TO imagePath');
+      try {
+        await db.execute('ALTER TABLE item RENAME COLUMN imageIcon TO imagePath');
+      } catch (e) {
+        // Column might already be renamed
+      }
     }
-    await db.execute('ALTER TABLE item ADD COLUMN frozen INTEGER NOT NULL');
-    await db.execute(
-      'ALTER TABLE item ADD COLUMN frozenDifferential INTEGER NOT NULL',
-    );
+    
+    // Handle version 4: add frozen column
+    if (oldVersion < 4) {
+      try {
+        await db.execute('ALTER TABLE item ADD COLUMN frozen INTEGER NOT NULL DEFAULT 0');
+      } catch (e) {
+        // Column might already exist
+      }
+    }
+    
+    // Handle version 5: add frozenDifferential column
+    if (oldVersion < 5) {
+      try {
+        await db.execute('ALTER TABLE item ADD COLUMN frozenDifferential INTEGER NOT NULL DEFAULT 0');
+      } catch (e) {
+        // Column might already exist
+      }
+    }
   }
 
   Future _onConfigure(Database db) async {
@@ -49,8 +68,8 @@ abstract class DatabaseHelper<T> {
     await db.execute('''
       CREATE TABLE fridge (
         id INTEGER PRIMARY KEY NOT NULL,
-        userId INTEGER
-        FOREIGN KEY userId REFERENCES user(id)
+        userId INTEGER,
+        FOREIGN KEY (userId) REFERENCES user(id)
       )
     ''');
 
@@ -64,9 +83,9 @@ abstract class DatabaseHelper<T> {
         expiryDate TEXT NOT NULL,
         fridgeId INTEGER NOT NULL,
         imagePath TEXT,
-        FOREIGN KEY fridgeId REFERENCES fridge(id),
         frozen INTEGER NOT NULL,
-        frozenDifferential INTEGER NOT NULL
+        frozenDifferential INTEGER NOT NULL,
+        FOREIGN KEY (fridgeId) REFERENCES fridge(id)
       )
     ''');
   }
