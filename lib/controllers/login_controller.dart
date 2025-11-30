@@ -10,6 +10,10 @@ class LoginController {
   bool get isLoggedIn => _currentUser != null;
 
   Future<User> login(String username, String password) async {
+    if (username.isEmpty || password.isEmpty) {
+      throw Exception('Username and password cannot be empty');
+    }
+
     final db = await _dbHelper.db;
 
     final result = await db.query(
@@ -32,10 +36,6 @@ class LoginController {
     _currentUser = null;
   }
 
-  Future<User> createUser(String username, String password) async {
-    final email = username;
-    final newUser = await User.createAndInsert(username, email, password);
-    return newUser;
-  }
+
 
 }
