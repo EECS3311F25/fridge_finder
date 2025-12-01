@@ -12,6 +12,8 @@
 - `user.dart`
     - Purpose
     - `class User`
+        - `create({int?, String?, String?, String?})`
+        - `createAndInsert(String, String, String)`
         - `toMap()`
         - `fromMap(Map<String, dynamic>)`
     - `class UserDatabaseHelper extends DatabaseHelper<User>`
@@ -22,6 +24,10 @@
 - `fridge.dart`
     - Purpose
     - `class Fridge`
+        - `create({int?, User?, List<Item>?})`
+        - `createAndInsert(User)`
+        - `getFromDb(int)`
+        - `getFridgeByUser(User)`
         - `toMap()`
         - `fromMap(Map<String, dynamic>)`
     - `class FridgeDatabaseHelper extends DatabaseHelper<Fridge>`
@@ -32,6 +38,8 @@
 - `item.dart`
     - Purpose
     - `class Item`
+        - `create({int?, int?, Sting?, int? DateTime?, DateTime?, Fridge?, String?})`
+        - `createAndInsert(int?, String, int, DateTime, DateTime, Fridge, String)`
         - `toMap()`
         - `fromMap(Map<String, dynamic>)`
     - `class ItemDatabaseHelper extends DatabaseHelper<Item>`
@@ -98,6 +106,16 @@ Devices come and go, but data needs to persist. The `User` object establishes a 
     - `final String email`: User's email
     - `final String password`: User's password
 - Public methods:
+    - `create({int?, String?, String?}) => User`
+        - Purpose: Alternate constructor for User object that accepts null IDs
+        - Returns (`User`): New User object
+        - TODO:
+            - No known issues
+    - `createAndInsert(String, String, String) => Future<User>`
+        - Purpose: Creates new User object (without ID) and instantiates it in the database, returning a robust User object with an ID
+        - Returns (`Future<User>`): New User object
+        - TODO:
+            - No known issues
     - `toMap() => Map<String, dynamic>`
         - Purpose: Represents the current User's account information as a map
         - Returns (`Map<String, dynamic>`): Map containing the User's id, username, email, and password
@@ -162,6 +180,26 @@ The core object of our application, the Fridge defines the container in which th
     - `final User user`: User to which the Fridge belongs
     - `final List<Item> items`: The items contained within the Fridge
 - Public methods:
+    - `create({int?, User?, List<Item>?}) => Fridge`
+        - Purpose: Alternate constructor for Fridge object that accepts null IDs
+        - Returns (`User`): New Fridge object
+        - TODO:
+            - No known issues
+    - `createAndInsert(User) => Future<Fridge>`
+        - Purpose: Creates new Fridge object (without ID) and instantiates it in the database, returning a robust Fridge object with an ID
+        - Returns (`Future<Fridge>`): New Fridge object
+        - TODO:
+            - No known issues
+    - `getFromDb(int) => Future<Fridge>`
+        - Purpose: Gets a Fridge, along with its items, from the DB
+        - Returns (`Future<Fridge>`): New Fridge object
+        - TODO:
+            - No known issues
+    - `getFridgeByUser(User) => Future<Fridge?>`
+        - Purpose: Returns the Fridge associated with the given User
+        - Returns (`Future<Fridge?>`): New Fridge object, null if no Fridge associated with the given User
+        - TODO:
+            - No known issues
     - `toMap() => Map<String, dynamic>`
         - Purpose: Represents the current Fridge's information as a map
         - Returns (`Map<String, dynamic>`): Map containing the Fridge's id, user, and items
@@ -216,6 +254,16 @@ The Item class defines the object that represents a food item in a user's fridge
     - `final DateTime expiryDate`: Date the Item will expire
     - `final Image? imageIcon`: Icon for the Item
 - Public methods:
+    - `create({int?, int?, String?, int?, DateTime?, DateTime?, Fridge?, String?}) => Item`
+        - Purpose: Alternate constructor for Item object that accepts null IDs
+        - Returns (`Item`): New Item object
+        - TODO:
+            - No known issues
+    - `createAndInsert(int?, String, int, DateTime, DateTime, Fridge, String) => Future<Item>`
+        - Purpose: Creates new Item object (without ID) and instantiates it in the database, returning a robust Item object with an ID
+        - Returns (`Future<Item>`): New Item object
+        - TODO:
+            - No known issues
     - `toMap() => Map<String, dynamic>`
         - Purpose: Represents the current Item's information as a map
         - Returns (`Map<String, dynamic>`): Map containing the Item's ID, FDC ID, name, quantity, date added, expiry date, and icon
@@ -249,5 +297,26 @@ The Item class defines the object that represents a food item in a user's fridge
             - No known issues
     - `delete(int id) => Future<int>`
         - Purpose: Implementation of the *delete* operation for an Item in the DB, as defined in `DatabaseHelper<T>`
+        - TODO:
+            - No known issues
+
+
+
+## `lib/models/recipe.dart`
+
+### Purpose
+The Recipe class defines recipes for meals the user can make based on the ingredients in their fridge.
+
+### `class Recipe`
+- Public attributes:
+    - `final String name`: Name of the recipe
+    - `final String description`: Description of the recipe, including instructions on how to make it
+    - `final String imagePath`: Path to an image of the recipe
+    - `final int prepTime`: Time it takes to make the recipe
+    - `final String difficulty`: The difficulty associated with making the recipe
+- Public methods:
+    - `get formattedPrepTime => String`
+        - Purpose: Returns the prep time in a legible format
+        - Returns: `"$prepTime min"`
         - TODO:
             - No known issues

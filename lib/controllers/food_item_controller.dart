@@ -35,4 +35,12 @@ class FoodItemController {
     item.frozenDifferential = item.expiryDate.difference(item.dateAdded).inDays;
     await ItemDatabaseHelper.instance.update(item);
   }
+
+  Future<void> unfreezeItem() async {
+    item.frozen = false;
+    // When unfreezing, we might want to reset the expiry date logic or keep it as is.
+    // For now, just toggling the frozen state as requested.
+    await ItemDatabaseHelper.instance.update(item);
+  }
 }
+

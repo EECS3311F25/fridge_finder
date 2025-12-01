@@ -6,6 +6,12 @@ import 'package:sqflite/sqflite.dart';
 import 'databasehelper.dart';
 import 'fridge.dart';
 
+enum ItemStatus {
+  fresh,
+  expiringSoon,
+  expired,
+}
+
 class Item {
   final int? id;
   final int? fdcId;
@@ -30,6 +36,20 @@ class Item {
     this.frozen = false,
     this.frozenDifferential = 0,
   });
+
+  /// Auto-calculated status based on expiry date
+  ItemStatus get status {
+    final now = DateTime.now();
+    final daysUntilExpiry = expiryDate.difference(now).inDays;
+
+    if (daysUntilExpiry < 0) {
+      return ItemStatus.expired;
+    } else if (daysUntilExpiry <= 3) {
+      return ItemStatus.expiringSoon;
+    } else {
+      return ItemStatus.fresh;
+    }
+  }
 
   Item create({
     int? id,
@@ -91,8 +111,8 @@ class Item {
     };
   }
 
-  static Future<Item> fromMap(Map<String, dynamic> map) async {
-    final Fridge fridge = await Fridge.getFromDb(map['fridgeId']);
+  static Future<Item> fromMap(Map<String, dynamic> map, {Fridge? fridge}) async {
+    final Fridge itemFridge = fridge ?? await Fridge.getFromDb(map['fridgeId']);
 
     return Item(
       id: map['id'],
@@ -100,9 +120,10 @@ class Item {
       quantity: map['quantity'],
       dateAdded: DateTime.parse(map['dateAdded']),
       expiryDate: DateTime.parse(map['expiryDate']),
-      fridge: fridge,
+      fridge: itemFridge,
       imagePath: map['imagePath'] ?? '',
-      frozen: map['frozen'] ?? false,
+      frozen: map['frozen'] == 1,
+      frozenDifferential: map['frozenDifferential'] ?? 0,
     );
   }
 }

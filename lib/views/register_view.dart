@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'home_view.dart';
-import 'register_view.dart';
+import 'login_view.dart';
 import '../controllers/home_controller.dart';
-import '../controllers/login_controller.dart';
+import '../controllers/register_controller.dart';
 import '../models/fridge.dart';
 
-import '../models/user.dart';
-
-class LoginView extends StatelessWidget {
-  const LoginView({super.key});
+class RegisterView extends StatelessWidget {
+  const RegisterView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,44 +22,6 @@ class LoginView extends StatelessWidget {
           padding: EdgeInsets.zero,
           iconSize: 30,
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.bug_report),
-            onPressed: () async {
-              // Fetch all users
-              final users = await UserDatabaseHelper.instance.queryAll();
-              
-              if (context.mounted) {
-                showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    title: const Text('Debug: All Users'),
-                    content: SizedBox(
-                      width: double.maxFinite,
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: users.length,
-                        itemBuilder: (context, index) {
-                          final user = users[index];
-                          return ListTile(
-                            title: Text(user['username'] ?? 'No Username'),
-                            subtitle: Text('ID: ${user['id']} | Pass: ${user['password']}'),
-                          );
-                        },
-                      ),
-                    ),
-                    actions: [
-                      TextButton(
-                        onPressed: () => Navigator.pop(context),
-                        child: const Text('Close'),
-                      ),
-                    ],
-                  ),
-                );
-              }
-            },
-          ),
-        ],
         title: const Padding(
           padding: EdgeInsets.zero,
           child: Text(
@@ -84,9 +44,9 @@ class LoginView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Sign in
+              // Create Account Title
               const Text(
-                'Log in',
+                'Create Account',
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
@@ -95,29 +55,29 @@ class LoginView extends StatelessWidget {
               ),
               const SizedBox(height: 20),
 
-              // Create an account link
+              // Already have an account link
               GestureDetector(
                 onTap: () {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => const RegisterView()),
+                    MaterialPageRoute(builder: (context) => const LoginView()),
                   );
                 },
                 child: RichText(
                   text: const TextSpan(
                     children: [
                       TextSpan(
-                        text: 'Or ',
+                        text: 'Already have an account? ',
                         style: TextStyle(
-                          fontSize: 24,
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
                         ),
                       ),
                       TextSpan(
-                        text: 'create an account',
+                        text: 'Log in',
                         style: TextStyle(
-                          fontSize: 24,
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Colors.grey,
                           decoration: TextDecoration.underline,
@@ -198,7 +158,7 @@ class LoginView extends StatelessWidget {
               ),
               const SizedBox(height: 30),
 
-              // Sign in button
+              // Sign up button
               SizedBox(
                 width: double.infinity,
                 height: 55,
@@ -210,82 +170,75 @@ class LoginView extends StatelessWidget {
                     ),
                   ),
                   onPressed: () async {
-                  final loginController = LoginController();
-                  final username = usernameController.text;
-                  final password = passwordController.text;
+                    final registerController = RegisterController();
+                    final username = usernameController.text;
+                    final password = passwordController.text;
 
-                  // Show loading indicator
-                  showDialog(
-                    context: context,
-                    barrierDismissible: false,
-                    builder: (BuildContext context) {
-                      return const Center(
-                        child: CircularProgressIndicator(
-                          color: Color.fromRGBO(34, 171, 82, 1),
-                        ),
-                      );
-                    },
-                  );
+                    // Show loading indicator
+                    showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) {
+                        return const Center(
+                          child: CircularProgressIndicator(
+                            color: Color.fromRGBO(34, 171, 82, 1),
+                          ),
+                        );
+                      },
+                    );
 
-                  try {
-                    // Attempt login
-                    final user = await loginController.login(username, password);
-                    
-                    // Get or create fridge for the user
-                    Fridge? fridge = await Fridge.getFridgeByUser(user);
-                    
-                    // If no fridge exists, create one
-                    if (fridge == null) {
-                      fridge = await Fridge.createAndInsert(user);
-                    }
-                    
-                    // Close loading dialog
-                    if (context.mounted) {
-                      Navigator.of(context).pop();
+                    try {
+                      final newUser = await registerController.createUser(username, password);
                       
-                      // Navigate to home view
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => HomeWrapper(
-                            homeController: HomeController(
-                              user: user,
-                              fridge: fridge!,
+                      // Create a fridge for the new user
+                      final fridge = await Fridge.createAndInsert(newUser);
+                      
+                      // Close loading dialog
+                      if (context.mounted) {
+                        Navigator.of(context).pop();
+                        
+                        // Navigate to home view
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => HomeWrapper(
+                              homeController: HomeController(
+                                user: newUser,
+                                fridge: fridge,
+                              ),
                             ),
                           ),
-                        ),
-                      );
+                        );
+                      }
+                    } catch (error) {
+                      // Close loading dialog
+                      if (context.mounted) {
+                        Navigator.of(context).pop();
+                        
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Failed to create account: $error'),
+                            backgroundColor: Colors.red,
+                            duration: const Duration(seconds: 3),
+                          ),
+                        );
+                      }
                     }
-                  } catch (error) {
-                    // Close loading dialog
-                    if (context.mounted) {
-                      Navigator.of(context).pop();
-                      
-                      // Show error message
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Login failed: $error'),
-                          backgroundColor: Colors.red,
-                          duration: const Duration(seconds: 3),
-                        ),
-                      );
-                    }
-                  }
-                },
-                child: const Text(
-                  'Sign in',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
+                  },
+                  child: const Text(
+                    'Sign up',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
-    ),
     );
   }
 }

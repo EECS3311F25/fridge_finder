@@ -24,9 +24,9 @@ class Fridge {
   static Future<Fridge> createAndInsert(User user) async {
     final tempFridge = Fridge._(user: user, items: []);
 
-    final int newId = await FridgeDatabaseHelper.instance.insert(tempFridge);
+    final newId = await FridgeDatabaseHelper.instance.insert(tempFridge);
 
-    return tempFridge.create(id: newId);
+    return Fridge._(id: newId, user: user, items: []);
   }
 
   static Future<Fridge> getFromDb(int fridgeId) async {
@@ -39,13 +39,34 @@ class Fridge {
     );
     final User user = User.fromMap(userMap);
 
+    final fridge = Fridge._(id: fridgeMap['id'], user: user, items: []);
+
     final List<Map<String, dynamic>> itemMaps =
         await ItemDatabaseHelper.queryByFridge(fridgeId);
     final List<Item> items = await Future.wait(
-      itemMaps.map((map) async => await Item.fromMap(map)),
+      itemMaps.map((map) async => await Item.fromMap(map, fridge: fridge)),
     );
 
-    return Fridge._(id: fridgeMap['id'], user: user, items: items);
+    fridge.items = items;
+    return fridge;
+  }
+
+  static Future<Fridge?> getFridgeByUser(User user) async {
+    try {
+      final fridgeMap = await FridgeDatabaseHelper.queryByUserId(user.id!);
+
+      if (fridgeMap.isEmpty) return null;
+
+      final fridge = Fridge._(id: fridgeMap['id'], user: user, items: []);
+
+      final itemMaps = await ItemDatabaseHelper.queryByFridge(fridgeMap['id']);
+      final items = await Future.wait(itemMaps.map((m) => Item.fromMap(m, fridge: fridge)));
+
+      fridge.items = items;
+      return fridge;
+    } catch (e) {
+      return null;
+    }
   }
 
   Map<String, dynamic> toMap() {
@@ -53,15 +74,20 @@ class Fridge {
   }
 
   static Future<Fridge> fromMap(Map<String, dynamic> map) async {
-    final User user = User.fromMap(await UserDatabaseHelper.query(map['user']));
+    final User user = User.fromMap(
+      await UserDatabaseHelper.query(map['userId']),
+    );
+
+    final fridge = Fridge._(id: map['id'], user: user, items: []);
 
     final List<Map<String, dynamic>> itemMaps =
         await ItemDatabaseHelper.queryByFridge(map['id']);
     final List<Item> items = await Future.wait(
-      itemMaps.map((map) async => await Item.fromMap(map)),
+      itemMaps.map((map) async => await Item.fromMap(map, fridge: fridge)),
     );
 
-    return Fridge._(id: map['id'], user: user, items: items);
+    fridge.items = items;
+    return fridge;
   }
 }
 
@@ -88,6 +114,20 @@ class FridgeDatabaseHelper extends DatabaseHelper<Fridge> {
       return maps.first;
     }
     throw Exception('Fridge with ID $id not found');
+  }
+
+  static Future<Map<String, dynamic>> queryByUserId(int userId) async {
+    Database db = await instance.db;
+    List<Map<String, dynamic>> maps = await db.query(
+      'fridge',
+      where: 'userId = ?',
+      whereArgs: [userId],
+      limit: 1,
+    );
+    if (maps.isNotEmpty) {
+      return maps.first;
+    }
+    throw Exception('Fridge for user ID $userId not found');
   }
 
   @override
