@@ -5,6 +5,8 @@ import '../controllers/home_controller.dart';
 import '../controllers/login_controller.dart';
 import '../models/fridge.dart';
 
+import '../models/user.dart';
+
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
 
@@ -22,6 +24,44 @@ class LoginView extends StatelessWidget {
           padding: EdgeInsets.zero,
           iconSize: 30,
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.bug_report),
+            onPressed: () async {
+              // Fetch all users
+              final users = await UserDatabaseHelper.instance.queryAll();
+              
+              if (context.mounted) {
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text('Debug: All Users'),
+                    content: SizedBox(
+                      width: double.maxFinite,
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: users.length,
+                        itemBuilder: (context, index) {
+                          final user = users[index];
+                          return ListTile(
+                            title: Text(user['username'] ?? 'No Username'),
+                            subtitle: Text('ID: ${user['id']} | Pass: ${user['password']}'),
+                          );
+                        },
+                      ),
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text('Close'),
+                      ),
+                    ],
+                  ),
+                );
+              }
+            },
+          ),
+        ],
         title: const Padding(
           padding: EdgeInsets.zero,
           child: Text(

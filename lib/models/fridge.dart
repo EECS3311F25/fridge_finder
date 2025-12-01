@@ -39,13 +39,16 @@ class Fridge {
     );
     final User user = User.fromMap(userMap);
 
+    final fridge = Fridge._(id: fridgeMap['id'], user: user, items: []);
+
     final List<Map<String, dynamic>> itemMaps =
         await ItemDatabaseHelper.queryByFridge(fridgeId);
     final List<Item> items = await Future.wait(
-      itemMaps.map((map) async => await Item.fromMap(map)),
+      itemMaps.map((map) async => await Item.fromMap(map, fridge: fridge)),
     );
 
-    return Fridge._(id: fridgeMap['id'], user: user, items: items);
+    fridge.items = items;
+    return fridge;
   }
 
   static Future<Fridge?> getFridgeByUser(User user) async {
@@ -54,10 +57,13 @@ class Fridge {
 
       if (fridgeMap.isEmpty) return null;
 
-      final itemMaps = await ItemDatabaseHelper.queryByFridge(fridgeMap['id']);
-      final items = await Future.wait(itemMaps.map((m) => Item.fromMap(m)));
+      final fridge = Fridge._(id: fridgeMap['id'], user: user, items: []);
 
-      return Fridge._(id: fridgeMap['id'], user: user, items: items);
+      final itemMaps = await ItemDatabaseHelper.queryByFridge(fridgeMap['id']);
+      final items = await Future.wait(itemMaps.map((m) => Item.fromMap(m, fridge: fridge)));
+
+      fridge.items = items;
+      return fridge;
     } catch (e) {
       return null;
     }
@@ -72,13 +78,16 @@ class Fridge {
       await UserDatabaseHelper.query(map['userId']),
     );
 
+    final fridge = Fridge._(id: map['id'], user: user, items: []);
+
     final List<Map<String, dynamic>> itemMaps =
         await ItemDatabaseHelper.queryByFridge(map['id']);
     final List<Item> items = await Future.wait(
-      itemMaps.map((map) async => await Item.fromMap(map)),
+      itemMaps.map((map) async => await Item.fromMap(map, fridge: fridge)),
     );
 
-    return Fridge._(id: map['id'], user: user, items: items);
+    fridge.items = items;
+    return fridge;
   }
 }
 
