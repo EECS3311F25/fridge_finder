@@ -28,7 +28,7 @@
 
 
 
-Tracking on Trello Total Mark: 22
+Tracking on Trello Total Mark: 20
 
 ---
 ## Sprint Completion (Max 20 marks) 
@@ -65,5 +65,5 @@ one or more commit messages do not begin with the ticket number of the task foll
 
 ## Total Mark
 
-105 / 107
+103 / 107
 
